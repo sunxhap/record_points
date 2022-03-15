@@ -469,6 +469,9 @@ try {    // 依次读取opcodes，进行执行的逻辑。} catch (D) {
 2.  <section style="margin-top: 5px;margin-bottom: 5px;line-height: 26px;color: rgb(1, 1, 1);">《[JS 逆向之字节系列某量算数 jsvmp 算法分析及深度还原](https://mp.weixin.qq.com/s?__biz=Mzg2NDY4Njc4MQ==&mid=2247484192&idx=1&sn=1db676ecaff6aca791782fefacecf829&scene=21#wechat_redirect)》：该文章补环境部分和我补环境的思路一致，对同一份文件在浏览器和 node 环境各自输出的日志对比，来把控细节，判断补的环境是否正确.</section>
 
 3.  <section style="margin-top: 5px;margin-bottom: 5px;line-height: 26px;color: rgb(1, 1, 1);">《某鹅滑块验证码破解笔记 - https://www.52pojie.cn/thread-1521480-1-1.html》: 这是上面 jsdom 环境的出处，这篇文章对 vData 的介绍可以看一下。</section>
-<section style="margin-top: 5px;margin-bottom: 5px;line-height: 26px;color: rgb(1, 1, 1);">
+<section style="margin-top: 5px;margin-bottom: 5px;line-height: 26px;color: rgb(1, 1, 1);">![](https://mmbiz.qpic.cn/mmbiz_jpg/huXBGBmwjMWq6U8cJFU8fZvCKoG7h4xNuJqlp0ia8hUK1RkriaQ8OE8jncEe7yhenEhyHV3nvZLRUk2sOgCfFIjQ/640?wx_fmt=jpeg)
     </section>
 
+
+
+</section>
