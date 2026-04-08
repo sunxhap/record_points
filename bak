@@ -8,3 +8,6 @@
 
 ###3. 推送到 GitHub
     git push origin main    # 或 master，看你分支名
+
+####
+    mkdocs serve
