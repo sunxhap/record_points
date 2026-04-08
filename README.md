@@ -1,10 +1,10 @@
-### 爬虫逆向文章
 
 
+# 1. 添加所有文件（包括 .github 文件夹）
+git add .
 
-文章来自于 公众号 、 52pojie 等平台，通过工具 导出markdown ，希望 对同学们有所帮助
+# 2. 提交
+git commit -m "添加 MkDocs 文档配置"
 
-
-
-这些分享仅用于学习交流，请勿用于非法用途，否则后果自负。 
-
+# 3. 推送到 GitHub
+git push origin main    # 或 master，看你分支名
