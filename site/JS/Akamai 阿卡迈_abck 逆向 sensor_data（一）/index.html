@@ -1,0 +1,2001 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://sunxhap.github.io/record_points/JS/Akamai%20%E9%98%BF%E5%8D%A1%E8%BF%88_abck%20%E9%80%86%E5%90%91%20sensor_data%EF%BC%88%E4%B8%80%EF%BC%89/">
+      
+      
+        <link rel="prev" href="../../Android-APP/%E6%89%93%E9%80%A0%E5%B9%B4%E8%BD%BB%E4%BA%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A5%97%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E7%8E%AF%E5%A2%83%EF%BC%81/">
+      
+      
+        <link rel="next" href="../Akamai%20%E9%98%BF%E5%8D%A1%E8%BF%88_abck%20%E9%80%86%E5%90%91%20sensor_data%EF%BC%88%E4%BA%8C%EF%BC%89/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Akamai 阿卡迈 abck 逆向 sensor data（一） - 爬虫逆向文章库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="爬虫逆向文章库" class="md-header__button md-logo" aria-label="爬虫逆向文章库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            爬虫逆向文章库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Akamai 阿卡迈 abck 逆向 sensor data（一）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Android-APP/" class="md-tabs__link">
+          
+  
+  
+  Android APP
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  JS
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="爬虫逆向文章库" class="md-nav__button md-logo" aria-label="爬虫逆向文章库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    爬虫逆向文章库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android APP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android APP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Android-APP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 逆向专栏
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Android-APP/%E6%89%93%E9%80%A0%E5%B9%B4%E8%BD%BB%E4%BA%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A5%97%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E7%8E%AF%E5%A2%83%EF%BC%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    打造年轻人的第一套安卓逆向环境！
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    JS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Akamai 阿卡迈 abck 逆向 sensor data（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Akamai%20%E9%98%BF%E5%8D%A1%E8%BF%88_abck%20%E9%80%86%E5%90%91%20sensor_data%EF%BC%88%E4%BA%8C%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Akamai 阿卡迈 abck 逆向 sensor data（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VM%20%E9%98%B2%E6%8A%A4%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BC%81%E9%B9%85%E6%BB%91%E5%9D%97%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VM 防护介绍及企鹅滑块分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Akamai 阿卡迈 abck 逆向 sensor data（一）</h1>
+
+<blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/">简悦 SimpRead</a> 转码， 原文地址 https://blog.csdn.net/weixin_38927522/article/details/123691665 <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-163de54645.css"> </p>
+</blockquote>
+<p><strong>Akamai 阿卡迈</strong>：常用于国<a href="https://so.csdn.net/so/search?q=%E5%A4%96%E7%BD%91&amp;spm=1001.2101.3001.7020">外网</a>站，2019 年初期版本验证 cookies 中的_abck, 后期增加 ak_bmsc 等其他指纹设备。</p>
+<p><strong>常见网站：</strong>
+韩国大韩航空：<a href="https://www.koreanair.com/cn/zh-cn">https://www.koreanair.com/cn/zh-cn</a>
+韩国韩亚航空：<a href="https://www.flyasiana.com/C/CN/KO/index">https://www.flyasiana.com/C/CN/KO/index</a>
+电子元器件： <a href="https://www.ti.com/">https://www.ti.com/</a>
+nike 官网： <a href="https://www.nike.com/cn">https://www.nike.com/cn</a></p>
+<div class="highlight"><pre><span></span><code>本文以韩亚航空为例：
+采集航空机票数据的时候，我们发现cookie中的这些参数，无疑是akamai:
+</code></pre></div>
+<p>用 cookies 插件查看下 cookie 值：
+<img alt="" src="https://img-blog.csdnimg.cn/3fd25e3318f84199a792e251163c9a87.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQ29kZW9vbw==,size_20,color_FFFFFF,t_70,g_se,x_16" />
+清掉 cookies 观察发送请求包：</p>
+<p><img alt="" src="https://img-blog.csdnimg.cn/748cab37ac8c40d7bc85c49eaa0c8f21.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQ29kZW9vbw==,size_20,color_FFFFFF,t_70,g_se,x_16" />
+这个请求就很奇怪，像是心跳包，只要是会话超时以及清掉 ck, 必然会发一个，我们看下参数是什么：
+<img alt="" src="https://img-blog.csdnimg.cn/e987ad3f6b9a4e24b42bb85b40b349b1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQ29kZW9vbw==,size_20,color_FFFFFF,t_70,g_se,x_16" />
+看到 sensor_data 更加无疑是阿卡迈了。。。
+走完这个接口生成——abck?
+<img alt="" src="https://img-blog.csdnimg.cn/961e864cb08b465bb6a75d0b2bc1375e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQ29kZW9vbw==,size_20,color_FFFFFF,t_70,g_se,x_16" />
+堆栈追踪：逻辑还很是清楚的。
+<img alt="" src="https://img-blog.csdnimg.cn/39103cb1ce18478bba9c304ffd35aec1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQ29kZW9vbw==,size_20,color_FFFFFF,t_70,g_se,x_16" /></p>
+<p><img alt="" src="https://img-blog.csdnimg.cn/499750d477a54b21a9012c94b3491053.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQ29kZW9vbw==,size_20,color_FFFFFF,t_70,g_se,x_16" />
+这个数组很重要，一会需要我们还原下：
+<img alt="" src="https://img-blog.csdnimg.cn/216b8217a17141489e69c9264ef984d8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQ29kZW9vbw==,size_20,color_FFFFFF,t_70,g_se,x_16" /></p>
+<div class="highlight"><pre><span></span><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script&gt;
+    var _0xf488 = [&quot;\x4d\x69\x63\x72\x6f\x73\x6f\x66\x74\x20\x54\x61\x69\x20\x4c\x65&quot;, &quot;\x69\x6e\x64\x65\x78\x65\x64\x44\x62\x4b\x65\x79&quot;, &quot;\x6f\x70\x65\x72\x61&quot;, &quot;\x68\x79\x70\x6f\x74&quot;, &quot;\x63\x6c\x69\x63\x6b&quot;, &quot;\x74\x6f\x75\x63\x68\x73\x74\x61\x72\x74&quot;, &quot;\x24\x63\x68\x72\x6f\x6d\x65\x5f\x61\x73\x79\x6e\x63\x53\x63\x72\x69\x70\x74\x49\x6e\x66\x6f&quot;, &quot;\x63\x6c\x65\x61\x72\x43\x61\x63\x68\x65&quot;, &quot;\x73\x6c\x69\x63\x65&quot;, &quot;\x61\x63\x63\x65\x6c\x65\x72\x61\x74\x69\x6f\x6e\x49\x6e\x63\x6c\x75\x64\x69\x6e\x67\x47\x72\x61\x76\x69\x74\x79&quot;, &quot;\x6e\x61\x76\x69\x67\x61\x74\x6f\x72&quot;, &quot;\x61\x6c\x6c&quot;, &quot;\x2c\x22\x61\x75\x74\x68\x22\x20\x3a\x20\x22&quot;, &quot;\x67\x65\x74\x5f\x73\x74\x6f\x70\x5f\x73\x69\x67\x6e\x61\x6c\x73&quot;, &quot;\x74\x6f&quot;, &quot;\x4d\x65\x6e\x6c\x6f&quot;, &quot;\x70\x61\x63\x74&quot;, &quot;\x6b\x65\x79\x64\x6f\x77\x6e&quot;, &quot;\x69\x73\x49\x67\x6e&quot;, &quot;\x73\x65\x61\x72\x63\x68&quot;, &quot;\x67\x65\x74\x53\x74\x6f\x72\x61\x67\x65\x55\x70\x64\x61\x74\x65\x73&quot;, &quot;\x41\x72\x69\x61\x6c\x48\x65\x62\x72\x65\x77\x2d\x4c\x69\x67\x68\x74&quot;, &quot;\x66\x6f\x6e\x74\x46\x61\x6d\x69\x6c\x79&quot;, &quot;\x77\x65\x62\x64\x72\x69\x76\x65\x72&quot;, &quot;\x74\x6d\x65\x5f\x63\x6e\x74&quot;, &quot;\x72\x65\x71\x75\x65\x73\x74\x4d\x65\x64\x69\x61\x4b\x65\x79\x53\x79\x73\x74\x65\x6d\x41\x63\x63\x65\x73\x73&quot;, &quot;\x42\x75\x66\x66\x65\x72&quot;, &quot;\x68\x6f\x73\x74\x6e\x61\x6d\x65&quot;, &quot;\x63\x73\x73\x54\x65\x78\x74&quot;, &quot;\x6e\x5f\x63\x6b&quot;, &quot;\x69\x64&quot;, &quot;\x6b\x65\x5f\x76\x65\x6c&quot;, &quot;\x46\x75\x74\x75\x72\x61&quot;, &quot;\x50\x4f\x53\x54&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x32\x30\x2c&quot;, &quot;\x64\x61\x74\x61&quot;, &quot;\x6c\x69\x73\x74\x46\x75\x6e\x63\x74\x69\x6f\x6e\x73&quot;, &quot;\x64\x6d\x61\x5f\x74\x68\x72\x6f\x74\x74\x6c\x65&quot;, &quot;\x4d\x61\x63\x20\x4f\x53\x20\x58\x20\x31\x30\x5f\x35&quot;, &quot;\x6c\x61\x6e\x67\x75\x61\x67\x65&quot;, &quot;\x43\x6f\x75\x72\x69\x65\x72\x20\x4e\x65\x77&quot;, &quot;\x72\x67\x62\x28\x31\x32\x30\x2c\x20\x31\x38\x36\x2c\x20\x31\x37\x36\x29&quot;, &quot;\x62\x6f\x64\x79&quot;, &quot;\x57\x69\x6e\x64\x6f\x77\x73\x20\x4d\x65\x64\x69\x61\x20\x50\x6c\x61\x79\x65\x72\x20\x50\x6c\x75\x67\x2d\x69\x6e\x20\x44\x79\x6e\x61\x6d\x69\x63\x20\x4c\x69\x6e\x6b\x20\x4c\x69\x62\x72\x61\x72\x79&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x38\x30\x2c&quot;, &quot;\x61\x70\x70\x6c\x79&quot;, &quot;\x57\x65\x62\x45\x78\x36\x34\x20\x47\x65\x6e\x65\x72\x61\x6c\x20\x50\x6c\x75\x67\x69\x6e\x20\x43\x6f\x6e\x74\x61\x69\x6e\x65\x72&quot;, &quot;\x76\x63\x5f\x63\x6e\x74&quot;, &quot;\x2c\x69\x74\x30&quot;, &quot;\x67\x66&quot;, &quot;\x69\x31\x3a&quot;, &quot;\x70\x61\x67\x65\x58&quot;, &quot;\x4c\x61\x74\x6f&quot;, &quot;\x5f\x73\x65\x74\x41\x75&quot;, &quot;\x73\x65\x73\x73\x69\x6f\x6e\x53\x74\x6f\x72\x61\x67\x65\x4b\x65\x79&quot;, &quot;\x4c\x6f\x62\x73\x74\x65\x72&quot;, &quot;\x64\x69\x73\x46\x70\x43\x61\x6c\x4f\x6e\x54\x69\x6d\x65\x6f\x75\x74&quot;, &quot;\x73\x65\x74\x5f\x63\x6f\x6f\x6b\x69\x65&quot;, &quot;\x57\x45\x42\x47\x4c\x5f\x64\x65\x62\x75\x67\x5f\x72\x65\x6e\x64\x65\x72\x65\x72\x5f\x69\x6e\x66\x6f&quot;, &quot;\x73\x74\x72\x6f\x6b\x65\x53\x74\x79\x6c\x65&quot;, &quot;\x43\x6f\x72\x73\x69\x76\x61\x20\x48\x65\x62\x72\x65\x77&quot;, &quot;\x72\x43\x46\x50&quot;, &quot;\x64\x6f\x63\x75\x6d\x65\x6e\x74\x45\x6c\x65\x6d\x65\x6e\x74&quot;, &quot;\x5f\x5f\x77\x65\x62\x64\x72\x69\x76\x65\x72\x5f\x75\x6e\x77\x72\x61\x70\x70\x65\x64&quot;, &quot;\x2c\x73\x32\x3a&quot;, &quot;\x6d\x6e\x5f\x73\x74\x6f\x75\x74&quot;, &quot;\x72\x65\x71\x75\x69\x72\x65\x64&quot;, &quot;\x70\x61\x72\x73\x65\x49\x6e\x74&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x30\x36\x2c&quot;, &quot;\x5f\x73\x65\x74\x50\x6f\x77\x53\x74\x61\x74\x65&quot;, &quot;\x72\x61\x6e\x64\x6f\x6d&quot;, &quot;\x70\x61\x79\x6d\x65\x6e\x74\x2d\x68\x61\x6e\x64\x6c\x65\x72&quot;, &quot;\x50\x72\x65\x73\x73\x20\x53\x74\x61\x72\x74\x20\x32\x50&quot;, &quot;\x62\x64&quot;, &quot;\x69\x6e\x64\x65\x78\x4f\x66&quot;, &quot;\x66\x69\x6c\x6c\x54\x65\x78\x74&quot;, &quot;\x41\x63\x74\x69\x76\x65\x58\x4f\x62\x6a\x65\x63\x74&quot;, &quot;\x63\x6f\x6f\x6b\x69\x65&quot;, &quot;\x62\x75\x74\x74\x6f\x6e&quot;, &quot;\x6d\x6e\x5f\x72&quot;, &quot;\x6d\x6e\x5f\x6d\x63\x5f\x6c\x6d\x74&quot;, &quot;\x6d\x61\x63\x74&quot;, &quot;\x6e\x6f\x77&quot;, &quot;\x70\x6c\x75\x67\x69\x6e\x49\x6e\x66\x6f&quot;, &quot;\x24\x63\x64\x63\x5f\x61\x73\x64\x6a\x66\x6c\x61\x73\x75\x74\x6f\x70\x66\x68\x76\x63\x5a\x4c\x6d\x63\x66\x6c\x5f&quot;, &quot;\x75\x6e\x64\x65\x66&quot;, &quot;\x63\x61\x74\x63\x68&quot;, &quot;\x79\x31&quot;, &quot;\x6d\x6f\x7a\x49\x6e\x6e\x65\x72\x53\x63\x72\x65\x65\x6e\x59&quot;, &quot;\x61\x63\x63\x65\x73\x73\x69\x62\x69\x6c\x69\x74\x79\x2d\x65\x76\x65\x6e\x74\x73&quot;, &quot;\x67\x65\x74\x41\x74\x74\x72\x69\x62\x75\x74\x65&quot;, &quot;\x72\x6f\x74\x61\x74\x69\x6f\x6e\x52\x61\x74\x65&quot;, &quot;\x74\x69\x6d\x65\x7a\x6f\x6e\x65\x4f\x66\x66\x73\x65\x74\x4b\x65\x79&quot;, &quot;\x5f\x5f\x6c\x61\x73\x74\x57\x61\x74\x69\x72\x43\x6f\x6e\x66\x69\x72\x6d&quot;, &quot;\x67\x64&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x32\x39\x2c&quot;, &quot;\x74\x61&quot;, &quot;\x58\x4d\x4c\x48\x74\x74\x70\x52\x65\x71\x75\x65\x73\x74&quot;, &quot;\x63\x6f\x6c\x6f\x72\x44\x65\x70\x74\x68&quot;, &quot;\x66\x6f\x6e\x74\x53\x69\x7a\x65&quot;, &quot;\x65\x6d\x69\x74&quot;, &quot;\x67\x65\x74\x5f\x63\x6f\x6f\x6b\x69\x65&quot;, &quot;\x70\x75\x73\x68&quot;, &quot;\x6d\x64\x75\x63\x65\x5f\x63\x6e\x74&quot;, &quot;\x77\x69\x64\x74\x68&quot;, &quot;\x6d\x73\x48\x69\x64\x64\x65\x6e&quot;, &quot;\x76\x69\x73\x69\x62\x69\x6c\x69\x74\x79\x63\x68\x61\x6e\x67\x65&quot;, &quot;\x77\x65\x62\x6b\x69\x74\x76\x69\x73\x69\x62\x69\x6c\x69\x74\x79\x63\x68\x61\x6e\x67\x65&quot;, &quot;\x70\x6f\x73\x69\x74\x69\x6f\x6e\x3a\x20\x72\x65\x6c\x61\x74\x69\x76\x65\x3b\x20\x6c\x65\x66\x74\x3a\x20\x2d\x39\x39\x39\x39\x70\x78\x3b\x20\x76\x69\x73\x69\x62\x69\x6c\x69\x74\x79\x3a\x20\x68\x69\x64\x64\x65\x6e\x3b\x20\x64\x69\x73\x70\x6c\x61\x79\x3a\x20\x62\x6c\x6f\x63\x6b\x20\x21\x69\x6d\x70\x6f\x72\x74\x61\x6e\x74&quot;, &quot;\x2d\x31&quot;, &quot;\x62\x70\x64&quot;, &quot;\x73\x65\x6e\x64&quot;, &quot;\x72\x6f\x74\x61\x74\x65\x5f\x72\x69\x67\x68\x74&quot;, &quot;\x6f\x6e\x72\x65\x61\x64\x79\x73\x74\x61\x74\x65\x63\x68\x61\x6e\x67\x65&quot;, &quot;\x5f\x5f\x6c\x61\x73\x74\x57\x61\x74\x69\x72\x41\x6c\x65\x72\x74&quot;, &quot;\x78\x32&quot;, &quot;\x6d\x69\x63\x72\x6f\x70\x68\x6f\x6e\x65&quot;, &quot;\x66\x66&quot;, &quot;\x73\x65\x74\x52\x65\x71\x75\x65\x73\x74\x48\x65\x61\x64\x65\x72&quot;, &quot;\x77\x65\x62\x6b\x69\x74\x47\x65\x74\x47\x61\x6d\x65\x70\x61\x64\x73&quot;, &quot;\x6d\x6e\x5f\x63\x64&quot;, &quot;\x74\x5f\x64\x69\x73&quot;, &quot;\x62\x6d\x69\x73\x63&quot;, &quot;\x76\x63\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x70\x72\x6f\x74\x6f\x63\x6f\x6c&quot;, &quot;\x74\x6f\x75\x63\x68\x63\x61\x6e\x63\x65\x6c&quot;, &quot;\x71\x75\x65\x72\x79&quot;, &quot;\x4a\x61\x76\x61\x20\x50\x6c\x75\x67\x2d\x69\x6e\x20\x32\x20\x66\x6f\x72\x20\x4e\x50\x41\x50\x49\x20\x42\x72\x6f\x77\x73\x65\x72\x73&quot;, &quot;\x68\x76\x63&quot;, &quot;\x43\x68\x72\x6f\x6d\x65\x20\x52\x65\x6d\x6f\x74\x65\x20\x44\x65\x73\x6b\x74\x6f\x70\x20\x56\x69\x65\x77\x65\x72&quot;, &quot;\x61\x70\x69\x5f\x70\x75\x62\x6c\x69\x63\x5f\x6b\x65\x79&quot;, &quot;\x61\x75\x74\x68&quot;, &quot;\x5f\x5f\x64\x72\x69\x76\x65\x72\x5f\x65\x76\x61\x6c\x75\x61\x74\x65&quot;, &quot;\x2c\x73\x31\x3a&quot;, &quot;\x32&quot;, &quot;\x77\x72&quot;, &quot;\x76\x69\x62\x72\x61\x74\x65&quot;, &quot;\x66\x6d\x68&quot;, &quot;\x67\x65\x74\x5f\x63\x66\x5f\x64\x61\x74\x65&quot;, &quot;\x66\x6f\x6e\x74&quot;, &quot;\x66\x6f\x6e\x74\x73\x5f\x6f\x70\x74\x6d&quot;, &quot;\x6d\x6e\x5f\x70\x6f\x6c\x6c&quot;, &quot;\x2c\x6c\x6f\x63\x3a&quot;, &quot;\x6d\x64\x75\x63\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x70\x65\x6e&quot;, &quot;\x73\x65\x73\x73\x69\x6f\x6e\x53\x74\x6f\x72\x61\x67\x65&quot;, &quot;\x64\x6f\x65\x5f\x63\x6e\x74&quot;, &quot;\x63\x6b\x69\x65&quot;, &quot;\x67\x65\x74\x5f\x62\x72\x6f\x77\x73\x65\x72&quot;, &quot;\x63\x72\x65\x61\x74\x65\x45\x6c\x65\x6d\x65\x6e\x74&quot;, &quot;\x66\x6f\x6e\x74\x73&quot;, &quot;\x6d\x6e\x5f\x63\x63&quot;, &quot;\x64\x6f\x5f\x64\x69\x73&quot;, &quot;\x5f\x5f\x66\x78\x64\x72\x69\x76\x65\x72\x5f\x65\x76\x61\x6c\x75\x61\x74\x65&quot;, &quot;\x61\x6a\x5f\x69\x6e\x64\x78&quot;, &quot;\x66\x70\x56\x61\x6c\x73\x74\x72&quot;, &quot;\x67\x62&quot;, &quot;\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2b\x2f&quot;, &quot;\x6c\x6f\x63\x61\x6c\x53\x74\x6f\x72\x61\x67\x65\x4b\x65\x79&quot;, &quot;\x68\x61\x73\x4f\x77\x6e\x50\x72\x6f\x70\x65\x72\x74\x79&quot;, &quot;\x61\x70\x69\x63\x61\x6c\x6c\x5f\x62\x6d&quot;, &quot;\x68\x62\x73&quot;, &quot;\x3d\x3d&quot;, &quot;\x6c\x76\x63&quot;, &quot;\x70\x6f\x77&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x39\x2c&quot;, &quot;\x70\x65\x5f\x76\x65\x6c&quot;, &quot;\x6f\x6e\x66\x6f\x63\x75\x73&quot;, &quot;\x64\x6f\x61\x5f\x74\x68\x72\x6f\x74\x74\x6c\x65&quot;, &quot;\x61\x66\x53\x62\x65\x70\x38\x79\x6a\x6e\x5a\x55\x6a\x71\x33\x61\x4c\x30\x31\x30\x6a\x4f\x31\x35\x53\x61\x77\x6a\x32\x56\x5a\x66\x64\x59\x4b\x38\x75\x59\x39\x30\x75\x78\x71&quot;, &quot;\x47\x65\x6e\x65\x76\x61&quot;, &quot;\x63\x6c\x69\x65\x6e\x74\x57\x69\x64\x74\x68&quot;, &quot;\x63\x64\x6f\x61&quot;, &quot;\x7b\x22\x73\x65\x73\x73\x69\x6f\x6e\x5f\x69\x64\x22\x20\x3a\x20\x22&quot;, &quot;\x77\x65\x62\x72\x74\x63\x4b\x65\x79&quot;, &quot;\x64\x65\x66\x61\x75\x6c\x74\x5f\x73\x65\x73\x73\x69\x6f\x6e&quot;, &quot;\x68\x6d\x6d&quot;, &quot;\x63\x65\x69\x6c&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x30\x35\x2c&quot;, &quot;\x6a\x6f\x69\x6e&quot;, &quot;\x5f\x70\x68\x61\x6e\x74\x6f\x6d&quot;, &quot;\x61\x6a\x5f\x6c\x6d\x74\x5f\x74\x61\x63\x74&quot;, &quot;\x23\x66\x36\x30&quot;, &quot;\x6d\x6e\x5f\x67\x65\x74\x5f\x6e\x65\x77\x5f\x63\x68\x61\x6c\x6c\x65\x6e\x67\x65\x5f\x70\x61\x72\x61\x6d\x73&quot;, &quot;\x73\x74\x61\x72\x74\x54\x72\x61\x63\x6b\x69\x6e\x67&quot;, &quot;\x6b\x65\x79\x43\x6f\x64\x65&quot;, &quot;\x61\x76\x61\x69\x6c\x57\x69\x64\x74\x68&quot;, &quot;\x3b\x20\x70\x61\x74\x68\x3d\x2f\x3b\x20\x65\x78\x70\x69\x72\x65\x73\x3d\x46\x72\x69\x2c\x20\x30\x31\x20\x46\x65\x62\x20\x32\x30\x32\x35\x20\x30\x38\x3a\x30\x30\x3a\x30\x30\x20\x47\x4d\x54\x3b&quot;, &quot;\x68\x6d\x64&quot;, &quot;\x63\x64\x6d\x61&quot;, &quot;\x61\x62\x73&quot;, &quot;\x73\x65\x64&quot;, &quot;\x31\x36\x70\x74\x20\x41\x72\x69\x61\x6c&quot;, &quot;\x68\x69\x64\x64\x65\x6e&quot;, &quot;\x74\x6f\x4c\x6f\x77\x65\x72\x43\x61\x73\x65&quot;, &quot;\x66\x70\x63\x66&quot;, &quot;\x70\x6c\x75\x67\x69\x6e\x73&quot;, &quot;\x58\x50\x61\x74\x68\x52\x65\x73\x75\x6c\x74&quot;, &quot;\x2f\x67\x65\x74\x5f\x70\x61\x72\x61\x6d\x73&quot;, &quot;\x69\x6e\x69\x74\x5f\x74\x69\x6d\x65&quot;, &quot;\x6d\x6e\x5f\x77&quot;, &quot;\x73\x70\x6c\x69\x74&quot;, &quot;\x65&quot;, &quot;\x5f\x5f\x24\x77\x65\x62\x64\x72\x69\x76\x65\x72\x41\x73\x79\x6e\x63\x45\x78\x65\x63\x75\x74\x6f\x72&quot;, &quot;\x6f\x66\x66&quot;, &quot;\x66\x70\x56\x61\x6c&quot;, &quot;\x6f\x66\x66\x73\x65\x74\x57\x69\x64\x74\x68&quot;, &quot;\x70\x65\x72\x73\x69\x73\x74\x65\x6e\x74\x2d\x73\x74\x6f\x72\x61\x67\x65&quot;, &quot;\x74\x6f\x44\x61\x74\x61\x55\x52\x4c&quot;, &quot;\x78\x61\x67\x67&quot;, &quot;\x64\x6f\x63\x75\x6d\x65\x6e\x74&quot;, &quot;\x69\x6e\x66\x6f\x72\x6d\x69\x6e\x66\x6f&quot;, &quot;\x42\x61\x73\x69\x63\x20&quot;, &quot;\x64\x6d\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x69\x6e\x6e\x65\x72\x48\x65\x69\x67\x68\x74&quot;, &quot;\x68\x74\x63&quot;, &quot;\x70\x64\x75\x63\x65\x5f\x63\x6e\x74&quot;, &quot;\x74\x6f\x46\x69\x78\x65\x64&quot;, &quot;\x69\x72&quot;, &quot;\x73\x74\x72\x69\x6e\x67\x69\x66\x79&quot;, &quot;\x77\x65\x62\x67\x6c&quot;, &quot;\x63\x6c\x69\x70\x62\x6f\x61\x72\x64&quot;, &quot;\x44\x65\x76\x69\x63\x65\x4f\x72\x69\x65\x6e\x74\x61\x74\x69\x6f\x6e\x45\x76\x65\x6e\x74&quot;, &quot;\x6d\x61\x67\x6e\x65\x74\x6f\x6d\x65\x74\x65\x72&quot;, &quot;\x30\x61\x34\x36\x47\x35\x6d\x31\x37\x56\x72\x70\x34\x6f\x34\x63&quot;, &quot;\x64\x65\x66\x61\x75\x6c\x74\x56\x61\x6c\x75\x65&quot;, &quot;\x2c&quot;, &quot;\x61\x62\x63\x64\x65\x66\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x78\x79\x7a\x31\x32\x33\x34\x35\x36\x37\x38\x39\x30\x3b\x2b\x2d\x2e&quot;, &quot;\x6d\x6f\x7a\x49\x73\x4c\x6f\x63\x61\x6c\x6c\x79\x41\x76\x61\x69\x6c\x61\x62\x6c\x65&quot;, &quot;\x41\x75\x74\x68\x6f\x72\x69\x7a\x61\x74\x69\x6f\x6e&quot;, &quot;\x41\x70\x70\x6c\x65\x20\x47\x6f\x74\x68\x69\x63&quot;, &quot;\x2d&quot;, &quot;\x65\x78\x63\x65\x70\x74\x69\x6f\x6e&quot;, &quot;\x69\x6d\x75\x6c&quot;, &quot;\x42\x61\x74\x61\x6e\x67&quot;, &quot;\x73\x74\x6f\x72\x65\x57\x65\x62\x57\x69\x64\x65\x54\x72\x61\x63\x6b\x69\x6e\x67\x45\x78\x63\x65\x70\x74\x69\x6f\x6e&quot;, &quot;\x70\x61\x74\x70&quot;, &quot;\x63\x61\x6c\x6c\x53\x65\x6c\x65\x6e\x69\x75\x6d&quot;, &quot;\x73\x74\x72\x6f\x6b\x65&quot;, &quot;\x33&quot;, &quot;\x74\x5f\x74\x73\x74&quot;, &quot;\x68\x70\x64&quot;, &quot;\x4d\x6f\x6e\x61\x63\x6f&quot;, &quot;\x63\x73\x68&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x32\x36\x2c&quot;, &quot;\x2c\x73\x33\x3a&quot;, &quot;\x57\x69\x6e\x67\x64\x69\x6e\x67\x73\x20\x32&quot;, &quot;\x63\x6b\x61&quot;, &quot;\x61\x6c\x70\x68\x61&quot;, &quot;\x6d\x72&quot;, &quot;\x30&quot;, &quot;\x68\x74\x6d&quot;, &quot;\x61\x64\x64\x45\x76\x65\x6e\x74\x4c\x69\x73\x74\x65\x6e\x65\x72&quot;, &quot;\x73\x70\x65\x61\x6b\x65\x72&quot;, &quot;\x69\x6e\x70\x75\x74&quot;, &quot;\x6e\x6f\x6e\x3a&quot;, &quot;\x63\x6c\x69\x70\x62\x6f\x61\x72\x64\x2d\x77\x72\x69\x74\x65&quot;, &quot;\x64\x6d\x5f\x64\x69\x73&quot;, &quot;\x64\x6f\x4e\x6f\x74\x54\x72\x61\x63\x6b&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x30\x38\x2c&quot;, &quot;\x4d\x69\x63\x72\x6f\x73\x6f\x66\x74\x20\x53\x61\x6e\x73\x20\x53\x65\x72\x69\x66&quot;, &quot;\x73\x66\x34&quot;, &quot;\x63\x64\x63\x5f\x61\x64\x6f\x51\x70\x6f\x61\x73\x6e\x66\x61\x37\x36\x70\x66\x63\x5a\x4c\x6d\x63\x66\x6c\x5f\x53\x79\x6d\x62\x6f\x6c&quot;, &quot;\x73\x74\x61\x72\x74\x5f\x74\x73&quot;, &quot;\x67\x65\x74\x50\x61\x72\x61\x6d\x65\x74\x65\x72&quot;, &quot;\x52\x6f\x62\x6f\x74\x6f&quot;, &quot;\x6d\x65\x73\x73\x61\x67\x65&quot;, &quot;\x6d\x65\x64\x69\x61\x44\x65\x76\x69\x63\x65\x73&quot;, &quot;\x66\x69\x72\x73\x74\x4c\x6f\x61\x64&quot;, &quot;\x3a&quot;, &quot;\x64\x69\x73&quot;, &quot;\x68\x6b\x75&quot;, &quot;\x53\x68\x61\x72\x65\x50\x6f\x69\x6e\x74\x20\x42\x72\x6f\x77\x73\x65\x72\x20\x50\x6c\x75\x67\x2d\x69\x6e&quot;, &quot;\x67\x72\x61\x6e\x74\x65\x64&quot;, &quot;\x64\x6f\x6d\x41\x75\x74\x6f\x6d\x61\x74\x69\x6f\x6e\x43\x6f\x6e\x74\x72\x6f\x6c\x6c\x65\x72&quot;, &quot;\x67\x77\x64&quot;, &quot;\x6c\x61\x6e\x67&quot;, &quot;\x5c\x5c\x22&quot;, &quot;\x63\x72\x65\x64\x65\x6e\x74\x69\x61\x6c\x73&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x38\x2c&quot;, &quot;\x5f\x5f\x77\x65\x62\x64\x72\x69\x76\x65\x72\x5f\x73\x63\x72\x69\x70\x74\x5f\x66\x75\x6e\x63\x74\x69\x6f\x6e&quot;, &quot;\x6f\x6e\x4c\x69\x6e\x65&quot;, &quot;\x64\x6f\x6d\x41\x75\x74\x6f\x6d\x61\x74\x69\x6f\x6e&quot;, &quot;\x6c\x6f\x61\x70&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x30\x39\x2c&quot;, &quot;\x72\x69\x72&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x32\x32\x2c&quot;, &quot;\x63\x61\x6c\x5f\x64\x69\x73&quot;, &quot;\x63\x73&quot;, &quot;\x68\x70\x75&quot;, &quot;\x41\x6c\x4e\x69\x6c\x65&quot;, &quot;\x74\x61\x72\x67\x65\x74&quot;, &quot;\x6d\x6d\x65\x5f\x63\x6e\x74&quot;, &quot;\x44\x65\x66\x61\x75\x6c\x74\x20\x42\x72\x6f\x77\x73\x65\x72\x20\x48\x65\x6c\x70\x65\x72&quot;, &quot;\x63\x6d\x61&quot;, &quot;\x47\x45\x54&quot;, &quot;\x70\x6f\x69\x6e\x74\x65\x72\x54\x79\x70\x65&quot;, &quot;\x4c\x75\x63\x69\x64\x61\x20\x53\x61\x6e\x73&quot;, &quot;\x69\x50\x61\x64\x3b&quot;, &quot;\x5f\x73\x65\x74\x42\x6d&quot;, &quot;\x61\x6c\x74\x4b\x65\x79&quot;, &quot;\x6d\x6e\x5f\x72\x74\x73&quot;, &quot;\x67\x79\x72\x6f\x73\x63\x6f\x70\x65&quot;, &quot;\x64\x65\x76\x69\x63\x65\x50\x69\x78\x65\x6c\x52\x61\x74\x69\x6f&quot;, &quot;\x6d\x6e\x5f\x73\x74\x61\x74\x65&quot;, &quot;\x67\x65\x74\x5f\x74\x79\x70\x65&quot;, &quot;\x5c\x27&quot;, &quot;\x6f\x6e&quot;, &quot;\x73\x74\x6f\x72\x61\x67\x65&quot;, &quot;\x72\x67\x62\x28\x31\x30\x32\x2c\x20\x32\x30\x34\x2c\x20\x30\x29&quot;, &quot;\x72\x76\x65&quot;, &quot;\x4e\x69\x6d\x62\x75\x73\x20\x52\x6f\x6d\x61\x6e\x20\x4e\x6f\x20\x39\x20\x4c&quot;, &quot;\x70\x6f\x69\x6e\x74\x65\x72\x64\x6f\x77\x6e&quot;, &quot;\x64\x69\x76&quot;, &quot;\x63\x68\x61\x72\x41\x74&quot;, &quot;\x63\x6c\x69\x70\x62\x6f\x61\x72\x64\x2d\x72\x65\x61\x64&quot;, &quot;\x73\x71\x72\x74&quot;, &quot;\x77\x61\x74\x69\x6e\x45\x78\x70\x72\x65\x73\x73\x69\x6f\x6e\x52\x65\x73\x75\x6c\x74&quot;, &quot;\x72\x65\x6d\x6f\x76\x65\x43\x68\x69\x6c\x64&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x30\x31\x2c&quot;, &quot;\x6d\x6f\x7a\x48\x69\x64\x64\x65\x6e&quot;, &quot;\x44\x65\x76\x69\x63\x65\x4d\x6f\x74\x69\x6f\x6e\x45\x76\x65\x6e\x74&quot;, &quot;\x6d\x6e\x5f\x74\x63\x6c&quot;, &quot;\x76\x63\x61\x63\x74&quot;, &quot;\x63\x68\x65\x63\x6b\x5f\x73\x74\x6f\x70\x5f\x70\x72\x6f\x74\x6f\x63\x6f\x6c&quot;, &quot;\x31\x39\x32\x70\x78&quot;, &quot;\x56\x65\x72\x73\x69\x6f\x6e\x2f\x34\x2e\x30&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x31\x2c&quot;, &quot;\x6d\x73\x76\x69\x73\x69\x62\x69\x6c\x69\x74\x79\x63\x68\x61\x6e\x67\x65&quot;, &quot;\x5f\x5f\x77\x65\x62\x64\x72\x69\x76\x65\x72\x5f\x73\x63\x72\x69\x70\x74\x5f\x66\x75\x6e\x63&quot;, &quot;\x64\x6f\x61\x63\x74&quot;, &quot;\x67\x65\x74\x47\x61\x6d\x65\x70\x61\x64\x73&quot;, &quot;\x54\x6f\x75\x63\x68\x45\x76\x65\x6e\x74&quot;, &quot;\x74\x64&quot;, &quot;\x6f\x6e\x6b\x65\x79\x75\x70&quot;, &quot;\x61\x70\x70\x6c\x79\x46\x75\x6e\x63&quot;, &quot;\x55\x52\x4c&quot;, &quot;\x68\x6d\x75&quot;, &quot;\x73\x61\x6e\x73\x2d\x73\x65\x72\x69\x66&quot;, &quot;\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x73\x42\x79\x54\x61\x67\x4e\x61\x6d\x65&quot;, &quot;\x73\x65\x6e\x64\x42\x65\x61\x63\x6f\x6e&quot;, &quot;\x6d\x6f\x7a\x41\x6c\x61\x72\x6d\x73&quot;, &quot;\x61\x63\x63\x65\x6c\x65\x72\x6f\x6d\x65\x74\x65\x72&quot;, &quot;\x2c\x63\x70\x65\x6e\x3a&quot;, &quot;\x64\x65\x6e\x69\x65\x64&quot;, &quot;\x65\x6e\x47\x65\x74\x4c\x6f\x63&quot;, &quot;\x41\x70\x70\x6c\x65\x20\x4c\x69\x47\x6f\x74\x68\x69\x63&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x30\x2c&quot;, &quot;\x74\x68\x65\x6e&quot;, &quot;\x57\x61\x73\x65\x65\x6d&quot;, &quot;\x74\x6f\x75\x63\x68\x65\x6e\x64&quot;, &quot;\x73\x70\x61\x6e&quot;, &quot;\x66\x69\x6c\x6c\x52\x65\x63\x74&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x32\x31\x2c&quot;, &quot;\x22\x7d&quot;, &quot;\x73\x70\x6c\x69\x63\x65&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x36\x2c&quot;, &quot;\x68\x61\x73\x49\x6e\x64\x65\x78\x65\x64\x44\x42&quot;, &quot;\x77\x69\x74\x68\x43\x72\x65\x64\x65\x6e\x74\x69\x61\x6c\x73&quot;, &quot;\x68\x63&quot;, &quot;\x62\x61\x63\x6b\x67\x72\x6f\x75\x6e\x64\x2d\x73\x79\x6e\x63&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x37\x30\x2c&quot;, &quot;\x6a\x72\x73&quot;, &quot;\x73\x74\x79\x6c\x65&quot;, &quot;\x41\x76\x65\x6e\x69\x72&quot;, &quot;\x50\x49&quot;, &quot;\x67\x65\x74\x66\x6f\x72\x6d\x69\x6e\x66\x6f&quot;, &quot;\x74\x64\x75\x63\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x65\x6e\x63\x6f\x64\x65&quot;, &quot;\x77\x67\x6c&quot;, &quot;\x6d\x6e\x5f\x61\x62\x63\x6b&quot;, &quot;\x63\x64\x63\x5f\x61\x64\x6f\x51\x70\x6f\x61\x73\x6e\x66\x61\x37\x36\x70\x66\x63\x5a\x4c\x6d\x63\x66\x6c\x5f\x41\x72\x72\x61\x79&quot;, &quot;\x6d\x6e\x5f\x67\x65\x74\x5f\x63\x75\x72\x72\x65\x6e\x74\x5f\x63\x68\x61\x6c\x6c\x65\x6e\x67\x65\x73&quot;, &quot;\x4e\x61\x74\x69\x76\x65\x20\x43\x6c\x69\x65\x6e\x74&quot;, &quot;\x6c\x61\x73\x74\x49\x6e\x64\x65\x78\x4f\x66&quot;, &quot;\x61\x77\x65\x73\x6f\x6d\x69\x75\x6d&quot;, &quot;\x73\x68\x69\x66\x74\x4b\x65\x79&quot;, &quot;\x43\x68\x72\x6f\x6d\x65\x20\x50\x44\x46\x20\x56\x69\x65\x77\x65\x72&quot;, &quot;\x31&quot;, &quot;\x6f\x64&quot;, &quot;\x6f\x6e\x6b\x65\x79\x70\x72\x65\x73\x73&quot;, &quot;\x4f\x70\x65\x6e\x20\x53\x61\x6e\x73&quot;, &quot;\x63\x61\x6e\x76\x61\x73&quot;, &quot;\x73\x75\x62\x73\x74\x72\x69\x6e\x67&quot;, &quot;\x73\x74\x61\x72\x74\x64\x6f\x61\x64\x6d\x61&quot;, &quot;\x2f\x2f&quot;, &quot;\x6d\x6e\x5f\x63\x74&quot;, &quot;\x68\x6e&quot;, &quot;&quot;, &quot;\x7a\x31&quot;, &quot;\x70\x69&quot;, &quot;\x68\x74\x73&quot;, &quot;\x6f\x6e\x70\x6f\x69\x6e\x74\x65\x72\x64\x6f\x77\x6e&quot;, &quot;\x6d\x6e\x5f\x6c\x63&quot;, &quot;\x64\x65\x6e&quot;, &quot;\x6d\x6e\x5f\x73\x65\x6e&quot;, &quot;\x4e\x6f\x74\x6f&quot;, &quot;\x5f\x53\x65\x6c\x65\x6e\x69\x75\x6d\x5f\x49\x44\x45\x5f\x52\x65\x63\x6f\x72\x64\x65\x72&quot;, &quot;\x2c\x6d\x6e\x5f\x77\x3a&quot;, &quot;\x5f\x73\x65\x74\x46\x73\x70&quot;, &quot;\x73\x65\x73\x73\x69\x6f\x6e\x5f\x69\x64&quot;, &quot;\x70\x61\x73\x73\x77\x6f\x72\x64&quot;, &quot;\x75\x6e\x64\x65\x66\x69\x6e\x65\x64&quot;, &quot;\x6b\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x68\x6b\x64&quot;, &quot;\x46\x61\x6e\x74\x61\x73\x71\x75\x65\x20\x53\x61\x6e\x73\x20\x4d\x6f\x6e\x6f&quot;, &quot;\x6d\x6e\x5f\x70\x72&quot;, &quot;\x70\x72\x6f\x74\x6f\x74\x79\x70\x65&quot;, &quot;\x75\x61\x72&quot;, &quot;\x62\x61\x74\x3a&quot;, &quot;\x73\x63\x72\x69\x70\x74&quot;, &quot;\x78\x31&quot;, &quot;\x67\x65\x6f\x6c\x6f\x63\x61\x74\x69\x6f\x6e&quot;, &quot;\x63\x64\x63\x5f\x61\x64\x6f\x51\x70\x6f\x61\x73\x6e\x66\x61\x37\x36\x70\x66\x63\x5a\x4c\x6d\x63\x66\x6c\x5f\x50\x72\x6f\x6d\x69\x73\x65&quot;, &quot;\x73\x70\x65\x65\x63\x68\x53\x79\x6e\x74\x68\x65\x73\x69\x73&quot;, &quot;\x67\x65\x74\x42\x61\x74\x74\x65\x72\x79&quot;, &quot;\x63\x65\x5f\x6a\x73\x5f\x70\x6f\x73\x74&quot;, &quot;\x6d\x6e\x5f\x74\x6f\x75\x74&quot;, &quot;\x6d\x6d\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x6d\x6e\x5f\x6d\x63\x5f\x69\x6e\x64\x78&quot;, &quot;\x63\x6c\x69\x65\x6e\x74\x58&quot;, &quot;\x7a&quot;, &quot;\x75\x72\x6c&quot;, &quot;\x5f\x61\x62\x63\x6b&quot;, &quot;\x75\x70\x64\x61\x74\x65\x74&quot;, &quot;\x43\x6f\x6e\x74\x65\x6e\x74\x2d\x74\x79\x70\x65&quot;, &quot;\x64\x6d\x61\x63\x74&quot;, &quot;\x73\x72\x63&quot;, &quot;\x63\x77\x65\x6e\x3a&quot;, &quot;\x70\x72\x6f\x64\x75\x63\x74\x53\x75\x62&quot;, &quot;\x68\x6b\x70&quot;, &quot;\x5f&quot;, &quot;\x6b\x61\x63\x74&quot;, &quot;\x7b\x22\x73\x65\x6e\x73\x6f\x72\x5f\x64\x61\x74\x61\x22\x3a\x22&quot;, &quot;\x73\x64\x5f\x64\x65\x62\x75\x67&quot;, &quot;\x4d\x69\x63\x72\x6f\x73\x6f\x66\x74\x20\x4f\x66\x66\x69\x63\x65\x20\x4c\x69\x76\x65\x20\x50\x6c\x75\x67\x2d\x69\x6e&quot;, &quot;\x61\x6a\x5f\x69\x6e\x64\x78\x5f\x64\x6f\x61\x63\x74&quot;, &quot;\x72\x65\x61\x64\x79\x53\x74\x61\x74\x65&quot;, &quot;\x61\x76\x61\x69\x6c\x48\x65\x69\x67\x68\x74&quot;, &quot;\x61\x63\x63\x65\x6c\x65\x72\x61\x74\x69\x6f\x6e&quot;, &quot;\x68\x74\x74\x70\x3a\x2f\x2f&quot;, &quot;\x70\x65\x5f\x63\x6e\x74&quot;, &quot;\x46\x69\x6c\x65\x52\x65\x61\x64\x65\x72&quot;, &quot;\x6c\x6f\x63&quot;, &quot;\x61\x73\x69\x6e&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x32\x2c&quot;, &quot;\x61\x6a\x5f\x74\x79\x70\x65&quot;, &quot;\x53\x6f\x75\x72\x63\x65\x20\x53\x61\x6e\x73\x20\x50\x72\x6f&quot;, &quot;\x68\x62&quot;, &quot;\x73\x6f\x72\x74&quot;, &quot;\x76\x63&quot;, &quot;\x2c\x73\x37\x3a&quot;, &quot;\x73\x63\x3a&quot;, &quot;\x74\x6f\x45\x6c\x65\x6d\x65\x6e\x74&quot;, &quot;\x63\x6f\x6f\x6b\x69\x65\x45\x6e\x61\x62\x6c\x65\x64&quot;, &quot;\x70\x61\x72\x73\x65&quot;, &quot;\x39\x30\x70\x78&quot;, &quot;\x73\x65\x72\x69\x66&quot;, &quot;\x67\x65\x74\x43\x6f\x6e\x74\x65\x78\x74&quot;, &quot;\x63\x61\x6c\x63\x5f\x66\x70&quot;, &quot;\x57\x69\x64\x65\x76\x69\x6e\x65\x20\x43\x6f\x6e\x74\x65\x6e\x74\x20\x44\x65\x63\x72\x79\x70\x74\x69\x6f\x6e\x20\x4d\x6f\x64\x75\x6c\x65&quot;, &quot;\x7e&quot;, &quot;\x6d\x6e\x5f\x6c\x64&quot;, &quot;\x69\x50\x68\x6f\x6e\x65&quot;, &quot;\x41\x64\x6f\x62\x65\x20\x42\x72\x61\x69\x6c\x6c\x65&quot;, &quot;\x64\x6f\x65\x5f\x76\x65\x6c&quot;, &quot;\x67\x65\x62&quot;, &quot;\x4e\x65\x77\x20\x59\x6f\x72\x6b&quot;, &quot;\x70\x64\x75\x63\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x73\x63\x72\x65\x65\x6e&quot;, &quot;\x2c\x73\x65\x74\x53\x44\x46\x4e\x3a&quot;, &quot;\x4f\x73\x77\x61\x6c\x64&quot;, &quot;\x32\x64&quot;, &quot;\x77\x6c&quot;, &quot;\x69\x73\x63\x3a&quot;, &quot;\x67\x61\x6d\x6d\x61&quot;, &quot;\x72\x65\x67\x69\x73\x74\x65\x72\x50\x72\x6f\x74\x6f\x63\x6f\x6c\x48\x61\x6e\x64\x6c\x65\x72&quot;, &quot;\x77\x72\x63\x3a&quot;, &quot;\x61\x70\x70\x6c\x69\x63\x61\x74\x69\x6f\x6e\x2f\x6a\x73\x6f\x6e&quot;, &quot;\x6d\x6e\x5f\x77\x74&quot;, &quot;\x50\x4c\x55\x47\x49\x4e\x53&quot;, &quot;\x6d\x73\x4d\x61\x6e\x69\x70\x75\x6c\x61\x74\x69\x6f\x6e\x56\x69\x65\x77\x73\x45\x6e\x61\x62\x6c\x65\x64&quot;, &quot;\x73\x64\x66\x6e&quot;, &quot;\x43\x65\x6e\x74\x75\x72\x79\x20\x47\x6f\x74\x68\x69\x63&quot;, &quot;\x70\x61\x72\x61\x6d\x73\x5f\x75\x72\x6c&quot;, &quot;\x67\x65\x74\x5f\x6d\x6e\x5f\x70\x61\x72\x61\x6d\x73\x5f\x66\x72\x6f\x6d\x5f\x61\x62\x63\x6b&quot;, &quot;\x5f\x5f\x70\x68\x61\x6e\x74\x6f\x6d\x61\x73&quot;, &quot;\x6d\x2c\x45\x76\x21\x78\x56\x36\x37\x42\x61\x55\x3e\x20\x65\x68\x32\x6d\x3c\x66\x33\x41\x47\x33\x40&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x32\x37\x2c&quot;, &quot;\x69\x73\x54\x72\x75\x73\x74\x65\x64&quot;, &quot;\x61\x6a\x5f\x73\x73&quot;, &quot;\x53\x68\x72\x65\x65\x20\x44\x65\x76\x61\x6e\x61\x67\x61\x72\x69\x20\x37\x31\x34&quot;, &quot;\x43\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72&quot;, &quot;\x61\x6a\x5f\x69\x6e\x64\x78\x5f\x74\x61\x63\x74&quot;, &quot;\x62\x64\x6d&quot;, &quot;\x41\x64\x6f\x62\x65\x20\x41\x63\x72\x6f\x62\x61\x74&quot;, &quot;\x6f\x6e\x62\x6c\x75\x72&quot;, &quot;\x4f\x53\x4d\x4a\x49\x46&quot;, &quot;\x69\x73\x20\x6e\x6f\x74\x20\x61\x20\x76\x61\x6c\x69\x64\x20\x65\x6e\x75\x6d\x20\x76\x61\x6c\x75\x65\x20\x6f\x66\x20\x74\x79\x70\x65\x20\x50\x65\x72\x6d\x69\x73\x73\x69\x6f\x6e\x4e\x61\x6d\x65&quot;, &quot;\x76\x69\x62\x3a&quot;, &quot;\x53\x69\x6c\x76\x65\x72\x6c\x69\x67\x68\x74\x20\x50\x6c\x75\x67\x2d\x49\x6e&quot;, &quot;\x5f\x5f\x77\x65\x62\x64\x72\x69\x76\x65\x72\x46\x75\x6e\x63\x67\x65\x62&quot;, &quot;\x3c\x2f\x73\x65\x74\x53\x44\x46\x4e\x3e&quot;, &quot;\x73\x70\x61\x77\x6e&quot;, &quot;\x70\x64&quot;, &quot;\x63\x6c\x69\x65\x6e\x74\x48\x65\x69\x67\x68\x74&quot;, &quot;\x77\x65\x68&quot;, &quot;\x45\x64\x67\x65\x20\x50\x44\x46\x20\x56\x69\x65\x77\x65\x72&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x32\x34\x2c&quot;, &quot;\x43\x6f\x75\x72\x69\x65\x72&quot;, &quot;\x6d\x6e\x5f\x69\x6c&quot;, &quot;\x64\x6d\x65\x5f\x76\x65\x6c&quot;, &quot;\x4a\x61\x76\x61\x20\x41\x70\x70\x6c\x65\x74\x20\x50\x6c\x75\x67\x2d\x69\x6e&quot;, &quot;\x63\x68\x6b\x6e\x75\x6c\x6c&quot;, &quot;\x22&quot;, &quot;\x6f\x39&quot;, &quot;\x66\x6f\x72\x45\x61\x63\x68&quot;, &quot;\x5f\x5f\x66\x78\x64\x72\x69\x76\x65\x72\x5f\x75\x6e\x77\x72\x61\x70\x70\x65\x64&quot;, &quot;\x72\x65\x70\x6c\x61\x63\x65&quot;, &quot;\x74\x5f\x65\x6e&quot;, &quot;\x4d\x53\x49\x45&quot;, &quot;\x72\x6f\x75\x6e\x64&quot;, &quot;\x6b\x65\x79\x75\x70&quot;, &quot;\x6e\x6f\x74\x69\x66\x69\x63\x61\x74\x69\x6f\x6e\x73&quot;, &quot;\x6e\x61\x76\x5f\x70\x65\x72\x6d&quot;, &quot;\x73\x65\x72\x76\x69\x63\x65\x57\x6f\x72\x6b\x65\x72&quot;, &quot;\x2f\x5f\x62\x6d\x2f\x5f\x64\x61\x74\x61&quot;, &quot;\x6c\x6f\x63\x61\x74\x69\x6f\x6e&quot;, &quot;\x2c\x30&quot;, &quot;\x73\x73\x68&quot;, &quot;\x67\x65\x74\x56\x6f\x69\x63\x65\x73&quot;, &quot;\x63\x6c\x69\x65\x6e\x74\x59&quot;, &quot;\x6d\x6e\x5f\x73&quot;, &quot;\x63\x61\x6d\x65\x72\x61&quot;, &quot;\x43\x65\x6e\x74\x75\x72\x79&quot;, &quot;\x65\x6e\x52\x65\x61\x64\x44\x6f\x63\x55\x72\x6c&quot;, &quot;\x6f\x6e\x63\x6c\x69\x63\x6b&quot;, &quot;\x50\x61\x70\x79\x72\x75\x73&quot;, &quot;\x61\x6d\x62\x69\x65\x6e\x74\x2d\x6c\x69\x67\x68\x74\x2d\x73\x65\x6e\x73\x6f\x72&quot;, &quot;\x72\x73\x74&quot;, &quot;\x3b\x20&quot;, &quot;\x6e\x75\x6d\x62\x65\x72&quot;, &quot;\x63\x6e\x73&quot;, &quot;\x3c\x62\x70\x64\x3e&quot;, &quot;\x63\x74\x61&quot;, &quot;\x61\x74\x74\x61\x63\x68\x45\x76\x65\x6e\x74&quot;, &quot;\x5f\x5f\x77\x65\x62\x64\x72\x69\x76\x65\x72\x5f\x65\x76\x61\x6c\x75\x61\x74\x65&quot;, &quot;\x75\x6e\x6b&quot;, &quot;\x68\x74\x74\x70\x73\x3a&quot;, &quot;\x57\x65\x62\x4b\x69\x74\x2d\x69\x6e\x74\x65\x67\x72\x69\x65\x72\x74\x65\x20\x50\x44\x46&quot;, &quot;\x6f\x6e\x6b\x65\x79\x64\x6f\x77\x6e&quot;, &quot;\x6d\x69\x64\x69&quot;, &quot;\x6d\x6f\x7a\x50\x68\x6f\x6e\x65\x4e\x75\x6d\x62\x65\x72\x53\x65\x72\x76\x69\x63\x65&quot;, &quot;\x6d\x6e\x5f\x75\x70\x64\x61\x74\x65\x5f\x63\x68\x61\x6c\x6c\x65\x6e\x67\x65\x5f\x64\x65\x74\x61\x69\x6c\x73&quot;, &quot;\x66\x75\x6e\x63\x74\x69\x6f\x6e&quot;, &quot;\x66\x6d&quot;, &quot;\x67\x65\x74\x45\x78\x74\x65\x6e\x73\x69\x6f\x6e&quot;, &quot;\x6d\x6f\x7a\x43\x6f\x6e\x6e\x65\x63\x74\x69\x6f\x6e&quot;, &quot;\x61\x72\x63&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x30\x33\x2c&quot;, &quot;\x41\x64\x6f\x62\x65\x41\x41\x4d\x44\x65\x74\x65\x63\x74&quot;, &quot;\x42\x69\x72\x63\x68\x20\x53\x74\x64&quot;, &quot;\x42\x6f\x64\x6f\x6e\x69\x20\x37\x32&quot;, &quot;\x73\x68\x69\x66\x74&quot;, &quot;\x6d\x65\x74\x61\x4b\x65\x79&quot;, &quot;\x76\x65\x72&quot;, &quot;\x43\x61\x6e\x74\x61\x72\x65\x6c\x6c&quot;, &quot;\x6d\x6f\x75\x73\x65\x6d\x6f\x76\x65&quot;, &quot;\x74\x65\x5f\x63\x6e\x74&quot;, &quot;\x74\x65\x5f\x76\x65\x6c&quot;, &quot;\x64\x65\x76\x69\x63\x65\x6d\x6f\x74\x69\x6f\x6e&quot;, &quot;\x55\x4e\x4d\x41\x53\x4b\x45\x44\x5f\x52\x45\x4e\x44\x45\x52\x45\x52\x5f\x57\x45\x42\x47\x4c&quot;, &quot;\x63\x70\x61&quot;, &quot;\x70\x72\x6f\x64\x75\x63\x74&quot;, &quot;\x5f\x5f\x64\x72\x69\x76\x65\x72\x5f\x75\x6e\x77\x72\x61\x70\x70\x65\x64&quot;, &quot;\x6d\x6e\x5f\x6c\x67&quot;, &quot;\x6d\x6f\x7a\x52\x54\x43\x50\x65\x65\x72\x43\x6f\x6e\x6e\x65\x63\x74\x69\x6f\x6e&quot;, &quot;\x4d\x6f\x6e\x6f\x73\x70\x61\x63\x65&quot;, &quot;\x6a\x61\x76\x61\x45\x6e\x61\x62\x6c\x65\x64&quot;, &quot;\x43\x61\x6e\x64\x61\x72\x61&quot;, &quot;\x66\x69\x6c\x6c\x53\x74\x79\x6c\x65&quot;, &quot;\x6c\x6f\x63\x61\x6c\x53\x74\x6f\x72\x61\x67\x65&quot;, &quot;\x64\x32&quot;, &quot;\x6d\x6e\x5f\x74\x73&quot;, &quot;\x66\x6d\x7a&quot;, &quot;\x6d\x6e\x5f\x61\x6c&quot;, &quot;\x64\x65\x76\x69\x63\x65\x6f\x72\x69\x65\x6e\x74\x61\x74\x69\x6f\x6e&quot;, &quot;\x50\x61\x6c\x61\x74\x69\x6e\x6f\x2d\x42\x6f\x6c\x64&quot;, &quot;\x52\x65\x61\x6c\x50\x6c\x61\x79\x65\x72\x20\x56\x65\x72\x73\x69\x6f\x6e\x20\x50\x6c\x75\x67\x69\x6e&quot;, &quot;\x70\x61\x72\x73\x65\x5f\x67\x70&quot;, &quot;\x77\x65\x62\x6b\x69\x74\x52\x54\x43\x50\x65\x65\x72\x43\x6f\x6e\x6e\x65\x63\x74\x69\x6f\x6e&quot;, &quot;\x73\x65\x6c\x65\x6e\x69\x75\x6d&quot;, &quot;\x68\x61\x72\x64\x77\x61\x72\x65\x43\x6f\x6e\x63\x75\x72\x72\x65\x6e\x63\x79&quot;, &quot;\x4d\x6f\x7a\x69\x6c\x6c\x61\x20\x44\x65\x66\x61\x75\x6c\x74\x20\x50\x6c\x75\x67\x2d\x69\x6e&quot;, &quot;\x48\x54\x4d\x4c\x45\x6c\x65\x6d\x65\x6e\x74&quot;, &quot;\x6e&quot;, &quot;\x50\x61\x6c\x61\x74\x69\x6e\x6f&quot;, &quot;\x6a\x73\x5f\x70\x6f\x73\x74&quot;, &quot;\x66\x69\x64\x63\x6e\x74&quot;, &quot;\x6d\x65\x5f\x63\x6e\x74&quot;, &quot;\x77\x68\x69\x63\x68&quot;, &quot;\x61\x63\x6f\x73&quot;, &quot;\x6d\x6f\x75\x73\x65\x64\x6f\x77\x6e&quot;, &quot;\x67\x65\x74\x53\x74\x61\x74\x65\x46\x69\x65\x6c\x64&quot;, &quot;\x49\x54\x43\x20\x42\x6f\x64\x6f\x6e\x69\x20\x37\x32\x20\x42\x6f\x6c\x64&quot;, &quot;\x6f\x6e\x6d\x6f\x75\x73\x65\x6d\x6f\x76\x65&quot;, &quot;\x77\x65\x62\x73\x74\x6f\x72\x65&quot;, &quot;\x6f\x6e\x6d\x6f\x75\x73\x65\x75\x70&quot;, &quot;\x55\x4e\x4d\x41\x53\x4b\x45\x44\x5f\x56\x45\x4e\x44\x4f\x52\x5f\x57\x45\x42\x47\x4c&quot;, &quot;\x68\x66&quot;, &quot;\x5f\x5f\x6c\x61\x73\x74\x57\x61\x74\x69\x72\x50\x72\x6f\x6d\x70\x74&quot;, &quot;\x70\x72\x6f\x6d\x70\x74&quot;, &quot;\x6d\x61\x70&quot;, &quot;\x65\x6d\x61\x69\x6c&quot;, &quot;\x72\x75\x6e\x46\x6f\x6e\x74\x73&quot;, &quot;\x69\x6e\x6e\x65\x72\x57\x69\x64\x74\x68&quot;, &quot;\x72\x65\x71\x75\x65\x73\x74\x57\x61\x6b\x65\x4c\x6f\x63\x6b&quot;, &quot;\x36\x70\x74\x20\x41\x72\x69\x61\x6c&quot;, &quot;\x43\x61\x6c\x69\x62\x72\x69&quot;, &quot;\x61\x6a\x5f\x6c\x6d\x74\x5f\x64\x6d\x61\x63\x74&quot;, &quot;\x63\x61\x6c\x6c\x65\x64\x53\x65\x6c\x65\x6e\x69\x75\x6d&quot;, &quot;\x6e\x6f\x6e\x65&quot;, &quot;\x6d\x6e\x5f\x72\x74&quot;, &quot;\x6d\x6f\x75\x73\x65&quot;, &quot;\x66\x61\x73&quot;, &quot;\x3c\x40\x6e\x76\x34\x35\x2e\x20\x46\x31\x6e\x36\x33\x72\x2c\x50\x72\x31\x6e\x37\x31\x6e\x36\x21&quot;, &quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f&quot;, &quot;\x77\x76&quot;, &quot;\x72\x56\x61\x6c&quot;, &quot;\x6f\x66\x66\x73\x65\x74\x48\x65\x69\x67\x68\x74&quot;, &quot;\x69\x6e\x6e\x65\x72\x48\x54\x4d\x4c&quot;, &quot;\x64\x33&quot;, &quot;\x41\x76\x65\x6e\x69\x72\x20\x4e\x65\x78\x74&quot;, &quot;\x44\x61\x6d\x61\x73\x63\x75\x73&quot;, &quot;\x61\x6a\x5f\x69\x6e\x64\x78\x5f\x64\x6d\x61\x63\x74&quot;, &quot;\x70\x73\x75\x62&quot;, &quot;\x70\x6d\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x62\x63&quot;, &quot;\x54\x49\x2d\x4e\x73\x70\x69\x72\x65&quot;, &quot;\x61\x6a\x5f\x6c\x6d\x74\x5f\x64\x6f\x61\x63\x74&quot;, &quot;\x3b&quot;, &quot;\x53\x68\x6f\x63\x6b\x77\x61\x76\x65\x20\x66\x6f\x72\x20\x44\x69\x72\x65\x63\x74\x6f\x72&quot;, &quot;\x61\x74\x61\x6e\x68&quot;, &quot;\x70\x72\x65\x76\x66\x69\x64&quot;, &quot;\x55\x62\x75\x6e\x74\x75\x20\x4d\x65\x64\x69\x75\x6d&quot;, &quot;\x63\x63&quot;, &quot;\x68\x74\x65&quot;, &quot;\x65\x6e\x41\x64\x64\x48\x69\x64\x64\x65\x6e&quot;, &quot;\x77\x65\x62\x6b\x69\x74\x54\x65\x6d\x70\x6f\x72\x61\x72\x79\x53\x74\x6f\x72\x61\x67\x65&quot;, &quot;\x67\x62\x72\x76&quot;, &quot;\x76\x61\x6c\x75\x65&quot;, &quot;\x70\x6f\x69\x6e\x74\x65\x72\x75\x70&quot;, &quot;\x63\x61\x6c\x6c\x65\x64\x50\x68\x61\x6e\x74\x6f\x6d&quot;, &quot;\x63\x68\x72\x6f\x6d\x65&quot;, &quot;\x68\x65\x69\x67\x68\x74&quot;, &quot;\x63\x61\x6c\x6c&quot;, &quot;\x6f\x70\x63\x3a&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x32\x33\x2c&quot;, &quot;\x51\x75\x69\x63\x6b\x73\x61\x6e\x64&quot;, &quot;\x68\x61\x73\x4c\x6f\x63\x61\x6c\x53\x74\x6f\x72\x61\x67\x65&quot;, &quot;\x74\x6d\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x43\x6f\x6d\x69\x63\x20\x4e\x65\x75\x65&quot;, &quot;\x5f\x5f\x73\x65\x6c\x65\x6e\x69\x75\x6d\x5f\x75\x6e\x77\x72\x61\x70\x70\x65\x64&quot;, &quot;\x73\x74\x61\x63\x6b&quot;, &quot;\x63\x66\x5f\x75\x72\x6c&quot;, &quot;\x3c\x73\x65\x74\x53\x44\x46\x4e\x3e&quot;, &quot;\x61\x62&quot;, &quot;\x62\x6d&quot;, &quot;\x5f\x5f\x77\x65\x62\x64\x72\x69\x76\x65\x72\x5f\x5f\x63\x68\x72&quot;, &quot;\x64\x6d\x65\x5f\x63\x6e\x74&quot;, &quot;\x74\x61\x63\x74&quot;, &quot;\x63\x74\x72\x6c\x4b\x65\x79&quot;, &quot;\x61\x74\x73&quot;, &quot;\x47\x6f\x6f\x67\x6c\x65\x20\x54\x61\x6c\x6b\x20\x50\x6c\x75\x67\x69\x6e\x20\x56\x69\x64\x65\x6f\x20\x52\x65\x6e\x64\x65\x72\x65\x72&quot;, &quot;\x78\x31\x32\x3a&quot;, &quot;\x63\x61\x6c\x6c\x50\x68\x61\x6e\x74\x6f\x6d&quot;, &quot;\x53\x65\x72\x69\x66&quot;, &quot;\x69\x50\x68\x6f\x74\x6f\x50\x68\x6f\x74\x6f\x63\x61\x73\x74&quot;, &quot;\x74\x65\x6c&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x30\x30\x2c&quot;, &quot;\x44\x72\x6f\x69\x64\x20\x53\x65\x72\x69\x66&quot;, &quot;\x66\x6d\x67\x65\x74\x5f\x74\x61\x72\x67\x65\x74\x73&quot;, &quot;\x61\x75\x74\x6f\x63\x6f\x6d\x70\x6c\x65\x74\x65&quot;, &quot;\x77\x61\x74\x69\x6e\x45\x78\x70\x72\x65\x73\x73\x69\x6f\x6e\x45\x72\x72\x6f\x72&quot;, &quot;\x64\x69\x73\x70\x6c\x61\x79&quot;, &quot;\x69\x6e\x73&quot;, &quot;\x48\x65\x6c\x76\x65\x74\x69\x63\x61\x20\x4e\x65\x75\x65&quot;, &quot;\x74\x6f\x53\x74\x72\x69\x6e\x67&quot;, &quot;\x70\x61\x67\x65\x59&quot;, &quot;\x70\x72\x6f\x64&quot;, &quot;\x64\x6d\x3a&quot;, &quot;\x6f\x6e\x6c\x6f\x61\x64&quot;, &quot;\x64\x6f\x63\x75\x6d\x65\x6e\x74\x4d\x6f\x64\x65&quot;, &quot;\x78\x31\x31\x3a&quot;, &quot;\x70\x6d\x65\x5f\x63\x6e\x74&quot;, &quot;\x52\x54\x43\x50\x65\x65\x72\x43\x6f\x6e\x6e\x65\x63\x74\x69\x6f\x6e&quot;, &quot;\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x42\x79\x49\x64&quot;, &quot;\x62\x72\x76&quot;, &quot;\x73\x70\x79\x6e\x6e\x65\x72\x5f\x61\x64\x64\x69\x74\x69\x6f\x6e\x61\x6c\x5f\x6a\x73\x5f\x6c\x6f\x61\x64\x65\x64&quot;, &quot;\x7d&quot;, &quot;\x6e\x61\x6d\x65&quot;, &quot;\x68\x61\x73\x53\x65\x73\x73\x69\x6f\x6e\x53\x74\x6f\x72\x61\x67\x65&quot;, &quot;\x62\x65\x74\x61&quot;, &quot;\x70\x73\x74\x61\x74\x65&quot;, &quot;\x65\x78\x70&quot;, &quot;\x58\x44\x6f\x6d\x61\x69\x6e\x52\x65\x71\x75\x65\x73\x74&quot;, &quot;\x69\x6e\x64\x65\x78\x65\x64\x44\x42&quot;, &quot;\x61\x63\x74\x69\x76\x65\x45\x6c\x65\x6d\x65\x6e\x74&quot;, &quot;\x55\x6e\x69\x74\x79\x20\x50\x6c\x61\x79\x65\x72&quot;, &quot;\x53\x68\x6f\x63\x6b\x77\x61\x76\x65\x20\x46\x6c\x61\x73\x68&quot;, &quot;\x63\x75\x72\x72\x65\x6e\x74\x53\x63\x72\x69\x70\x74&quot;, &quot;\x43\x61\x6d\x62\x72\x69\x61&quot;, &quot;\x6d\x65\x5f\x76\x65\x6c&quot;, &quot;\x66\x70\x56\x61\x6c\x43\x61\x6c\x63\x75\x6c\x61\x74\x65\x64&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x37\x2c&quot;, &quot;\x62\x72\x61\x76\x65&quot;, &quot;\x65\x6e\x63\x6f\x64\x65\x5f\x75\x74\x66\x38&quot;, &quot;\x73\x65\x6e\x73\x6f\x72\x5f\x64\x61\x74\x61&quot;, &quot;\x73\x74\x61\x74\x65&quot;, &quot;\x51\x75\x69\x63\x6b\x54\x69\x6d\x65\x20\x50\x6c\x75\x67\x2d\x69\x6e&quot;, &quot;\x64\x63\x73&quot;, &quot;\x6e\x70&quot;, &quot;\x70\x69\x78\x65\x6c\x44\x65\x70\x74\x68&quot;, &quot;\x62&quot;, &quot;\x64\x6f\x5f\x65\x6e&quot;, &quot;\x70\x6c\x65\x6e&quot;, &quot;\x75\x73\x65\x72\x41\x67\x65\x6e\x74&quot;, &quot;\x6f\x70\x65\x6e&quot;, &quot;\x6f\x75\x74\x65\x72\x57\x69\x64\x74\x68&quot;, &quot;\x61\x6c\x74\x46\x6f\x6e\x74\x73&quot;, &quot;\x63\x68\x69\x6c\x64\x4e\x6f\x64\x65\x73&quot;, &quot;\x64\x6d\x5f\x65\x6e&quot;, &quot;\x50\x6f\x69\x6e\x74\x65\x72\x45\x76\x65\x6e\x74&quot;, &quot;\x67\x65\x74\x46\x6c\x6f\x61\x74\x56\x61\x6c&quot;, &quot;\x55\x62\x75\x6e\x74\x75\x20\x52\x65\x67\x75\x6c\x61\x72&quot;, &quot;\x42\x65\x6c\x6c\x20\x4d\x54&quot;, &quot;\x63\x6f\x6f\x6b\x69\x65\x5f\x63\x68\x6b\x5f\x72\x65\x61\x64&quot;, &quot;\x68\x62\x43\x61\x6c\x63&quot;, &quot;\x73\x74\x72\x69\x6e\x67&quot;, &quot;\x47\x69\x6c\x6c\x20\x53\x61\x6e\x73\x20\x4d\x54&quot;, &quot;\x74\x73\x74&quot;, &quot;\x64\x65\x76\x69\x63\x65\x2d\x69\x6e\x66\x6f&quot;, &quot;\x6d\x6e\x5f\x6c\x63\x6c&quot;, &quot;\x61\x70\x70\x65\x6e\x64\x43\x68\x69\x6c\x64&quot;, &quot;\x66\x6c\x6f\x6f\x72&quot;, &quot;\x74\x79\x70\x65&quot;, &quot;\x63\x62\x72\x74&quot;, &quot;\x54\x69\x6d\x65\x73&quot;, &quot;\x52\x65\x61\x6c\x50\x6c\x61\x79\x65\x72\x28\x74\x6d\x29\x20\x47\x32\x20\x4c\x69\x76\x65\x43\x6f\x6e\x6e\x65\x63\x74\x2d\x45\x6e\x61\x62\x6c\x65\x64\x20\x50\x6c\x75\x67\x2d\x49\x6e\x20\x28\x33\x32\x2d\x62\x69\x74\x29&quot;, &quot;\x6d\x6d\x6d\x6d\x6d\x6d\x6d\x6d\x6c\x6c\x69&quot;, &quot;\x79&quot;, &quot;\x5f\x5f\x77\x65\x62\x64\x72\x69\x76\x65\x72\x5f\x73\x63\x72\x69\x70\x74\x5f\x66\x6e&quot;, &quot;\x63\x61\x63\x68\x65&quot;, &quot;\x62\x6d\x2d\x74\x65\x6c\x65\x6d\x65\x74\x72\x79&quot;, &quot;\x6d\x6f\x75\x73\x65\x75\x70&quot;, &quot;\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x73\x42\x79\x4e\x61\x6d\x65&quot;, &quot;\x59\x6f\x75\x54\x75\x62\x65\x20\x50\x6c\x75\x67\x2d\x69\x6e&quot;, &quot;\x67\x65\x74\x54\x69\x6d\x65\x7a\x6f\x6e\x65\x4f\x66\x66\x73\x65\x74&quot;, &quot;\x64\x72\x69\x76\x65\x72&quot;, &quot;\x6d\x6f\x7a\x76\x69\x73\x69\x62\x69\x6c\x69\x74\x79\x63\x68\x61\x6e\x67\x65&quot;, &quot;\x6f\x6e\x70\x6f\x69\x6e\x74\x65\x72\x75\x70&quot;, &quot;\x5f\x5f\x73\x65\x6c\x65\x6e\x69\x75\x6d\x5f\x65\x76\x61\x6c\x75\x61\x74\x65&quot;, &quot;\x2c\x75\x61\x65\x6e\x64\x2c&quot;, &quot;\x69\x73\x42\x72\x61\x76\x65&quot;, &quot;\x3c\x69\x6e\x69\x74\x2f\x3e&quot;, &quot;\x76\x6f\x69\x63\x65\x55\x52\x49&quot;, &quot;\x3d&quot;, &quot;\x2f&quot;, &quot;\x66\x73\x70&quot;, &quot;\x6b\x65\x79\x70\x72\x65\x73\x73&quot;, &quot;\x70\x65\x72\x6d\x69\x73\x73\x69\x6f\x6e\x73&quot;, &quot;\x67\x65\x74\x6d\x72&quot;, &quot;\x67\x65\x74\x64\x75\x72\x6c&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x30\x32\x2c&quot;, &quot;\x61\x70\x70\x4d\x69\x6e\x6f\x72\x56\x65\x72\x73\x69\x6f\x6e&quot;, &quot;\x77\x65\x62\x6b\x69\x74\x48\x69\x64\x64\x65\x6e&quot;, &quot;\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74&quot;, &quot;\x6d\x6e\x5f\x70\x73\x6e&quot;, &quot;\x74\x64\x75\x63\x65\x5f\x63\x6e\x74&quot;, &quot;\x63\x68\x61\x72\x43\x6f\x64\x65&quot;, &quot;\x64\x6f\x61\x64\x6d\x61\x5f\x65\x6e&quot;, &quot;\x6d\x6f\x6e\x6f\x73\x70\x61\x63\x65&quot;, &quot;\x6d\x6e\x5f\x69\x6e\x69\x74&quot;, &quot;\x64\x65\x66\x61\x75\x6c\x74&quot;, &quot;\x61\x65\x69\x6f\x75\x79\x31\x33\x35\x37\x39&quot;, &quot;\x62\x69\x6e\x64&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x34\x2c&quot;, &quot;\x77\x65\x6e&quot;, &quot;\x74\x65\x78\x74&quot;, &quot;\x22\x2c\x22\x73\x65\x6e\x73\x6f\x72\x5f\x64\x61\x74\x61\x22\x20\x3a\x20\x22&quot;, &quot;\x65\x76\x65\x6e\x74&quot;, &quot;\x61\x70\x70\x56\x65\x72\x73\x69\x6f\x6e&quot;, &quot;\x78&quot;, &quot;\x41\x64\x6f\x62\x65\x20\x48\x65\x62\x72\x65\x77&quot;, &quot;\x2d\x31\x2c\x32\x2c\x2d\x39\x34\x2c\x2d\x31\x31\x35\x2c&quot;, &quot;\x6f\x6e\x6d\x6f\x75\x73\x65\x64\x6f\x77\x6e&quot;, &quot;\x64\x6f\x65\x5f\x63\x6e\x74\x5f\x6c\x6d\x74&quot;, &quot;\x5f\x5f\x6e\x69\x67\x68\x74\x6d\x61\x72\x65&quot;, &quot;\x6c\x65\x6e\x67\x74\x68&quot;, &quot;\x74\x6f\x75\x63\x68\x6d\x6f\x76\x65&quot;, &quot;\x4d\x69\x63\x72\x6f\x73\x6f\x66\x74\x2e\x58\x4d\x4c\x48\x54\x54\x50&quot;, &quot;\x7c\x7c&quot;, &quot;\x47\x6f\x6f\x67\x6c\x65\x20\x45\x61\x72\x74\x68\x20\x50\x6c\x75\x67\x2d\x69\x6e&quot;, &quot;\x4d\x69\x6e\x69\x6f\x6e\x20\x50\x72\x6f&quot;, &quot;\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65&quot;, &quot;\x66\x63\x3a&quot;, &quot;\x67\x65\x74\x53\x75\x70\x70\x6f\x72\x74\x65\x64\x45\x78\x74\x65\x6e\x73\x69\x6f\x6e\x73&quot;, &quot;\x62\x6c\x75\x65\x74\x6f\x6f\x74\x68&quot;, &quot;\x6b\x65\x5f\x63\x6e\x74&quot;, &quot;\x3c\x2f\x62\x70\x64\x3e&quot;];
+
+    function decode() {
+        var element = document.getElementById(&#39;code&#39;);
+        console.log(_0xf488.length);
+        for (var key in _0xf488) {
+            element.value += _0xf488[key] + &quot;\n&quot;;
+        }
+    }
+&lt;/script&gt;
+&lt;textarea id=&quot;code&quot; cols=&quot;80&quot; rows=&quot;20&quot;&gt;&lt;/textarea&gt;
+&lt;input type=&quot;button&quot; onclick=&quot;decode()&quot; value=&quot;解码&quot;&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+<p>源码解析后：</p>
+<div class="highlight"><pre><span></span><code>// var document = {&#39;location&#39;: {&#39;href&#39;: &#39;about:blank&#39;, &#39;origin&#39;: &#39;null&#39;, &#39;protocol&#39;: &#39;about:&#39;, &#39;host&#39;: &#39;&#39;, &#39;hostname&#39;: &#39;&#39;, &#39;port&#39;: &#39;&#39;, &#39;pathname&#39;: &#39;blank&#39;, &#39;search&#39;: &#39;&#39;, &#39;hash&#39;: &#39;&#39;}};
+
+var _ac =[&#39;clientX&#39;, &#39;==&#39;, &#39;keyCode&#39;, &#39;onclick&#39;, &#39;-1,2,-94,-115,&#39;, &#39;input&#39;, &#39;pme_cnt_lmt&#39;, &#39;appMinorVersion&#39;, &#39;imul&#39;, &#39;kact&#39;, &#39;mme_cnt&#39;, &#39;pd&#39;, &#39;indexedDbKey&#39;, &#39;mediaDevices&#39;, &#39;plugins&#39;, &#39;aj_indx&#39;, &#39;dme_cnt_lmt&#39;, &#39;Open Sans&#39;, &#39;number&#39;, &#39;get_browser&#39;, &#39;Windows Media Player Plug-in Dynamic Link Library&#39;, &#39;t_tst&#39;, &#39;Monaco&#39;, &#39;PointerEvent&#39;, &#39;click&#39;, &#39;sd_debug&#39;, &#39;-1,2,-94,-106,&#39;, &#39;clientY&#39;, &#39;informinfo&#39;, &#39;cbrt&#39;, &#39;getContext&#39;, &#39;sendBeacon&#39;, &#39;ceil&#39;, &#39;,c-&#39;, &#39;encode_utf8&#39;, &#39;vc&#39;, &#39;/&#39;, &#39;fonts_optm&#39;, &#39;chknull&#39;, &#39;screen&#39;, &#39;-1,2,-94,-117,&#39;, &#39;,s3:&#39;, &#39;$cdc_asdjflasutopfhvcZLmcfl_&#39;, &#39;type&#39;, &#39;removeChild&#39;, &#39;Courier New&#39;, &#39;-1,2,-94,-103,&#39;, &#39;d2&#39;, &#39;domAutomation&#39;, &#39;getFloatVal&#39;, &#39;AdobeAAMDetect&#39;, &#39;iPhotoPhotocast&#39;, &#39;aj_indx_tact&#39;, &#39;strokeStyle&#39;, &#39;-1,2,-94,-112,&#39;, &#39;&quot;&#39;, &#39;sf4&#39;, &#39;storeWebWideTrackingException&#39;, &#39;Constructor&#39;, &#39;mr&#39;, &#39;Papyrus&#39;, &#39;ins&#39;, &#39;16pt Arial&#39;, &#39;Bell MT&#39;, &#39;sqrt&#39;, &#39;shift&#39;, &#39;get_cookie&#39;, &#39;Lobster&#39;, &#39;appVersion&#39;, &#39;userAgent&#39;, &#39;webrtcKey&#39;, &#39;indexedDB&#39;, &#39;,s6:&#39;, &#39;Apple Gothic&#39;, &#39;XMLHttpRequest&#39;, &#39;rCFP&#39;, &#39;gb&#39;, &#39;string&#39;, &#39;offsetWidth&#39;, &#39;rgb(102, 204, 0)&#39;, &#39;z1&#39;, &#39;onfocus&#39;, &#39;pe_cnt&#39;, &#39;pointerdown&#39;, &#39;fillText&#39;, &#39;keypress&#39;, &#39;Minion Pro&#39;, &#39;toElement&#39;, &#39;api_public_key&#39;, &#39;gf&#39;, &#39;target&#39;, &#39;webstore&#39;, &#39;Authorization&#39;, &#39;mousedown&#39;, &#39;Oswald&#39;, &#39;Google Earth Plug-in&#39;, &#39;hardwareConcurrency&#39;, &#39;hku&#39;, &#39;cookie_chk_read&#39;, &#39;xagg&#39;, &#39;doact&#39;, &#39;home.html&#39;, &#39;replace&#39;, &#39;x12:&#39;, &#39;email&#39;, &#39;ff&#39;, &#39;Fantasque Sans Mono&#39;, &#39;cookieEnabled&#39;, &#39;-1,2,-94,-70,&#39;, &#39;mouse&#39;, &#39;a&#39;, &#39;id&#39;, &#39;localStorage&#39;, &#39;mn_r&#39;, &#39;availHeight&#39;, &#39;,loc:&#39;, &#39;doe_cnt&#39;, &#39;onkeypress&#39;, &#39;apicall_bm&#39;, &#39;outerWidth&#39;, &#39;3&#39;, &#39;onmouseup&#39;, &#39;setRequestHeader&#39;, &#39;rVal&#39;, &#39;metaKey&#39;, &#39;onblur&#39;, &#39;webkitHidden&#39;, &#39;hvc&#39;, &#39;pi&#39;, &#39;onLine&#39;, &#39;getmr&#39;, &#39;onkeyup&#39;, &#39;cssText&#39;, &#39;charCode&#39;, &#39;mn_tcl&#39;, &#39;fpVal&#39;, &#39;div&#39;, &#39;bat:&#39;, &#39;Noto&#39;, &#39;\\&quot;&#39;, &#39;z&#39;, &#39;pow&#39;, &#39;aj_lmt_dmact&#39;, &#39;doadma_en&#39;, &#39;default&#39;, &#39;parse&#39;, &#39;-&#39;, &#39;set_cookie&#39;, &#39;updatet&#39;, &#39;Microsoft.XMLHTTP&#39;, &#39;; &#39;, &#39;stroke&#39;, &#39;wen&#39;, &#39;cpa&#39;, &#39;loc&#39;, &#39;getBattery&#39;, &#39;getElementsByTagName&#39;, &#39;Droid Serif&#39;, &#39;init_time&#39;, &#39;hts&#39;, &#39;ce_js_post&#39;, &#39;bdm&#39;, &#39;doe_cnt_lmt&#39;, &#39;Century Gothic&#39;, &#39;bd&#39;, &#39;substring&#39;, &#39;tst&#39;, &#39;-1,2,-94,-123,&#39;, &#39;mn_stout&#39;, &#39;ArialHebrew-Light&#39;, &#39;height&#39;, &#39;ke_cnt&#39;, &#39;get_stop_signals&#39;, &#39;SharePoint Browser Plug-in&#39;, &#39;withCredentials&#39;, &#39;Comic Neue&#39;, &#39;apply&#39;, &#39;startdoadma&#39;, &#39;serviceWorker&#39;, &#39;mn_abck&#39;, &#39;uar&#39;, &#39;lastIndexOf&#39;, &#39;hc&#39;, &#39;,&#39;, &#39;unk&#39;, &#39;webkitGetGamepads&#39;, &#39;onpointerup&#39;, &#39;doe_vel&#39;, &#39;encode&#39;, &#39;tel&#39;, &#39;PI&#39;, &#39;sans-serif&#39;, &#39;aj_type&#39;, &#39;-1,2,-94,-101,&#39;, &#39;opera&#39;, &#39;default_session&#39;, &#39;credentials&#39;, &#39;check_stop_protocol&#39;, &#39;plen&#39;, &#39;sessionStorage&#39;, &#39;XPathResult&#39;, &#39;XDomainRequest&#39;, &#39;0&#39;, &#39;:&#39;, &#39;slice&#39;, &#39;isTrusted&#39;, &#39;Buffer&#39;, &#39;mme_cnt_lmt&#39;, &#39;asin&#39;, &#39;Chrome Remote Desktop Viewer&#39;, &#39;te_vel&#39;, &#39;pixelDepth&#39;, &#39;mn_poll&#39;, &#39;,a-&#39;, &#39;Google Talk Plugin Video Renderer&#39;, &#39;aj_lmt_tact&#39;, &#39;cma&#39;, &#39;webkitTemporaryStorage&#39;, &#39;=&#39;, &#39;getdurl&#39;, &#39;mn_il&#39;, &#39;button&#39;, &#39;&lt;cfsubmit/&gt;&#39;, &#39;,setSDFN:&#39;, &#39;call&#39;, &#39;deviceorientation&#39;, &#39;fsp&#39;, &#39;sdfn&#39;, &#39;Futura&#39;, &#39;Palatino&#39;, &#39;hpu&#39;, &#39;&quot;,&quot;sensor_data&quot; : &quot;&#39;, &#39;-1,2,-94,-100,&#39;, &#39;-1,2,-94,-110,&#39;, &#39;-1,2,-94,-121,&#39;, &#39;-1,2,-94,-118,&#39;, &#39;non:&#39;, &#39;mozRTCPeerConnection&#39;, &#39;cs&#39;, &#39;mn_w&#39;, &#39;storage&#39;, &#39;https:&#39;, &#39;-1,2,-94,-116,&#39;, &#39;getGamepads&#39;, &#39;beta&#39;, &#39;pme_cnt&#39;, &#39;-1,2,-94,-109,&#39;, &#39;now&#39;, &#39;Apple LiGothic&#39;, &#39;innerHTML&#39;, &#39;enAddHidden&#39;, &#39;~&#39;, &#39;Helvetica Neue&#39;, &#39;onmousemove&#39;, &#39;me_vel&#39;, &#39;opc:&#39;, &#39;pd_en&#39;, &#39;span&#39;, &#39;0a46G5m17Vrp4o4c&#39;, &#39;,uaend,&#39;, &#39;webdriver&#39;, &#39;parseInt&#39;, &#39;y1&#39;, &#39;value&#39;, &#39;&lt;@nv45\. F1n63r,Pr1n71n6!&#39;, &#39;forEach&#39;, &#39;fpcf&#39;, &#39;mn_mc_lmt&#39;, &#39;#f60&#39;, &#39;altKey&#39;, &#39;Chrome PDF Viewer&#39;, &#39;auth&#39;, &#39;https://&#39;, &#39;monospace&#39;, &#39;vc_cnt_lmt&#39;, &#39;cka&#39;, &#39;,mn_w:&#39;, &#39;{&quot;session_id&quot; : &quot;&#39;, &#39;timezoneOffsetKey&#39;, &#39;Avenir Next&#39;, &#39;ke_vel&#39;, &#39;width&#39;, &#39;RealPlayer(tm) G2 LiveConnect-Enabled Plug-In (32-bit)&#39;, &#39;get_mn_params_from_abck&#39;, &#39;1&#39;, &#39;&#39;, &#39;PLUGINS&#39;, &#39;afSbep8yjnZUjq3aL010jO15Sawj2VZfdYK8uY90uxq&#39;, &#39;hb&#39;, &#39;availWidth&#39;, &#39;sensor_data&#39;, &#39;d3&#39;, &#39;x11:&#39;, &#39;send&#39;, &#39;pageX&#39;, &#39;Ubuntu Regular&#39;, &#39;mozvisibilitychange&#39;, &#39;cns&#39;, &#39;keydown&#39;, &#39;hte&#39;, &#39;Lato&#39;, &#39;documentMode&#39;, &#39;attachEvent&#39;, &#39;apid.cformanalytics.com/api/v1/attempt&#39;, &#39;autocomplete&#39;, &#39;ir&#39;, &#39;Java Plug-in 2 for NPAPI Browsers&#39;, &#39;text&#39;, &#39;msHidden&#39;, &#39;htm&#39;, &#39;Batang&#39;, &#39;documentElement&#39;, &#39;fontSize&#39;, &#39;New York&#39;, &#39;Mac OS X 10_5&#39;, &#39;Microsoft Sans Serif&#39;, &#39;{&quot;sensor_data&quot;:&quot;&#39;, &#39;default_abck&#39;, &#39;lvc&#39;, &#39;clearCache&#39;, &#39;mouseup&#39;, &#39;DeviceMotionEvent&#39;, &#39;Microsoft Office Live Plug-in&#39;, &#39;mn_tout&#39;, &#39;ctrlKey&#39;, &#39;Java Applet Plug-in&#39;, &#39;canvas&#39;, &#39;do_dis&#39;, &#39;hidden&#39;, &#39;mozAlarms&#39;, &#39;t_en&#39;, &#39;wrc:&#39;, &#39;push&#39;, &#39;Century&#39;, &#39;,s4&#39;, &#39;dm_dis&#39;, &#39;Courier&#39;, &#39;getTimezoneOffset&#39;, &#39;TI-Nspire&#39;, &#39;none&#39;, &#39;90px&#39;, &#39;-1,2,-94,-105,&#39;, &#39;mn_al&#39;, &#39;mn_h&#39;, &#39;position: relative; left: -9999px; visibility: hidden; display: block !important&#39;, &#39;random&#39;, &#39;hn&#39;, &#39;touchmove&#39;, &#39;fonts&#39;, &#39;toFixed&#39;, &#39;js_post&#39;, &#39;enReadDocUrl&#39;, &#39;style&#39;, &#39;mn_lg&#39;, &#39;hpd&#39;, &#39;do_en&#39;, &#39;Adobe Braille&#39;, &#39;fas&#39;, &#39;mn_sen&#39;, &#39;cdoa&#39;, &#39;-1,2,-94,-111,&#39;, &#39;return &#39;, &#39;bind&#39;, &#39;Edge PDF Viewer&#39;, &#39;gck&#39;, &#39;body&#39;, &#39;vcact&#39;, &#39;dme_vel&#39;, &#39;sed&#39;, &#39;getStorageUpdates&#39;, &#39;rir&#39;, &#39;touchstart&#39;, &#39;rgb(120, 186, 176)&#39;, &#39;abcdefhijklmnopqrstuvxyz1234567890;+-.&#39;, &quot;&#39;&quot;, &#39;return a&#39;, &#39;rst&#39;, &#39;session_id&#39;, &#39;mozInnerScreenY&#39;, &#39;,0&#39;, &#39;doNotTrack&#39;, &#39;bluetooth&#39;, &#39;-1,2,-94,-108,&#39;, &#39;get_type&#39;, &#39;toLowerCase&#39;, &#39;aj_lmt_doact&#39;, &#39;gamma&#39;, &#39;exp&#39;, &#39;sort&#39;, &#39;toString&#39;, &#39;-1,2,-94,-102,&#39;, &#39;fc:&#39;, &#39;runFonts&#39;, &#39;charAt&#39;, &#39;activeElement&#39;, &#39;t_dis&#39;, &#39;document&#39;, &#39;off&#39;, &#39;undef&#39;, &#39;-1,2,-94,-120,&#39;, &#39;Silverlight Plug-In&#39;, &#39;mn_init&#39;, &#39;dme_cnt&#39;, &#39;vc_cnt&#39;, &#39;round&#39;, &#39;rve&#39;, &#39;application/json&#39;, &#39;tme_cnt&#39;, &#39;defaultValue&#39;, &#39;msvisibilitychange&#39;, &#39;mn_pr&#39;, &#39;hf&#39;, &#39;hasSessionStorage&#39;, &#39;x1&#39;, &#39;cta&#39;, &#39;dma_throttle&#39;, &#39;iPad;&#39;, &#39;Shockwave Flash&#39;, &#39;vibrate&#39;, &#39;ta&#39;, &#39;mn_get_challenge&#39;, &#39;cf_url&#39;, &#39;fillStyle&#39;, &#39;dm_en&#39;, &#39;http://&#39;, &#39;data&#39;, &#39;getElementById&#39;, &#39;-1&#39;, &#39;url&#39;, &#39;mduce_cnt&#39;, &#39;clientWidth&#39;, &#39;pointerup&#39;, &#39;MSIE&#39;, &#39;onreadystatechange&#39;, &#39;offsetHeight&#39;, &#39;fillRect&#39;, &#39;onmousedown&#39;, &#39;-1,2,-94,-80,&#39;, &#39;Native Client&#39;, &#39;on&#39;, &#39;URL&#39;, &#39;Widevine Content Decryption Module&#39;, &#39;search&#39;, &#39;-1,2,-94,-119,&#39;, &#39;,s2:&#39;, &#39;open&#39;, &#39;tact&#39;, &#39;hasIndexedDB&#39;, &#39;split&#39;, &#39;aj_indx_doact&#39;, &#39;function&#39;, &#39;Basic &#39;, &#39;undefined&#39;, &#39;_&#39;, &#39;javaEnabled&#39;, &#39;forminfo&#39;, &#39;POST&#39;, &#39;pduce_cnt_lmt&#39;, &#39;getAttribute&#39;, &#39;readyState&#39;, &#39;webkitRTCPeerConnection&#39;, &#39;ver&#39;, &#39;; path=/; expires=Fri, 01 Feb 2025 08:00:00 GMT;&#39;, &#39;dis&#39;, &#39;cc&#39;, &#39;childNodes&#39;, &#39;hkp&#39;, &#39;YouTube Plug-in&#39;, &#39;arc&#39;, &#39;indexOf&#39;, &#39;Cantarell&#39;, &#39;innerWidth&#39;, &#39;keyup&#39;, &#39;rotationRate&#39;, &#39;tme_cnt_lmt&#39;, &#39;pen&#39;, &#39;start_ts&#39;, &#39;callPhantom&#39;, &#39;bmisc&#39;, &#39;length&#39;, &#39;me_cnt&#39;, &#39;Times&#39;, &#39;fromCharCode&#39;, &#39;psub&#39;, &#39;Cambria&#39;, &#39;onload&#39;, &#39;gd&#39;, &#39;display&#39;, &#39;,s7:&#39;, &#39;apicall&#39;, &#39;acos&#39;, &#39;isIgn&#39;, &#39;pe_vel&#39;, &#39;pduce_cnt&#39;, &#39;innerHeight&#39;, &#39;doa_throttle&#39;, &#39;listFunctions&#39;, &#39;colorDepth&#39;, &#39;abs&#39;, &#39;,s1:&#39;, &#39;,d&#39;, &#39;bm&#39;, &#39;bc&#39;, &#39;_phantom&#39;, &#39;Mozilla Default Plug-in&#39;, &#39;dm:&#39;, &#39;o9&#39;, &#39;cache&#39;, &#39;Shockwave for Director&#39;, &#39;6pt Arial&#39;, &#39;floor&#39;, &#39;mn_mc_indx&#39;, &#39;toDataURL&#39;, &#39;Adobe Acrobat&#39;, &#39;location&#39;, &#39;2d&#39;, &#39;charCodeAt&#39;, &#39;hostname&#39;, &#39;password&#39;, &#39;visibilitychange&#39;, &#39;mact&#39;, &#39;bpd&#39;, &#39;}&#39;, &#39;Geneva&#39;, &#39;fidcnt&#39;, &#39;selenium&#39;, &#39;sessionStorageKey&#39;, &#39;required&#39;, &#39;Avenir&#39;, &#39;fpValCalculated&#39;, &#39;chrome&#39;, &#39;hasLocalStorage&#39;, &#39;webkitvisibilitychange&#39;, &#39;lang&#39;, &#39;&quot;}&#39;, &#39;&lt;init/&gt;&#39;, &#39;cwen:&#39;, &#39;DeviceOrientationEvent&#39;, &#39;mozHidden&#39;, &#39;mozIsLocallyAvailable&#39;, &#39;disFpCalOnTimeout&#39;, &#39;Default Browser Helper&#39;, &#39;htc&#39;, &#39;exception&#39;, &#39;requestWakeLock&#39;, &#39;Damascus&#39;, &#39;&lt;/setSDFN&gt;&#39;, &#39;applyFunc&#39;, &#39;,&quot;auth&quot; : &quot;&#39;, &#39;&lt;setSDFN&gt;&#39;, &#39;x&#39;, &#39;,c-null&#39;, &#39;driver&#39;, &#39;_abck&#39;, &#39;FileReader&#39;, &#39;shiftKey&#39;, &#39;tduce_cnt_lmt&#39;, &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&#39;, &#39;WebEx64 General Plugin Container&#39;, &#39;pointerType&#39;, &#39;atanh&#39;, &#39;RealPlayer Version Plugin&#39;, &#39;clientHeight&#39;, &#39;localStorageKey&#39;, &#39;serif&#39;, &#39;mn_psn&#39;, &#39;emit&#39;, &#39;acceleration&#39;, &#39;Palatino-Bold&#39;, &#39;&lt;bpd&gt;&#39;, &#39;startTracking&#39;, &#39;Adobe Hebrew&#39;, &#39;productSub&#39;, &#39;td&#39;, &#39;&lt;/bpd&gt;&#39;, &#39;Birch Std&#39;, &#39;;&#39;, &#39;TouchEvent&#39;, &#39;Ubuntu Medium&#39;, &#39;fpValstr&#39;, &#39;isc:&#39;, &#39;Quicksand&#39;, &#39;vib:&#39;, &#39;,s5&#39;, &#39;mozConnection&#39;, &#39;Content-type&#39;, &#39;pact&#39;, &#39;addEventListener&#39;, &#39;Corsiva Hebrew&#39;, &#39;requestMediaKeySystemAccess&#39;, &#39;msManipulationViewsEnabled&#39;, &#39;,cpen:&#39;, &#39;aj_indx_dmact&#39;, &#39;mn_ts&#39;, &#39;protocol&#39;, &#39;//&#39;, &#39;hypot&#39;, &#39;prototype&#39;, &#39;appendChild&#39;, &#39;ab&#39;, &#39;x2&#39;, &#39;touchend&#39;, &#39;tduce_cnt&#39;, &#39;mn_check_if_new_challenge&#39;, &#39;Version/4.0&#39;, &#39;name&#39;, &#39;QuickTime Plug-in&#39;, &#39;hmd&#39;, &#39;patp&#39;, &#39;onpointerdown&#39;, &#39;onkeydown&#39;, &#39;mozPhoneNumberService&#39;, &#39;Unity Player&#39;, &#39;prevfid&#39;, &#39;prod&#39;, &#39;dmact&#39;, &#39;accelerationIncludingGravity&#39;, &#39;iPhone&#39;, &#39;font&#39;, &#39;den&#39;, &#39;touchcancel&#39;, &#39;product&#39;, &#39;thr&#39;, &#39;mousemove&#39;, &#39;ckie&#39;, &#39;HTMLElement&#39;, &#39;RTCPeerConnection&#39;, &#39;sc:&#39;, &#39;y&#39;, &#39;/_bm/_data&#39;, &#39;ke_cnt_lmt&#39;, &#39;AlNile&#39;, &#39;registerProtocolHandler&#39;, &#39;pageY&#39;, &#39;mn_ld&#39;, &#39;alpha&#39;, &#39;hmu&#39;, &#39;-1,2,-94,-122,&#39;, &#39;aj_ss&#39;, &#39;mn_cd&#39;, &#39;fontFamily&#39;, &#39;od&#39;, &#39;rotate_left&#39;, &#39;mn_cc&#39;, &#39;te_cnt&#39;, &#39;mn_state&#39;, &#39;permissions&#39;, &#39;Source Sans Pro&#39;, &#39;spawn&#39;, &#39;hmm&#39;, &#39;n_ck&#39;, &#39;Calibri&#39;, &#39;cookie&#39;, &#39;join&#39;, &#39;to&#39;, &#39;language&#39;, &#39;get_cf_date&#39;, &#39;WebKit-integrierte PDF&#39;, &#39;devicemotion&#39;, &#39;Roboto&#39;, &#39;event&#39;, &#39;mduce_cnt_lmt&#39;, &#39;hkd&#39;, &#39;-1,2,-94,-114,&#39;, &#39;2&#39;, &#39;i1:&#39;, &#39;,b&#39;, &#39;createElement&#39;, &#39;cdma&#39;, &#39;altFonts&#39;, &#39;return/*@cc_on!@*/!1&#39;, &#39;which&#39;, &#39;pluginInfo&#39;, &#39;enGetLoc&#39;, &#39;navigator&#39;, &#39;mn_lc&#39;];
+var _cf = _cf || [],
+    bmak = {
+        ver: 1.41,
+        ke_cnt_lmt: 150,
+        mme_cnt_lmt: 100,
+        mduce_cnt_lmt: 75,
+        pme_cnt_lmt: 25,
+        pduce_cnt_lmt: 25,
+        tme_cnt_lmt: 25,
+        tduce_cnt_lmt: 25,
+        doe_cnt_lmt: 10,
+        dme_cnt_lmt: 10,
+        vc_cnt_lmt: 100,
+        doa_throttle: 0,
+        dma_throttle: 0,
+        session_id: &#39;default_session&#39;,
+        js_post: !1,
+        loc: &#39;&#39;,
+        cf_url: (&#39;https:&#39; === &quot;https:&quot; ? &#39;https://&#39; : &#39;http://&#39;) + &#39;apid.cformanalytics.com/api/v1/attempt&#39;,
+        auth: &#39;&#39;,
+        api_public_key: null,
+        aj_lmt_doact: 1,
+        aj_lmt_dmact: 1,
+        aj_lmt_tact: 1,
+        ce_js_post: 0,
+        init_time: 0,
+        informinfo: &#39;&#39;,
+        prevfid: -1,
+        fidcnt: 0,
+        sensor_data: 0,
+        ins: null,
+        cns: null,
+        enGetLoc: 0,
+        enReadDocUrl: 0,
+        disFpCalOnTimeout: 0,
+        xagg: -1,
+        pen: -1,
+        brow: &#39;&#39;,
+        browver: &#39;&#39;,
+        psub: &#39;-&#39;,
+        lang: &#39;-&#39;,
+        prod: &#39;-&#39;,
+        plen: -1,
+        doadma_en: 0,
+        sdfn: [],
+        d2: 0,
+        d3: 0,
+        thr: 0,
+        cs: &#39;0a46G5m17Vrp4o4c&#39;,
+        hn: &#39;unk&#39;,
+        z1: 0,
+        o9: 0,
+        vc: &#39;&#39;,
+        y1: 2016,
+        ta: 0,
+        tst: -1,
+        t_tst: 0,
+        ckie: &quot;_abck&quot;,
+        n_ck: &#39;0&#39;,
+        ckurl: 0,
+        bm: !1,
+        mr: -1,
+        altFonts: !1,
+        rst: !1,
+        runFonts: !0,
+        fsp: !1,
+        mn_mc_lmt: 10,
+        mn_state: 0,
+        mn_mc_indx: 0,
+        mn_sen: 0,
+        mn_tout: 100,
+        mn_stout: 1e3,
+        mn_cc: &#39;&#39;,
+        mn_cd: 1e4,
+        mn_lc: &#39;&#39;,
+        mn_ld: 1e4,
+        mn_al: [],
+        mn_il: [],
+        mn_tcl: [],
+        mn_r: &#39;&#39;,
+        mn_abck: &#39;&#39;,
+        mn_psn: &#39;&#39;,
+        mn_ts: &#39;&#39;,
+        mn_lg: [],
+        ir: function () {
+            // 00000
+            bmak[&#39;start_ts&#39;] = Date.now ? Date.now() : +new Date,
+            bmak[&#39;kact&#39;] = &#39;&#39;,
+            bmak[&#39;ke_cnt&#39;] = 0,
+            bmak[&#39;ke_vel&#39;] = 0,
+            bmak[&#39;mact&#39;] = &#39;&#39;,
+            bmak[&#39;mme_cnt&#39;] = 0,
+            bmak[&#39;mduce_cnt&#39;] = 0,
+            bmak[&#39;me_vel&#39;] = 0,
+            bmak[&#39;pact&#39;] = &#39;&#39;,
+            bmak[&#39;pme_cnt&#39;] = 0,
+            bmak[&#39;pduce_cnt&#39;] = 0,
+            bmak[&#39;pe_vel&#39;] = 0,
+            bmak[&#39;tact&#39;] = &#39;&#39;,
+            bmak[&#39;tme_cnt&#39;] = 0,
+            bmak[&#39;tduce_cnt&#39;] = 0,
+            bmak[&#39;te_vel&#39;] = 0,
+            bmak[&#39;doact&#39;] = &#39;&#39;,
+            bmak[&#39;doe_cnt&#39;] = 0,
+            bmak[&#39;doe_vel&#39;] = 0,
+            bmak[&#39;dmact&#39;] = &#39;&#39;,
+            bmak[&#39;dme_cnt&#39;] = 0,
+            bmak[&#39;dme_vel&#39;] = 0,
+            bmak[&#39;vcact&#39;] = &#39;&#39;,
+            bmak[&#39;vc_cnt&#39;] = 0,
+            bmak[&quot;aj_indx&quot;] = 0,
+            bmak[&#39;aj_ss&#39;] = 0,
+            bmak[&quot;aj_type&quot;] = -1,
+            bmak[&#39;aj_indx_doact&#39;] = 0,
+            bmak[&#39;aj_indx_dmact&#39;] = 0,
+            bmak[&#39;aj_indx_tact&#39;] = 0,
+            bmak[&#39;me_cnt&#39;] = 0,
+            bmak[&#39;pe_cnt&#39;] = 0,
+            bmak[&#39;te_cnt&#39;] = 0
+        },
+        // 000000
+        get_cf_date: function () {
+            return Date.now ? Date.now() : +new Date
+        },
+        // 00000
+        sd_debug: function (a) {    // &lt;init/&gt;
+            if (!bmak[&quot;js_post&quot;]) {  //永远为true
+            // if (!bmak[&quot;js_post&quot;]) {      ! !1
+                var t = a;
+                &#39;string&#39; == typeof _sd_trace ? _sd_trace += t : _sd_trace = t
+                // string == typeof _sd_trace ? _sd_trace += t : _sd_trace = t  -==&gt; &lt;init/&gt;&lt;init/&gt;
+            }
+        },
+        pi: function (a) {
+            return parseInt(a)
+        },
+        // 获取 U-A 头。 000000
+        uar: function () {
+            return window[&#39;navigator&#39;][&#39;userAgent&#39;].replace(/\\|&quot;/g, &#39;&#39;)
+        },
+        gd: function () {
+            var a = bmak[&quot;uar&quot;](),
+                t = &#39;&#39; + bmak[&#39;ab&#39;](a),
+                e = bmak[&#39;start_ts&#39;] / 2,
+                n = window[&#39;screen&#39;] ? window[&#39;screen&#39;][&#39;availWidth&#39;] : -1,
+                o = window[&#39;screen&#39;] ? window[&#39;screen&#39;][&#39;availHeight&#39;] : -1,
+                m = window[&#39;screen&#39;] ? window[&#39;screen&#39;][&#39;width&#39;] : -1,
+                r = window[&#39;screen&#39;] ? window[&#39;screen&#39;][&#39;height&#39;] : -1,
+                i = window[&#39;innerWidth&#39;] || 1431,
+                c = window[&#39;innerHeight&#39;] || 1315,
+                b = window[&#39;outerWidth&#39;] || undefined;
+            bmak[&#39;z1&#39;] = bmak[&#39;pi&#39;](bmak[&#39;start_ts&#39;] / (bmak[&#39;y1&#39;] * bmak[&#39;y1&#39;]));
+            var d = Math[&#39;random&#39;](),
+                k = bmak[&#39;pi&#39;](1e3 * d / 2),
+                s = d + &#39;&#39;;
+            return s = s[&#39;slice&#39;](0, 11) + k,
+            bmak[&#39;get_browser&#39;](),
+            bmak[&#39;bc&#39;](),
+            bmak[&#39;bmisc&#39;](),
+            a + &#39;,uaend,&#39; + bmak[&#39;xagg&#39;] + &quot;,&quot; + bmak[&#39;psub&#39;] + &quot;,&quot; + bmak[&#39;lang&#39;] + &quot;,&quot; + bmak[&#39;prod&#39;] + &quot;,&quot; + bmak[&#39;plen&#39;] + &quot;,&quot; + bmak[&#39;pen&#39;] + &quot;,&quot; + bmak[&#39;wen&#39;] + &quot;,&quot; + bmak[&#39;den&#39;] + &quot;,&quot; + bmak[&#39;z1&#39;] + &quot;,&quot; + bmak[&#39;d3&#39;] + &quot;,&quot; + n + &quot;,&quot; + o + &quot;,&quot; + m + &quot;,&quot; + r + &quot;,&quot; + i + &quot;,&quot; + c + &quot;,&quot; + b + &quot;,&quot; + bmak[&#39;bd&#39;]() + &quot;,&quot; + t + &quot;,&quot; + s + &quot;,&quot; + e + &#39;,loc:&#39; + bmak[&#39;loc&#39;]
+        },
+        get_browser: function () {
+            navigator[&#39;productSub&#39;] &amp;&amp; (bmak[&#39;psub&#39;] = navigator[&#39;productSub&#39;]),
+            navigator[&#39;language&#39;] &amp;&amp; (bmak[&#39;lang&#39;] = navigator[&#39;language&#39;]),
+            navigator[&#39;product&#39;] &amp;&amp; (bmak[&#39;prod&#39;] = navigator[&#39;product&#39;]),
+            bmak[&#39;plen&#39;] = void 0 !== navigator[&#39;plugins&#39;] ? navigator[&#39;plugins&#39;].length : -1
+        },
+
+        //  赋值   bmak[&#39;xagg&#39;] = 12147
+        bc: function () {
+            var a = window[&#39;addEventListener&#39;] ? 1 : 0,
+                t = window[&#39;XMLHttpRequest&#39;] ? 1 : 0,
+                e = window[&#39;XDomainRequest&#39;] ? 1 : 0,
+                n = window[&#39;emit&#39;] ? 1 : 0,
+                o = window.DeviceOrientationEvent ? 1 : 0,
+                m = window.DeviceMotionEvent ? 1 : 0,
+                r = window.TouchEvent ? 1 : 0,
+                i = window[&#39;spawn&#39;] ? 1 : 0,
+                c = window[&#39;innerWidth&#39;] ? 1 : 0,
+                b = window[&#39;outerWidth&#39;] ? 1 : 0,
+                d = window[&#39;chrome&#39;] ? 1 : 0,
+                k = Function[&#39;prototype&#39;][&#39;bind&#39;] ? 1 : 0,
+                s = window[&#39;Buffer&#39;] ? 1 : 0,
+                l = window[&#39;PointerEvent&#39;] ? 1 : 0;
+            bmak[&#39;xagg&#39;] = a + (t &lt;&lt; 1) + (e &lt;&lt; 2) + (n &lt;&lt; 3) + (o &lt;&lt; 4) + (m &lt;&lt; 5) + (r &lt;&lt; 6) + (i &lt;&lt; 7) + (c &lt;&lt; 8) + (b &lt;&lt; 9) + (d &lt;&lt; 10) + (k &lt;&lt; 11) + (s &lt;&lt; 12) + (l &lt;&lt; 13)
+        },
+
+        bmisc: function () {
+            bmak[&#39;pen&#39;] = window[&#39;_phantom&#39;] ? 1 : 0,
+            bmak[&#39;wen&#39;] = window[&#39;webdriver&#39;] ? 1 : 0,
+            bmak[&#39;den&#39;] = window[&#39;domAutomation&#39;] ? 1 : 0
+        },
+        bd: function () {
+            var a = [],
+                t = window[&#39;callPhantom&#39;] ? 1 : 0;
+            a[&#39;push&#39;](&#39;,cpen:&#39; + t);
+            try {
+                    var e = new Function(&#39;return/*@cc_on!@*/!1&#39;)() ? 1 : 0
+                } catch (a) {
+                    var e = 0
+                }
+            a[&#39;push&#39;](&#39;i1:&#39; + e);
+            var n = number == typeof undefined ? 1 : 0;
+            a[&#39;push&#39;](&#39;dm:&#39; + n);
+            var o = window[&#39;chrome&#39;] &amp;&amp; window[&#39;chrome&#39;][&#39;webstore&#39;] ? 1 : 0;
+            a[&#39;push&#39;](&#39;cwen:&#39; + o);
+            var m = navigator[&#39;onLine&#39;] ? 1 : 0;
+            a[&#39;push&#39;](&#39;non:&#39; + m);
+            var r = window[&#39;opera&#39;] ? 1 : 0;
+            a[&#39;push&#39;](&#39;opc:&#39; + r);
+            var i = undefined != typeof InstallTrigger ? 1 : 0;
+            a[&#39;push&#39;](&#39;fc:&#39; + i);
+            var c = window[&#39;HTMLElement&#39;] &amp;&amp; Object[&#39;prototype&#39;][&#39;toString&#39;][&#39;call&#39;](window[&#39;HTMLElement&#39;]).indexOf(&#39;Constructor&#39;) &gt; 0 ? 1 : 0;
+            a[&#39;push&#39;](&#39;sc:&#39; + c);
+            var b = function == typeof window[&quot;RTCPeerConnection&quot;] || function == typeof window[&quot;mozRTCPeerConnection&quot;] || function == typeof window[&quot;webkitRTCPeerConnection&quot;] ? 1 : 0;
+            a[&#39;push&#39;](&#39;wrc:&#39; + b);
+            var d = &#39;mozInnerScreenY&#39; in window ? window[&#39;mozInnerScreenY&#39;] : 0;
+            a[&#39;push&#39;](&#39;isc:&#39; + d),
+            bmak[&#39;d2&#39;] = bmak[&#39;pi&#39;](bmak[&#39;z1&#39;] / 23);
+            var k = &#39;function&#39; == typeof navigator[&#39;vibrate&#39;] ? 1 : 0;
+            a[&#39;push&#39;](&#39;vib:&#39; + k);
+            var s = &#39;function&#39; == typeof navigator[&#39;getBattery&#39;] ? 1 : 0;
+            a[&#39;push&#39;](&#39;bat:&#39; + s);
+            var l = Array[&#39;prototype&#39;][&#39;forEach&#39;] ? 0 : 1;
+            a[&#39;push&#39;](&#39;x11:&#39; + l);
+            var u = &#39;FileReader&#39; in window ? 1 : 0;
+            return a[&#39;push&#39;](&#39;x12:&#39; + u),
+            a.join(&quot;,&quot;)
+        },
+
+        // 30261693
+        fas: function () {
+            try {
+                return Boolean(navigator[&#39;credentials&#39;]) + (Boolean(navigator[&#39;appMinorVersion&#39;]) &lt;&lt; 1) + (Boolean(navigator[&#39;bluetooth&#39;]) &lt;&lt; 2) + (Boolean(navigator[&#39;storage&#39;]) &lt;&lt; 3) + (Boolean(Math[&#39;imul&#39;]) &lt;&lt; 4) + (Boolean(navigator[&#39;getGamepads&#39;]) &lt;&lt; 5) + (Boolean(navigator[&#39;getStorageUpdates&#39;]) &lt;&lt; 6) + (Boolean(navigator[&#39;hardwareConcurrency&#39;]) &lt;&lt; 7) + (Boolean(navigator[&#39;mediaDevices&#39;]) &lt;&lt; 8) + (Boolean(navigator[&#39;mozAlarms&#39;]) &lt;&lt; 9) + (Boolean(navigator[&#39;mozConnection&#39;]) &lt;&lt; 10) + (Boolean(navigator[&#39;mozIsLocallyAvailable&#39;]) &lt;&lt; 11) + (Boolean(navigator[&#39;mozPhoneNumberService&#39;]) &lt;&lt; 12) + (Boolean(navigator[&#39;msManipulationViewsEnabled&#39;]) &lt;&lt; 13) + (Boolean(navigator[&#39;permissions&#39;]) &lt;&lt; 14) + (Boolean(navigator[&#39;registerProtocolHandler&#39;]) &lt;&lt; 15) + (Boolean(navigator[&#39;requestMediaKeySystemAccess&#39;]) &lt;&lt; 16) + (Boolean(navigator[&#39;requestWakeLock&#39;]) &lt;&lt; 17) + (Boolean(navigator[&#39;sendBeacon&#39;]) &lt;&lt; 18) + (Boolean(navigator[&#39;serviceWorker&#39;]) &lt;&lt; 19) + (Boolean(navigator[&#39;storeWebWideTrackingException&#39;]) &lt;&lt; 20) + (Boolean(navigator[&#39;webkitGetGamepads&#39;]) &lt;&lt; 21) + (Boolean(navigator[&#39;webkitTemporaryStorage&#39;]) &lt;&lt; 22) + (Boolean(Number[&#39;parseInt&#39;]) &lt;&lt; 23) + (Boolean(Math[&#39;hypot&#39;]) &lt;&lt; 24)
+            } catch (a) {
+                return 0
+            }
+        },
+        // 获取 bmak[&#39;mr&#39;] = a
+        getmr: function () {
+            try {
+                // false
+                if (undefined == typeof performance || void 0 === performance.now || undefined == typeof JSON) return void(bmak[&quot;mr&quot;] = &quot;undef&quot;);
+                // 一个随机 14 个的字符串
+                // &quot; 58,62,62,61,83,198,67,8,11,6,6,7,605,503,&quot;
+                for (var a = &#39;&#39;, t = 1e3, e = [Math[&#39;abs&#39;], Math[&#39;acos&#39;], Math[&#39;asin&#39;], Math[&#39;atanh&#39;], Math[&#39;cbrt&#39;], Math[&#39;exp&#39;], Math[&#39;random&#39;], Math[&#39;round&#39;], Math[&#39;sqrt&#39;], isFinite, isNaN, parseFloat, parseInt, JSON[&#39;parse&#39;]], n = 0; n &lt; e.length; n++) {
+                    var o = [],
+                        m = 0,
+                        r = performance.now(),
+                        i = 0,
+                        c = 0;
+                    if (void 0 !== e[n]) {
+                            for (i = 0; i &lt; t &amp;&amp; m &lt; .6; i++) {
+                                for (var b = performance.now(), d = 0; d &lt; 4e3; d++) e[n](3.14);
+                                var k = performance.now();
+                                o[&#39;push&#39;](Math[&#39;round&#39;](1e3 * (k - b))),
+                                m = k - r
+                            }
+                            var s = o[&#39;sort&#39;]();
+                            c = s[Math[&#39;floor&#39;](s.length / 2)] / 5
+                        }
+                    a = a + c + &quot;,&quot;
+                }
+                bmak[&#39;mr&#39;] = a
+            } catch (a) {
+                bmak[&#39;mr&#39;] = &#39;exception&#39;
+            }
+        },
+        // 返回 0,0,0,0,1,0,0
+        sed: function () {
+            var a;
+            a = &#39;0&#39;;
+            var t;
+            t = &#39;0&#39;;
+            var e;
+            e = &#39;0&#39;;
+            var n;
+            n = &#39;0&#39;;
+            var o;
+            o = &#39;1&#39;;
+            var m;
+            m = &#39;0&#39;;
+            var r;
+            return r = &#39;0&#39;,
+            [a, t, e, n, o, m, r].join(&quot;,&quot;)
+
+        },
+
+        cma: function (a, t) {
+            try {
+                if (1 == t &amp;&amp; bmak[&#39;mme_cnt&#39;] &lt; bmak[&#39;mme_cnt_lmt&#39;] || 1 != t &amp;&amp; bmak[&#39;mduce_cnt&#39;] &lt; bmak[&#39;mduce_cnt_lmt&#39;]) {
+                    var e = a || window[&#39;event&#39;],
+                        n = -1,
+                        o = -1;
+                    e &amp;&amp; e[&#39;pageX&#39;] &amp;&amp; e[&#39;pageY&#39;] ? (n = Math[&#39;floor&#39;](e[&#39;pageX&#39;]), o = Math[&#39;floor&#39;](e[&#39;pageY&#39;])) : e &amp;&amp; e[&#39;clientX&#39;] &amp;&amp; e[&#39;clientY&#39;] &amp;&amp; (n = Math[&#39;floor&#39;](e[&#39;clientX&#39;]), o = Math[&#39;floor&#39;](e[&#39;clientY&#39;]));
+                    var m = e[&#39;toElement&#39;];
+                    null == m &amp;&amp; (m = e[&#39;target&#39;]);
+                    var r = bmak[&#39;gf&#39;](m),
+                        i = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+                        c = bmak[&#39;me_cnt&#39;] + &quot;,&quot; + t + &quot;,&quot; + i + &quot;,&quot; + n + &quot;,&quot; + o;
+                    if (1 != t) {
+                            c = c + &quot;,&quot; + r;
+                            var b = void 0 !== e[&#39;which&#39;] ? e[&#39;which&#39;] : e[&#39;button&#39;];
+                            null != b &amp;&amp; 1 != b &amp;&amp; (c = c + &quot;,&quot; + b)
+                        }
+                    c += &#39;;&#39;,
+                    bmak[&#39;me_vel&#39;] = bmak[&#39;me_vel&#39;] + bmak[&#39;me_cnt&#39;] + t + i + n + o,
+                    bmak[&#39;mact&#39;] = bmak[&#39;mact&#39;] + c,
+                    bmak[&#39;ta&#39;] += i
+                }
+                1 == t ? bmak[&#39;mme_cnt&#39;]++ : bmak[&#39;mduce_cnt&#39;]++,
+                bmak[&#39;me_cnt&#39;]++,
+                bmak[&quot;js_post&quot;] &amp;&amp; 3 == t &amp;&amp; (bmak[&quot;aj_type&quot;] = 1, bmak[&#39;bpd&#39;](), bmak[&#39;pd&#39;](!0), bmak[&#39;ce_js_post&#39;] = 1)
+            } catch (a) {}
+        },
+
+        // 其实就是返回 时间戳
+        x2: function () {
+            // 指定uricoder  返回一个字符串
+            var a = bmak[&#39;ff&#39;],
+                t = a(98) + a(109) + a(97) + a(107) + a(46) + a(103) + a(101) + a(116);
+                // t = return bmak.get_cf_date();
+            return t = t + a(95) + a(99) + a(102) + a(95),
+            t = &#39;return &#39; + t + a(100) + a(97) + a(116) + a(101) + a(40) + a(41),
+            t += &#39;;&#39;,
+            new Function(t)()
+        },
+        cpa: function (a, t) {
+            try {
+                var e = !1;
+                if (1 == t &amp;&amp; bmak[&#39;pme_cnt&#39;] &lt; bmak[&#39;pme_cnt_lmt&#39;] || 1 != t &amp;&amp; bmak[&#39;pduce_cnt&#39;] &lt; bmak[&#39;pduce_cnt_lmt&#39;]) {
+                    var n = a || window[&#39;event&#39;];
+                    if (n &amp;&amp; &#39;mouse&#39; != n[&#39;pointerType&#39;]) {
+                        e = !0;
+                        var o = -1,
+                            m = -1;
+                        n &amp;&amp; n[&#39;pageX&#39;] &amp;&amp; n[&#39;pageY&#39;] ? (o = Math[&#39;floor&#39;](n[&#39;pageX&#39;]), m = Math[&#39;floor&#39;](n[&#39;pageY&#39;])) : n &amp;&amp; n[&#39;clientX&#39;] &amp;&amp; n[&#39;clientY&#39;] &amp;&amp; (o = Math[&#39;floor&#39;](n[&#39;clientX&#39;]), m = Math[&#39;floor&#39;](n[&#39;clientY&#39;]));
+                        var r = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+                            i = bmak[&#39;pe_cnt&#39;] + &quot;,&quot; + t + &quot;,&quot; + r + &quot;,&quot; + o + &quot;,&quot; + m + &#39;;&#39;;
+                        bmak[&#39;pe_vel&#39;] = bmak[&#39;pe_vel&#39;] + bmak[&#39;pe_cnt&#39;] + t + r + o + m,
+                        bmak[&#39;pact&#39;] = bmak[&#39;pact&#39;] + i,
+                        bmak[&#39;ta&#39;] += r,
+                        1 == t ? bmak[&#39;pme_cnt&#39;]++ : bmak[&#39;pduce_cnt&#39;]++
+                    }
+                }
+                1 == t ? bmak[&#39;pme_cnt&#39;]++ : bmak[&#39;pduce_cnt&#39;]++,
+                bmak[&#39;pe_cnt&#39;]++,
+                bmak[&quot;js_post&quot;] &amp;&amp; 3 == t &amp;&amp; e &amp;&amp; (bmak[&quot;aj_type&quot;] = 2, bmak[&#39;bpd&#39;](), bmak[&#39;pd&#39;](!0), bmak[&#39;ce_js_post&#39;] = 1)
+            } catch (a) {}
+        },
+
+        // 返回一个数字
+        ab: function (a) {
+            if (null == a) return -1;
+            try {
+
+                for (var t = 0, e = 0; e &lt; a.length; e++) {
+                    var n = a.charCodeAt(e);
+                    n &lt; 128 &amp;&amp; (t += n)
+                }
+                return t    // 1676
+            } catch (a) {
+                return -2
+            }
+        },
+        ff: function (a) {
+            return String.fromCharCode(a)
+        },
+
+        to: function () {
+            var a = bmak[&#39;x2&#39;]() % 1e7;
+            bmak[&#39;d3&#39;] = a;
+            for (var t = a, e = 0; e &lt; 5; e++) {
+                var n = bmak[&#39;pi&#39;](a / Math[&#39;pow&#39;](10, e)) % 10,
+                    o = n + 1,
+                    m = &#39;return a&#39; + bmak[&#39;cc&#39;](n) + o + &#39;;&#39;;
+                t = new Function(&#39;a&#39;, m)(t)
+            }
+            bmak[&#39;o9&#39;] = t
+        },
+        // 将其 name 或者id 进行数字化，在返回。
+        // 也就是 a 肯定是一个 DOM 文档
+        gf: function (a) {
+            // t 等于 a
+            var t;
+            if (t = null == a ? document.activeElement : a, null == document.activeElement) return -1;
+
+            var e = t.getAttribute(&#39;name&#39;);
+            if (null == e) {
+                var n = t.getAttribute(&#39;id&#39;);
+                return null == n ? -1 : asd(n)
+            }
+            return asd(e)
+        },
+        // 模四余二 返回 逗号，  否则返回 -
+        cc: function (a) {
+            var t = a % 4;
+            2 == t &amp;&amp; (t = 3);
+            var e = 42 + t;
+            return String.fromCharCode(e)
+        },
+        isIgn: function (a) {
+            var t = document[&#39;activeElement&#39;];
+            if (null == document[&#39;activeElement&#39;]) return 0;
+            var e = t[&#39;getAttribute&#39;](&#39;type&#39;);
+            return 1 == (null == e ? -1 : bmak[&#39;get_type&#39;](e)) &amp;&amp; bmak[&#39;fidcnt&#39;] &gt; 12 &amp;&amp; -2 == a ? 1 : 0
+        },
+        cka: function (a, t) {
+            try {
+                var e = a || window[&#39;event&#39;],
+                    n = -1,
+                    o = 1;
+                if (bmak[&#39;ke_cnt&#39;] &lt; bmak[&#39;ke_cnt_lmt&#39;] &amp;&amp; e) {
+                        n = e[&#39;keyCode&#39;];
+                        var m = e[&#39;charCode&#39;],
+                            r = e[&#39;shiftKey&#39;] ? 1 : 0,
+                            i = e[&#39;ctrlKey&#39;] ? 1 : 0,
+                            c = e[&#39;metaKey&#39;] ? 1 : 0,
+                            b = e[&#39;altKey&#39;] ? 1 : 0,
+                            d = 8 * r + 4 * i + 2 * c + b,
+                            k = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+                            s = bmak[&#39;gf&#39;](null),
+                            l = 0;
+                        m &amp;&amp; n &amp;&amp; (n = 0 != m &amp;&amp; 0 != n &amp;&amp; m != n ? -1 : 0 != n ? n : m),
+                        0 == i &amp;&amp; 0 == c &amp;&amp; 0 == b &amp;&amp; n &gt;= 32 &amp;&amp; (n = 3 == t &amp;&amp; n &gt;= 32 &amp;&amp; n &lt;= 126 ? -2 : n &gt;= 33 &amp;&amp; n &lt;= 47 ? -3 : n &gt;= 112 &amp;&amp; n &lt;= 123 ? -4 : -2),
+                        s != bmak[&#39;prevfid&#39;] ? (bmak[&#39;fidcnt&#39;] = 0, bmak[&#39;prevfid&#39;] = s) : bmak[&#39;fidcnt&#39;] = bmak[&#39;fidcnt&#39;] + 1;
+                        if (0 == bmak[&#39;isIgn&#39;](n)) {
+                                var u = bmak[&#39;ke_cnt&#39;] + &quot;,&quot; + t + &quot;,&quot; + k + &quot;,&quot; + n + &quot;,&quot; + l + &quot;,&quot; + d + &quot;,&quot; + s;
+                                null != e[&#39;isTrusted&#39;] &amp;&amp; !1 === e[&#39;isTrusted&#39;] &amp;&amp; (u += &#39;,0&#39;),
+                                u += &#39;;&#39;,
+                                bmak[&#39;kact&#39;] = bmak[&#39;kact&#39;] + u,
+                                bmak[&#39;ke_vel&#39;] = bmak[&#39;ke_vel&#39;] + bmak[&#39;ke_cnt&#39;] + t + k + n + d + s,
+                                bmak[&#39;ta&#39;] += k
+                            } else o = 0
+                    }
+                o &amp;&amp; e &amp;&amp; bmak[&#39;ke_cnt&#39;]++,
+                !bmak[&quot;js_post&quot;] || 1 != t || 13 != n &amp;&amp; 9 != n || (bmak[&quot;aj_type&quot;] = 3, bmak[&#39;bpd&#39;](), bmak[&#39;pd&#39;](!0), bmak[&#39;ce_js_post&#39;] = 1)
+            } catch (a) {}
+        },
+        cta: function (a, t) {
+            try {
+                if (1 == t &amp;&amp; bmak[&#39;tme_cnt&#39;] &lt; bmak[&#39;tme_cnt_lmt&#39;] || 1 != t &amp;&amp; bmak[&#39;tduce_cnt&#39;] &lt; bmak[&#39;tduce_cnt_lmt&#39;]) {
+                    var e = a || window[&#39;event&#39;],
+                        n = -1,
+                        o = -1;
+                    e &amp;&amp; e[&#39;pageX&#39;] &amp;&amp; e[&#39;pageY&#39;] ? (n = Math[&#39;floor&#39;](e[&#39;pageX&#39;]), o = Math[&#39;floor&#39;](e[&#39;pageY&#39;])) : e &amp;&amp; e[&#39;clientX&#39;] &amp;&amp; e[&#39;clientY&#39;] &amp;&amp; (n = Math[&#39;floor&#39;](e[&#39;clientX&#39;]), o = Math[&#39;floor&#39;](e[&#39;clientY&#39;]));
+                    var m = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+                        r = bmak[&#39;te_cnt&#39;] + &quot;,&quot; + t + &quot;,&quot; + m + &quot;,&quot; + n + &quot;,&quot; + o + &#39;;&#39;;
+                    bmak[&#39;tact&#39;] = bmak[&#39;tact&#39;] + r,
+                    bmak[&#39;ta&#39;] += m,
+                    bmak[&#39;te_vel&#39;] = bmak[&#39;te_vel&#39;] + bmak[&#39;te_cnt&#39;] + t + m + n + o,
+                    bmak[&#39;doa_throttle&#39;] = 0,
+                    bmak[&#39;dma_throttle&#39;] = 0
+                }
+                1 == t ? bmak[&#39;tme_cnt&#39;]++ : bmak[&#39;tduce_cnt&#39;]++,
+                bmak[&#39;te_cnt&#39;]++,
+                bmak[&quot;js_post&quot;] &amp;&amp; 2 == t &amp;&amp; bmak[&#39;aj_indx_tact&#39;] &lt; bmak[&#39;aj_lmt_tact&#39;] &amp;&amp; (bmak[&quot;aj_type&quot;] = 5, bmak[&#39;bpd&#39;](), bmak[&#39;pd&#39;](!0), bmak[&#39;ce_js_post&#39;] = 1, bmak[&#39;aj_indx_tact&#39;]++)
+            } catch (a) {}
+        },
+        getFloatVal: function (a) {
+            try {
+                if (-1 != bmak[&#39;chknull&#39;](a) &amp;&amp; !isNaN(a)) {
+                    var t = parseFloat(a);
+                    if (!isNaN(t)) return t[&#39;toFixed&#39;](2)
+                }
+            } catch (a) {}
+            return -1
+        },
+        cdoa: function (a) {
+            try {
+                if (bmak[&#39;doe_cnt&#39;] &lt; bmak[&#39;doe_cnt_lmt&#39;] &amp;&amp; bmak[&#39;doa_throttle&#39;] &lt; 2 &amp;&amp; a) {
+                    var t = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+                        e = bmak[&#39;getFloatVal&#39;](a[&#39;alpha&#39;]),
+                        n = bmak[&#39;getFloatVal&#39;](a[&#39;beta&#39;]),
+                        o = bmak[&#39;getFloatVal&#39;](a[&#39;gamma&#39;]),
+                        m = bmak[&#39;doe_cnt&#39;] + &quot;,&quot; + t + &quot;,&quot; + e + &quot;,&quot; + n + &quot;,&quot; + o + &#39;;&#39;;
+                    bmak[&#39;doact&#39;] = bmak[&#39;doact&#39;] + m,
+                    bmak[&#39;ta&#39;] += t,
+                    bmak[&#39;doe_vel&#39;] = bmak[&#39;doe_vel&#39;] + bmak[&#39;doe_cnt&#39;] + t,
+                    bmak[&#39;doe_cnt&#39;]++
+                }
+                bmak[&quot;js_post&quot;] &amp;&amp; bmak[&#39;doe_cnt&#39;] &gt; 1 &amp;&amp; bmak[&#39;aj_indx_doact&#39;] &lt; bmak[&#39;aj_lmt_doact&#39;] &amp;&amp; (bmak[&quot;aj_type&quot;] = 6, bmak[&#39;bpd&#39;](), bmak[&#39;pd&#39;](!0), bmak[&#39;ce_js_post&#39;] = 1, bmak[&#39;aj_indx_doact&#39;]++),
+                bmak[&#39;doa_throttle&#39;]++
+            } catch (a) {}
+        },
+        cdma: function (a) {
+            try {
+                if (bmak[&#39;dme_cnt&#39;] &lt; bmak[&#39;dme_cnt_lmt&#39;] &amp;&amp; bmak[&#39;dma_throttle&#39;] &lt; 2 &amp;&amp; a) {
+                    var t = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+                        e = -1,
+                        n = -1,
+                        o = -1;
+                    a[&#39;acceleration&#39;] &amp;&amp; (e = bmak[&#39;getFloatVal&#39;](a[&#39;acceleration&#39;][&#39;x&#39;]), n = bmak[&#39;getFloatVal&#39;](a[&#39;acceleration&#39;][&#39;y&#39;]), o = bmak[&#39;getFloatVal&#39;](a[&#39;acceleration&#39;][&#39;z&#39;]));
+                    var m = -1,
+                        r = -1,
+                        i = -1;
+                    a[&#39;accelerationIncludingGravity&#39;] &amp;&amp; (m = bmak[&#39;getFloatVal&#39;](a[&#39;accelerationIncludingGravity&#39;][&#39;x&#39;]), r = bmak[&#39;getFloatVal&#39;](a[&#39;accelerationIncludingGravity&#39;][&#39;y&#39;]), i = bmak[&#39;getFloatVal&#39;](a[&#39;accelerationIncludingGravity&#39;][&#39;z&#39;]));
+                    var c = -1,
+                        b = -1,
+                        d = 1;
+                    a[&#39;rotationRate&#39;] &amp;&amp; (c = bmak[&#39;getFloatVal&#39;](a[&#39;rotationRate&#39;][&#39;alpha&#39;]), b = bmak[&#39;getFloatVal&#39;](a[&#39;rotationRate&#39;][&#39;beta&#39;]), d = bmak[&#39;getFloatVal&#39;](a[&#39;rotationRate&#39;][&#39;gamma&#39;]));
+                    var k = bmak[&#39;dme_cnt&#39;] + &quot;,&quot; + t + &quot;,&quot; + e + &quot;,&quot; + n + &quot;,&quot; + o + &quot;,&quot; + m + &quot;,&quot; + r + &quot;,&quot; + i + &quot;,&quot; + c + &quot;,&quot; + b + &quot;,&quot; + d + &#39;;&#39;;
+                    bmak[&#39;dmact&#39;] = bmak[&#39;dmact&#39;] + k,
+                    bmak[&#39;ta&#39;] += t,
+                    bmak[&#39;dme_vel&#39;] = bmak[&#39;dme_vel&#39;] + bmak[&#39;dme_cnt&#39;] + t,
+                    bmak[&#39;dme_cnt&#39;]++
+                }
+                bmak[&quot;js_post&quot;] &amp;&amp; bmak[&#39;dme_cnt&#39;] &gt; 1 &amp;&amp; bmak[&#39;aj_indx_dmact&#39;] &lt; bmak[&#39;aj_lmt_dmact&#39;] &amp;&amp; (bmak[&quot;aj_type&quot;] = 7, bmak[&#39;bpd&#39;](), bmak[&#39;pd&#39;](!0), bmak[&#39;ce_js_post&#39;] = 1, bmak[&#39;aj_indx_dmact&#39;]++),
+                bmak[&#39;dma_throttle&#39;]++
+            } catch (a) {}
+        },
+        get_type: function (a) {
+            return a = a[&#39;toLowerCase&#39;](),
+            &#39;text&#39; == a || &#39;search&#39; == a || &#39;url&#39; == a || &#39;email&#39; == a || &#39;tel&#39; == a || &#39;number&#39; == a ? 0 : &#39;password&#39; == a ? 1 : 2
+        },
+        chknull: function (a) {
+            return null == a ? -1 : a
+        },
+        forminfo: function () {
+            for (var a = &#39;&#39;, t = &#39;&#39;, e = document[&#39;getElementsByTagName&#39;](&#39;input&#39;), n = -1, o = 0; o &lt; e.length; o++) {
+                var m = e[o],
+                    r = bmak[&#39;ab&#39;](m[&#39;getAttribute&#39;](&#39;name&#39;)),
+                    i = bmak[&#39;ab&#39;](m[&#39;getAttribute&#39;](&#39;id&#39;)),
+                    c = m[&#39;getAttribute&#39;](&#39;required&#39;),
+                    b = null == c ? 0 : 1,
+                    d = m[&#39;getAttribute&#39;](&#39;type&#39;),
+                    k = null == d ? -1 : bmak[&#39;get_type&#39;](d),
+                    s = m[&#39;getAttribute&#39;](&#39;autocomplete&#39;);
+                null == s ? n = -1 : (s = s[&#39;toLowerCase&#39;](), n = &#39;off&#39; == s ? 0 : &#39;on&#39; == s ? 1 : 2);
+                var l = m[&#39;defaultValue&#39;],
+                    u = m[&#39;value&#39;],
+                    _ = 0,
+                    f = 0;
+                l &amp;&amp; 0 != l.length &amp;&amp; (f = 1),
+                !u || 0 == u.length || f &amp;&amp; u == l || (_ = 1),
+                2 != k &amp;&amp; (a = a + k + &quot;,&quot; + n + &quot;,&quot; + _ + &quot;,&quot; + b + &quot;,&quot; + i + &quot;,&quot; + r + &quot;,&quot; + f + &#39;;&#39;),
+                t = t + _ + &#39;;&#39;
+            }
+            return null == bmak[&#39;ins&#39;] &amp;&amp; (bmak[&#39;ins&#39;] = t),
+            bmak[&#39;cns&#39;] = t,
+            a
+        },
+        startdoadma: function () {
+            0 == bmak[&#39;doadma_en&#39;] &amp;&amp; window[&#39;addEventListener&#39;] &amp;&amp; (window[&#39;addEventListener&#39;](&#39;deviceorientation&#39;, bmak[&#39;cdoa&#39;], !0), window[&#39;addEventListener&#39;](&#39;devicemotion&#39;, bmak[&#39;cdma&#39;], !0), bmak[&#39;doadma_en&#39;] = 1),
+            bmak[&#39;doa_throttle&#39;] = 0,
+            bmak[&#39;dma_throttle&#39;] = 0
+        },
+        // 00000
+        updatet: function () {
+            return bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;]
+        },
+        htm: function (a) {
+            bmak[&#39;cta&#39;](a, 1)
+        },
+        hts: function (a) {
+            bmak[&#39;cta&#39;](a, 2)
+        },
+        hte: function (a) {
+            bmak[&#39;cta&#39;](a, 3)
+        },
+        htc: function (a) {
+            bmak[&#39;cta&#39;](a, 4)
+        },
+        hmm: function (a) {
+            bmak[&#39;cma&#39;](a, 1)
+        },
+        hc: function (a) {
+            bmak[&#39;cma&#39;](a, 2)
+        },
+        hmd: function (a) {
+            bmak[&#39;cma&#39;](a, 3)
+        },
+        hmu: function (a) {
+            bmak[&#39;cma&#39;](a, 4)
+        },
+        hpd: function (a) {
+            bmak[&#39;cpa&#39;](a, 3)
+        },
+        hpu: function (a) {
+            bmak[&#39;cpa&#39;](a, 4)
+        },
+        hkd: function (a) {
+            bmak[&#39;cka&#39;](a, 1)
+        },
+        hku: function (a) {
+            bmak[&#39;cka&#39;](a, 2)
+        },
+        hkp: function (a) {
+            bmak[&#39;cka&#39;](a, 3)
+        },
+        cfsubmit: function () {
+            bmak[&quot;sd_debug&quot;](&#39;&lt;cfsubmit/&gt;&#39;),
+            bmak[&quot;js_post&quot;] ? (bmak[&quot;aj_type&quot;] = 4, bmak[&#39;bpd&#39;](), 0 == bmak[&#39;ce_js_post&#39;] &amp;&amp; bmak[&#39;cns&#39;] != bmak[&#39;ins&#39;] &amp;&amp; bmak[&#39;pd&#39;](!0)) : bmak[&#39;bpd&#39;]()
+        },
+        getdurl: function () {
+            return bmak[&#39;enReadDocUrl&#39;] ? document[&#39;URL&#39;].replace(/\\|&quot;/g, &#39;&#39;) : &#39;&#39;
+        },
+        x1: function () {
+
+            return Math[&#39;floor&#39;](16777216 * (1 + Math[&#39;random&#39;]()))[&#39;toString&#39;](36)
+            // Math.floor(16777216 * (1 + Math.random())).toString(36)
+        },
+        gck: function () {
+            var a = bmak[&#39;x1&#39;]() + bmak[&#39;x1&#39;]() + bmak[&#39;x1&#39;]() + bmak[&#39;x1&#39;]();
+            return bmak[&#39;set_cookie&#39;](bmak[&quot;ckie&quot;], a + &#39;_&#39; + bmak[&#39;ab&#39;](a)),a
+            // a = bmak[x1]() * 4   d5w0c  d5w0cd5w0cd5w0cd5w0c
+            // bmak.set_cookie(&quot;_abck&quot;,a*4 + &quot;_&quot; + bmak[ab](a*4)), a
+            // bmak.set_cookie(&quot;_abck&quot;,a*4 + &quot;_&quot; + 1676), a
+            // d5w0cd5w0cd5w0cd5w0c
+        },
+        set_cookie: function (a, t) {
+            void 0 !== document.cookie &amp;&amp; (document.cookie = a + &quot;=&quot; + t + &#39;; path=/; expires=Fri, 01 Feb 2025 08:00:00 GMT;&#39;)
+            // void 0 !== document.cookie &amp;&amp; (document.cookie = a + &quot;=&quot; + &quot;d5w0cd5w0cd5w0cd5w0c_1676&quot; + &quot;; path=/; expires=Fri, 01 Feb 2025 08:00:00 GMT;&quot;)
+        },
+        get_cookie: function () {
+            try {
+                var a = bmak[&quot;cookie_chk_read&quot;](bmak[&quot;ckie&quot;]);
+                return a || (bmak[&quot;n_ck&quot;] = 1, a = bmak[&quot;gck&quot;]()),
+                a
+            } catch (a) {}
+            return 2  //dmr7fbzmlajit5fbuh3t_1982
+        },
+        // 返回 等于号后面的
+        cookie_chk_read: function (a) {
+            // a == &quot;_abck&quot;
+            if (document.cookie)
+                for (var t = a + &quot;=&quot;, e = document.cookie.split(&quot;;&quot;), n = 0; n &lt; e.length; n++) {
+                var o = e[n];
+                if (0 === o.indexOf(t)) {
+
+                    var m = o.substring(t.length, o.length);
+                    if (!!1) return m;
+                    if (-1 != m.indexOf(&quot;~&quot;)) return m
+                }
+            }
+            return !1
+        },
+        // 00000
+        bpd: function () {
+            bmak[&quot;sd_debug&quot;](&quot;&lt;bpd&gt;&quot;);
+            var a = 0;
+            try {
+                a = bmak[&quot;get_cf_date&quot;]();
+                var t = bmak[&quot;updatet&quot;](),
+                    e = 3;
+                bmak[&quot;ckie&quot;] &amp;&amp; (e = bmak[&quot;get_cookie&quot;]());
+                var n = bmak[&quot;gd&quot;](),
+                    o = &quot;do_en&quot;,
+                    m = &quot;dm_en&quot;,
+                    r = &quot;t_en&quot;,
+                    i = o + &quot;,&quot; + m + &quot;,&quot; + r,
+                    c = bmak[&quot;forminfo&quot;](),
+                    b = bmak[&quot;getdurl&quot;](),
+                    d = bmak[&quot;aj_type&quot;] + &quot;,&quot; + bmak[&quot;aj_indx&quot;];
+                !bmak[&quot;fpcf&quot;][&quot;fpValCalculated&quot;] &amp;&amp; (0 == bmak[&quot;js_post&quot;] || bmak[&quot;aj_indx&quot;] &gt; 0) &amp;&amp; bmak[&quot;fpcf&quot;][&quot;fpVal&quot;]();
+                var k = bmak[&#39;ke_vel&#39;] + bmak[&#39;me_vel&#39;] + bmak[&#39;doe_vel&#39;] + bmak[&#39;dme_vel&#39;] + bmak[&#39;te_vel&#39;] + bmak[&#39;pe_vel&#39;],
+                    s = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+                    l = bmak[&#39;pi&#39;](bmak[&#39;d2&#39;] / 6),
+                    u = bmak[&#39;fas&#39;](),
+                    _ = [bmak[&#39;ke_vel&#39;] + 1, bmak[&#39;me_vel&#39;] + 1, bmak[&#39;te_vel&#39;], bmak[&#39;doe_vel&#39;], bmak[&#39;dme_vel&#39;], bmak[&#39;pe_vel&#39;], k, t, bmak[&#39;init_time&#39;], bmak[&#39;start_ts&#39;], bmak[&quot;fpcf&quot;][&quot;td&quot;], bmak[&#39;d2&#39;], bmak[&#39;ke_cnt&#39;], bmak[&#39;me_cnt&#39;], l, bmak[&#39;pe_cnt&#39;], bmak[&#39;te_cnt&#39;], s, bmak[&#39;ta&#39;], bmak[&quot;n_ck&quot;], e, bmak[&#39;ab&#39;](e), bmak[&quot;fpcf&quot;][&quot;rVal&quot;], bmak[&quot;fpcf&quot;][&quot;rCFP&quot;], u],
+                    f = _.join(&quot;,&quot;),
+                    p = &#39;&#39; + bmak[&#39;ab&#39;](bmak[&quot;fpcf&quot;][&quot;fpValstr&quot;]),
+                    v = bmak[&#39;sed&#39;]();
+
+                sensor_data = bmak[&#39;ver&#39;] + &#39;-1,2,-94,-100,&#39; + n + &#39;-1,2,-94,-101,&#39; + i + &#39;-1,2,-94,-105,&#39; + bmak[&#39;informinfo&#39;] + &#39;-1,2,-94,-102,&#39; + c + &#39;-1,2,-94,-108,&#39; + bmak[&#39;kact&#39;] + &#39;-1,2,-94,-110,&#39; + bmak[&#39;mact&#39;] + &#39;-1,2,-94,-117,&#39; + bmak[&#39;tact&#39;] + &#39;-1,2,-94,-111,&#39; + bmak[&#39;doact&#39;] + &#39;-1,2,-94,-109,&#39; + bmak[&#39;dmact&#39;] + &#39;-1,2,-94,-114,&#39; + bmak[&#39;pact&#39;] + &#39;-1,2,-94,-103,&#39; + bmak[&#39;vcact&#39;] + &#39;-1,2,-94,-112,&#39; + b + &#39;-1,2,-94,-115,&#39; + f + &#39;-1,2,-94,-106,&#39; + d,
+                sensor_data = sensor_data + &#39;-1,2,-94,-119,&#39; + bmak[&#39;mr&#39;] + &#39;-1,2,-94,-122,&#39; + v + &#39;-1,2,-94,-123,&#39; + bmak[&#39;mn_r&#39;];
+                var h = bmak[&#39;ab&#39;](sensor_data);
+                sensor_data = sensor_data + &#39;-1,2,-94,-70,&#39; + bmak[&quot;fpcf&quot;][&quot;fpValstr&quot;] + &#39;-1,2,-94,-80,&#39; + p + &#39;-1,2,-94,-116,&#39; + bmak[&#39;o9&#39;] + &#39;-1,2,-94,-118,&#39; + h + &#39;-1,2,-94,-121,&#39;,
+                bmak[&quot;sd_debug&quot;](&#39;,s1:&#39; + sensor_data[&#39;slice&#39;](0, 10))
+            } catch (a) {
+                try {
+                    bmak[&quot;sd_debug&quot;](&#39;,s2:&#39; + a),
+                    sensor_data = bmak[&#39;ver&#39;] + &#39;-1,2,-94,-100,&#39; + bmak[&quot;uar&quot;]() + &#39;-1,2,-94,-120,&#39; + a.replace(/\&quot;/g, &quot;&#39;&quot;)
+                } catch (a) {
+                    bmak[&quot;sd_debug&quot;](&#39;,s3:&#39; + a)
+                }
+            }
+            try {
+                var g = bmak[&#39;od&#39;](bmak[&#39;cs&#39;], bmak[&#39;api_public_key&#39;])[&#39;slice&#39;](0, 16),
+                    w = Math[&#39;floor&#39;](bmak[&quot;get_cf_date&quot;]() / 36e5),
+                    y = bmak[&quot;get_cf_date&quot;](),
+                    C = g + bmak[&#39;od&#39;](w, g) + sensor_data;
+                sensor_data = C + &#39;;&#39; + (bmak[&quot;get_cf_date&quot;]() - a) + &#39;;&#39; + bmak[&#39;tst&#39;] + &#39;;&#39; + (bmak[&quot;get_cf_date&quot;]() - y)
+
+            } catch (a) {}
+            try {
+                if (0 == bmak[&quot;sdfn&quot;].length) bmak[&quot;sd_debug&quot;](&#39;,s4&#39;),
+                document[&#39;getElementById&#39;](&#39;sensor_data&#39;) &amp;&amp; (bmak[&quot;sd_debug&quot;](&#39;,s5&#39;), document[&#39;getElementById&#39;](&#39;sensor_data&#39;)[&#39;value&#39;] = sensor_data);
+                else {
+                    bmak[&quot;sd_debug&quot;](&#39;,s6:&#39;);
+                    for (var j = 0; j &lt; bmak[&quot;sdfn&quot;].length; j++) if (bmak[&quot;sd_debug&quot;](&#39;,a-&#39; + bmak[&quot;sdfn&quot;][j]), document[&#39;getElementById&#39;](bmak[&quot;sdfn&quot;][j])) {
+                        bmak[&quot;sd_debug&quot;](&#39;,b&#39;),
+                        document[&#39;getElementById&#39;](bmak[&quot;sdfn&quot;][j])[&#39;value&#39;] = sensor_data;
+                        var S = document[&#39;getElementById&#39;](bmak[&quot;sdfn&quot;][j])[&#39;value&#39;];
+                        &#39;string&#39; == typeof S ? bmak[&quot;sd_debug&quot;](&#39;,c-&#39; + S[&#39;slice&#39;](0, 5)) : bmak[&quot;sd_debug&quot;](&#39;,c-null&#39;)
+                    } else bmak[&quot;sd_debug&quot;](&#39;,d&#39;)
+                }
+            } catch (a) {
+                bmak[&quot;sd_debug&quot;](&#39;,s7:&#39; + a + &quot;,&quot; + sensor_data)
+            }
+            bmak[&quot;sd_debug&quot;](&#39;&lt;/bpd&gt;&#39;)
+        },
+        od: function (a, t) {
+            try {
+                a = String(a),
+                t = String(t);
+                var e = [],
+                    n = t.length;
+                if (n &gt; 0) {
+                        for (var o = 0; o &lt; a.length; o++) {
+                            var m = a[&#39;charCodeAt&#39;](o),
+                                r = a[&#39;charAt&#39;](o),
+                                i = t[&#39;charCodeAt&#39;](o % n);
+                            m = bmak[&#39;rir&#39;](m, 47, 57, i),
+                            m != a[&#39;charCodeAt&#39;](o) &amp;&amp; (r = String[&#39;fromCharCode&#39;](m)),
+                            e[&#39;push&#39;](r)
+                        }
+                        if (e.length &gt; 0) return e.join(&#39;&#39;)
+                    }
+            } catch (a) {}
+            return a
+        },
+        rir: function (a, t, e, n) {
+            return a &gt; t &amp;&amp; a &lt;= e &amp;&amp; (a += n % (e - t)) &gt; e &amp;&amp; (a = a - e + t),
+            a
+        },
+        lvc: function (a) {
+            try {
+                if (bmak[&#39;vc_cnt&#39;] &lt; bmak[&#39;vc_cnt_lmt&#39;]) {
+                    var t = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+                        e = a + &quot;,&quot; + t + &#39;;&#39;;
+                    bmak[&#39;vcact&#39;] = bmak[&#39;vcact&#39;] + e
+                }
+                bmak[&#39;vc_cnt&#39;]++
+            } catch (a) {}
+        },
+        hvc: function () {
+            try {
+                var a = 1;
+                document[bmak[&#39;hn&#39;]] &amp;&amp; (a = 0),
+                bmak[&#39;lvc&#39;](a)
+            } catch (a) {}
+        },
+        hb: function (a) {
+            bmak[&#39;lvc&#39;](2)
+        },
+        hf: function (a) {
+            bmak[&#39;lvc&#39;](3)
+        },
+        rve: function () {
+            void 0 !== document[&#39;hidden&#39;] ? (bmak[&#39;hn&#39;] = &#39;hidden&#39;, bmak[&#39;vc&#39;] = &#39;visibilitychange&#39;) : void 0 !== document[&#39;mozHidden&#39;] ? (bmak[&#39;hn&#39;] = &#39;mozHidden&#39;, bmak[&#39;vc&#39;] = &#39;mozvisibilitychange&#39;) : void 0 !== document[&#39;msHidden&#39;] ? (bmak[&#39;hn&#39;] = &#39;msHidden&#39;, bmak[&#39;vc&#39;] = &#39;msvisibilitychange&#39;) : void 0 !== document[&#39;webkitHidden&#39;] &amp;&amp; (bmak[&#39;hn&#39;] = &#39;webkitHidden&#39;, bmak[&#39;vc&#39;] = &#39;webkitvisibilitychange&#39;),
+            document[&#39;addEventListener&#39;] ? &#39;unk&#39; != bmak[&#39;hn&#39;] &amp;&amp; document[&#39;addEventListener&#39;](bmak[&#39;vc&#39;], bmak[&#39;hvc&#39;], !0) : document[&#39;attachEvent&#39;] &amp;&amp; &#39;unk&#39; != bmak[&#39;hn&#39;] &amp;&amp; document[&#39;attachEvent&#39;](bmak[&#39;vc&#39;], bmak[&#39;hvc&#39;]),
+            window[&#39;onblur&#39;] = bmak[&#39;hb&#39;],
+            window[&#39;onfocus&#39;] = bmak[&#39;hf&#39;]
+        },
+        // 开启跟踪
+        startTracking: function () {
+            // 开启doadma
+            bmak[&#39;startdoadma&#39;]();
+            try {
+                bmak[&#39;to&#39;]()
+            } catch (a) {
+                bmak[&#39;o9&#39;] = -654321
+            }
+            setInterval(function () {
+                bmak[&#39;startdoadma&#39;]()
+            }, 3e3),
+            document[&#39;addEventListener&#39;] ? (document[&#39;addEventListener&#39;](&#39;touchmove&#39;, bmak[&#39;htm&#39;], !0), document[&#39;addEventListener&#39;](&#39;touchstart&#39;, bmak[&#39;hts&#39;], !0), document[&#39;addEventListener&#39;](&#39;touchend&#39;, bmak[&#39;hte&#39;], !0), document[&#39;addEventListener&#39;](&#39;touchcancel&#39;, bmak[&#39;htc&#39;], !0), document[&#39;addEventListener&#39;](&#39;mousemove&#39;, bmak[&#39;hmm&#39;], !0), document[&#39;addEventListener&#39;](&#39;click&#39;, bmak[&#39;hc&#39;], !0), document[&#39;addEventListener&#39;](&#39;mousedown&#39;, bmak[&#39;hmd&#39;], !0), document[&#39;addEventListener&#39;](&#39;mouseup&#39;, bmak[&#39;hmu&#39;], !0), document[&#39;addEventListener&#39;](&#39;pointerdown&#39;, bmak[&#39;hpd&#39;], !0), document[&#39;addEventListener&#39;](&#39;pointerup&#39;, bmak[&#39;hpu&#39;], !0), document[&#39;addEventListener&#39;](&#39;keydown&#39;, bmak[&#39;hkd&#39;], !0), document[&#39;addEventListener&#39;](&#39;keyup&#39;, bmak[&#39;hku&#39;], !0), document[&#39;addEventListener&#39;](&#39;keypress&#39;, bmak[&#39;hkp&#39;], !0)) : document[&#39;attachEvent&#39;] &amp;&amp; (document[&#39;attachEvent&#39;](&#39;touchmove&#39;, bmak[&#39;htm&#39;]), document[&#39;attachEvent&#39;](&#39;touchstart&#39;, bmak[&#39;hts&#39;]), document[&#39;attachEvent&#39;](&#39;touchend&#39;, bmak[&#39;hte&#39;]), document[&#39;attachEvent&#39;](&#39;touchcancel&#39;, bmak[&#39;htc&#39;]), document[&#39;attachEvent&#39;](&#39;onmousemove&#39;, bmak[&#39;hmm&#39;]), document[&#39;attachEvent&#39;](&#39;onclick&#39;, bmak[&#39;hc&#39;]), document[&#39;attachEvent&#39;](&#39;onmousedown&#39;, bmak[&#39;hmd&#39;]), document[&#39;attachEvent&#39;](&#39;onmouseup&#39;, bmak[&#39;hmu&#39;]), document[&#39;attachEvent&#39;](&#39;onpointerdown&#39;, bmak[&#39;hpd&#39;]), document[&#39;attachEvent&#39;](&#39;onpointerup&#39;, bmak[&#39;hpu&#39;]), document[&#39;attachEvent&#39;](&#39;onkeydown&#39;, bmak[&#39;hkd&#39;]), document[&#39;attachEvent&#39;](&#39;onkeyup&#39;, bmak[&#39;hku&#39;]), document[&#39;attachEvent&#39;](&#39;onkeypress&#39;, bmak[&#39;hkp&#39;])),
+            bmak[&#39;rve&#39;](),
+            bmak[&#39;informinfo&#39;] = bmak[&quot;forminfo&quot;](),
+            bmak[&quot;js_post&quot;] &amp;&amp; (bmak[&quot;aj_type&quot;] = 0, bmak[&#39;bpd&#39;](), bmak[&#39;pd&#39;](!0))
+        },
+        gb: function (a, t) {
+            var e = a[&#39;charCodeAt&#39;](t);
+            return e = e &gt; 255 ? 0 : e
+        },
+        encode: function (a) {
+            if (&#39;undefined&#39; != typeof btoa) return btoa(a);
+            for (var t, e, n, o, m, r, i, c = &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&#39;, b = &#39;&#39;, d = 3 * Math[&#39;floor&#39;](a.length / 3), k = 0; k &lt; d; k += 3) t = bmak[&#39;gb&#39;](a, k),
+            e = bmak[&#39;gb&#39;](a, k + 1),
+            n = bmak[&#39;gb&#39;](a, k + 2),
+            o = t &gt;&gt; 2,
+            m = ((3 &amp; t) &lt;&lt; 4) + (e &gt;&gt; 4),
+            r = ((15 &amp; e) &lt;&lt; 2) + (n &gt;&gt; 6),
+            i = 63 &amp; n,
+            b = b + c[&#39;charAt&#39;](o) + c[&#39;charAt&#39;](m) + c[&#39;charAt&#39;](r) + c[&#39;charAt&#39;](i);
+            return a.length % 3 == 1 &amp;&amp; (t = bmak[&#39;gb&#39;](a, k), o = t &gt;&gt; 2, m = (3 &amp; t) &lt;&lt; 4, b = b + c[&#39;charAt&#39;](o) + c[&#39;charAt&#39;](m) + &#39;==&#39;),
+            a.length % 3 == 2 &amp;&amp; (t = bmak[&#39;gb&#39;](a, k), e = bmak[&#39;gb&#39;](a, k + 1), o = t &gt;&gt; 2, m = ((3 &amp; t) &lt;&lt; 4) + (e &gt;&gt; 4), r = (15 &amp; e) &lt;&lt; 2, b = b + c[&#39;charAt&#39;](o) + c[&#39;charAt&#39;](m) + c[&#39;charAt&#39;](r) + &quot;=&quot;),
+            b
+        },
+        ie9OrLower: function () {
+            try {
+                if (&#39;string&#39; == typeof navigator[&#39;appVersion&#39;] &amp;&amp; -1 != navigator[&#39;appVersion&#39;].indexOf(&#39;MSIE&#39;)) {
+                    if (parseFloat(navigator[&#39;appVersion&#39;].split(&#39;MSIE&#39;)[1]) &lt;= 9) return !0
+                }
+            } catch (a) {}
+            return !1
+        },
+        apicall: function (a, t) {
+            var e;
+            e = window[&#39;XDomainRequest&#39;] ? new XDomainRequest : window[&#39;XMLHttpRequest&#39;] ? new XMLHttpRequest : new ActiveXObject(&#39;Microsoft.XMLHTTP&#39;),
+            e[&#39;open&#39;](&#39;POST&#39;, a, t);
+            var n = bmak[&#39;encode&#39;](bmak[&#39;api_public_key&#39;] + &#39;:&#39;);
+            bmak[&#39;auth&#39;] = &#39;,&quot;auth&quot; : &quot;&#39; + n + &#39;&quot;&#39;,
+            e[&#39;setRequestHeader&#39;] &amp;&amp; (e[&#39;setRequestHeader&#39;](&#39;Content-type&#39;, &#39;application/json&#39;), e[&#39;setRequestHeader&#39;](&#39;Authorization&#39;, &#39;Basic &#39; + n), bmak[&#39;auth&#39;] = &#39;&#39;);
+            var o = &#39;{&quot;session_id&quot; : &quot;&#39; + bmak[&#39;session_id&#39;] + &#39;&quot;,&quot;sensor_data&quot; : &quot;&#39; + sensor_data + &#39;&quot;&#39; + bmak[&#39;auth&#39;] + &#39;}&#39;;
+            e[&#39;send&#39;](o)
+        },
+        apicall_bm: function (a, t, e) {
+            var n;
+            void 0 !== window[&#39;XMLHttpRequest&#39;] ? n = new XMLHttpRequest : void 0 !== window[&#39;XDomainRequest&#39;] ? (n = new XDomainRequest, n[&#39;onload&#39;] = function () {
+                this[&#39;readyState&#39;] = 4,
+                this[&#39;onreadystatechange&#39;] instanceof Function &amp;&amp; this[&#39;onreadystatechange&#39;]()
+            }) : n = new ActiveXObject(&#39;Microsoft.XMLHTTP&#39;),
+            n[&#39;open&#39;](&#39;POST&#39;, a, t),
+            void 0 !== n[&#39;withCredentials&#39;] &amp;&amp; (n[&#39;withCredentials&#39;] = !0);
+            var o = &#39;{&quot;sensor_data&quot;:&quot;&#39; + sensor_data + &#39;&quot;}&#39;;
+            n[&#39;onreadystatechange&#39;] = function () {
+                n[&#39;readyState&#39;] &gt; 3 &amp;&amp; e &amp;&amp; e(n)
+            },
+            n[&#39;send&#39;](o)
+        },
+        pd_en: function () {
+            var a, t = bmak[&quot;getdurl&quot;]();
+            return 0 == bmak[&#39;thr&#39;] ? 1 : (a = t.indexOf(&#39;home.html&#39;) &gt; -1 ? 1 : 0, bmak[&#39;start_ts&#39;] % 10 != 0 ? 0 : bmak[&quot;aj_indx&quot;] &gt; 3 ? 0 : a &amp;&amp; bmak[&quot;aj_indx&quot;] &gt; 0 ? 0 : 1)
+        },
+        pd: function (a) {
+            var t;
+            (t = bmak[&#39;pd_en&#39;]()) &amp;&amp; (bmak[&quot;bm&quot;] ? bmak[&#39;check_stop_protocol&#39;]() &amp;&amp; bmak[&#39;apicall_bm&#39;](bmak[&#39;cf_url&#39;], a, bmak[&#39;patp&#39;]) : bmak[&#39;apicall&#39;](bmak[&#39;cf_url&#39;], a), bmak[&quot;aj_indx&quot;] = bmak[&quot;aj_indx&quot;] + 1)
+        },
+        check_stop_protocol: function () {
+            var a = bmak[&#39;get_stop_signals&#39;](),
+                t = a[0];
+            !bmak[&#39;rst&#39;] &amp;&amp; t &gt; -1 &amp;&amp; (bmak[&#39;ir&#39;](), bmak[&#39;rst&#39;] = !0);
+            var e = a[1];
+            return -1 == e || bmak[&#39;aj_ss&#39;] &lt; e
+        },
+        get_stop_signals: function () {
+            var a = [-1, -1],
+                t = bmak[&quot;cookie_chk_read&quot;](bmak[&quot;ckie&quot;]);
+            //  t = bmak[cookie_chk_read](&quot;_abck&quot;);
+            if (!1 !== t) try {
+                    var e = decodeURIComponent(t).split(&quot;~&quot;);
+                    if (e.length &gt;= 4) {
+                        var n = bmak[&#39;pi&#39;](e[1]),
+                            o = bmak[&#39;pi&#39;](e[3]);
+                        n = isNaN(n) ? -1 : n,
+                        o = isNaN(o) ? -1 : o,
+                        a = [o, n]
+                    }
+                } catch (a) {}
+            return a
+        },
+        patp: function (a) {
+            bmak[&#39;aj_ss&#39;]++,
+            bmak[&#39;rst&#39;] = !1
+        },
+        get_mn_params_from_abck: function () {
+            var a = [0, &#39;default_abck&#39;, &#39;&#39;, 1e5, 100, 1e3];
+            try {
+                var t = bmak[&quot;cookie_chk_read&quot;](bmak[&quot;ckie&quot;]);
+                if (!1 !== t) {
+                    var e = decodeURIComponent(t).split(&quot;~&quot;);
+                    if (e.length &gt;= 5) {
+                        var n = e[0],
+                            o = e[4],
+                            m = o.split(&#39;-&#39;);
+                        if (m.length &gt;= 5) {
+                                a = [bmak[&#39;pi&#39;](m[0]), n, m[1], bmak[&#39;pi&#39;](m[2]), bmak[&#39;pi&#39;](m[3]), bmak[&#39;pi&#39;](m[4])]
+                            }
+                    }
+                }
+            } catch (a) {}
+            return a
+        },
+        mn_get_challenge: function () {
+            var a = bmak[&#39;get_mn_params_from_abck&#39;](),
+                t = a[0],
+                e = a[1],
+                n = a[2],
+                o = a[3],
+                m = a[4],
+                r = a[5];
+            bmak[&#39;mn_abck&#39;] = e,
+            bmak[&#39;mn_psn&#39;] = n[&#39;toString&#39;](),
+            bmak[&#39;mn_sen&#39;] = t,
+            bmak[&#39;mn_cd&#39;] = o,
+            bmak[&#39;mn_tout&#39;] = m,
+            bmak[&#39;mn_stout&#39;] = r,
+            bmak[&#39;mn_ts&#39;] = bmak[&#39;start_ts&#39;],
+            bmak[&#39;mn_cc&#39;] = bmak[&#39;mn_abck&#39;] + bmak[&#39;start_ts&#39;] + bmak[&#39;mn_psn&#39;]
+        },
+        mn_check_if_new_challenge: function () {
+            return bmak[&#39;mn_cc&#39;] != bmak[&#39;mn_lc&#39;] || bmak[&#39;mn_cd&#39;] != bmak[&#39;mn_ld&#39;] ? 1 : 0
+        },
+        mn_poll: function () {
+            if (0 == bmak[&#39;mn_state&#39;]) {
+                bmak[&#39;mn_get_challenge&#39;]();
+                var a = bmak[&#39;mn_check_if_new_challenge&#39;]();
+                bmak[&#39;mn_sen&#39;] &amp;&amp; a &amp;&amp; (bmak[&#39;mn_state&#39;] = 1, bmak[&#39;mn_mc_indx&#39;] = 0, bmak[&#39;mn_al&#39;] = [], bmak[&#39;mn_il&#39;] = [], bmak[&#39;mn_tcl&#39;] = [], bmak[&#39;mn_lg&#39;] = [], setTimeout(bmak[&#39;mn_w&#39;], bmak[&#39;mn_tout&#39;]))
+            }
+        },
+        mn_init: function () {
+            setInterval(bmak[&#39;mn_poll&#39;], 1e3)
+        },
+        rotate_left: function (a, t) {
+            return a &lt;&lt; t | a &gt;&gt;&gt; 32 - t
+        },
+        encode_utf8: function (a) {
+            return unescape(encodeURIComponent(a))
+        },
+        mn_h: function (a) {
+            var t = 1732584193,
+                e = 4023233417,
+                n = 2562383102,
+                o = 271733878,
+                m = 3285377520,
+                r = bmak[&#39;encode_utf8&#39;](a),
+                i = 8 * r.length;
+            r += String[&#39;fromCharCode&#39;](128);
+            for (var c = r.length / 4 + 2, b = Math[&#39;ceil&#39;](c / 16), d = new Array(b), k = 0; k &lt; b; k++) {
+                    d[k] = new Array(16);
+                    for (var s = 0; s &lt; 16; s++) d[k][s] = r[&#39;charCodeAt&#39;](64 * k + 4 * s) &lt;&lt; 24 | r[&#39;charCodeAt&#39;](64 * k + 4 * s + 1) &lt;&lt; 16 | r[&#39;charCodeAt&#39;](64 * k + 4 * s + 2) &lt;&lt; 8 | r[&#39;charCodeAt&#39;](64 * k + 4 * s + 3) &lt;&lt; 0
+                }
+            var l = i / Math[&#39;pow&#39;](2, 32);
+            d[b - 1][14] = Math[&#39;floor&#39;](l),
+            d[b - 1][15] = 4294967295 &amp; i;
+            for (var u = 0; u &lt; b; u++) {
+                    for (var _, f, p, v = new Array(80), h = t, g = e, w = n, y = o, C = m, k = 0; k &lt; 80; k++) v[k] = k &lt; 16 ? d[u][k] : bmak[&#39;rotate_left&#39;](v[k - 3] ^ v[k - 8] ^ v[k - 14] ^ v[k - 16], 1),
+                    k &lt; 20 ? (_ = g &amp; w | ~g &amp; y, f = 1518500249) : k &lt; 40 ? (_ = g ^ w ^ y, f = 1859775393) : k &lt; 60 ? (_ = g &amp; w | g &amp; y | w &amp; y, f = 2400959708) : (_ = g ^ w ^ y, f = 3395469782),
+                    p = bmak[&#39;rotate_left&#39;](h, 5) + _ + C + f + v[k],
+                    C = y,
+                    y = w,
+                    w = bmak[&#39;rotate_left&#39;](g, 30),
+                    g = h,
+                    h = p;
+                    t += h,
+                    e += g,
+                    n += w,
+                    o += y,
+                    m += C
+                }
+            return [t &gt;&gt; 24 &amp; 255, t &gt;&gt; 16 &amp; 255, t &gt;&gt; 8 &amp; 255, 255 &amp; t, e &gt;&gt; 24 &amp; 255, e &gt;&gt; 16 &amp; 255, e &gt;&gt; 8 &amp; 255, 255 &amp; e, n &gt;&gt; 24 &amp; 255, n &gt;&gt; 16 &amp; 255, n &gt;&gt; 8 &amp; 255, 255 &amp; n, o &gt;&gt; 24 &amp; 255, o &gt;&gt; 16 &amp; 255, o &gt;&gt; 8 &amp; 255, 255 &amp; o, m &gt;&gt; 24 &amp; 255, m &gt;&gt; 16 &amp; 255, m &gt;&gt; 8 &amp; 255, 255 &amp; m]
+        },
+        bdm: function (a, t) {
+            for (var e = 0, n = 0; n &lt; a.length; ++n) e = (e &lt;&lt; 8 | a[n]) &gt;&gt;&gt; 0,
+            e %= t;
+            return e
+        },
+        mn_w: function () {
+            try {
+                for (var a = 0, t = 0, e = 0, n = &#39;&#39;, o = bmak[&quot;get_cf_date&quot;](), m = bmak[&#39;mn_cd&#39;] + bmak[&#39;mn_mc_indx&#39;]; 0 == a;) {
+                    n = Math[&#39;random&#39;]()[&#39;toString&#39;](16);
+                    var r = bmak[&#39;mn_cc&#39;] + m[&#39;toString&#39;]() + n,
+                        i = bmak[&#39;mn_h&#39;](r);
+                    if (0 == bmak[&#39;bdm&#39;](i, m)) a = 1,
+                    e = bmak[&quot;get_cf_date&quot;]() - o,
+                    bmak[&#39;mn_al&#39;][&#39;push&#39;](n),
+                    bmak[&#39;mn_tcl&#39;][&#39;push&#39;](e),
+                    bmak[&#39;mn_il&#39;][&#39;push&#39;](t),
+                    0 == bmak[&#39;mn_mc_indx&#39;] &amp;&amp; (bmak[&#39;mn_lg&#39;][&#39;push&#39;](bmak[&#39;mn_abck&#39;]), bmak[&#39;mn_lg&#39;][&#39;push&#39;](bmak[&#39;mn_ts&#39;]), bmak[&#39;mn_lg&#39;][&#39;push&#39;](bmak[&#39;mn_psn&#39;]), bmak[&#39;mn_lg&#39;][&#39;push&#39;](bmak[&#39;mn_cc&#39;]), bmak[&#39;mn_lg&#39;][&#39;push&#39;](bmak[&#39;mn_cd&#39;][&#39;toString&#39;]()), bmak[&#39;mn_lg&#39;][&#39;push&#39;](m[&#39;toString&#39;]()), bmak[&#39;mn_lg&#39;][&#39;push&#39;](n), bmak[&#39;mn_lg&#39;][&#39;push&#39;](r), bmak[&#39;mn_lg&#39;][&#39;push&#39;](i));
+                    else if ((t += 1) % 1e3 == 0 &amp;&amp; (e = bmak[&quot;get_cf_date&quot;]() - o) &gt; bmak[&#39;mn_stout&#39;]) return void setTimeout(bmak[&#39;mn_w&#39;], 1e3 + bmak[&#39;mn_stout&#39;])
+                }
+                bmak[&#39;mn_mc_indx&#39;] += 1,
+                bmak[&#39;mn_mc_indx&#39;] &lt; bmak[&#39;mn_mc_lmt&#39;] ? setTimeout(bmak[&#39;mn_w&#39;], bmak[&#39;mn_tout&#39;] + e) : (bmak[&#39;mn_mc_indx&#39;] = 0, bmak[&#39;mn_state&#39;] = 0, bmak[&#39;mn_lc&#39;] = bmak[&#39;mn_cc&#39;], bmak[&#39;mn_ld&#39;] = bmak[&#39;mn_cd&#39;], bmak[&#39;mn_r&#39;] = bmak[&#39;mn_pr&#39;]())
+            } catch (a) {
+                bmak[&quot;sd_debug&quot;](&#39;,mn_w:&#39; + a)
+            }
+        },
+        mn_pr: function () {
+            return bmak[&#39;mn_al&#39;].join(&quot;,&quot;) + &#39;;&#39; + bmak[&#39;mn_tcl&#39;].join(&quot;,&quot;) + &#39;;&#39; + bmak[&#39;mn_il&#39;].join(&quot;,&quot;) + &#39;;&#39; + bmak[&#39;mn_lg&#39;].join(&quot;,&quot;) + &#39;;&#39;
+        },
+        listFunctions: {
+            _setJsPost: function (a) {
+                bmak[&quot;js_post&quot;] = a,
+                bmak[&quot;js_post&quot;] &amp;&amp; (bmak[&#39;enReadDocUrl&#39;] = 1)
+            },
+            _setSessionId: function (a) {
+                bmak[&#39;session_id&#39;] = a
+            },
+            _setJavaScriptKey: function (a) {
+                bmak[&#39;api_public_key&#39;] = a
+            },
+            _setEnAddHidden: function (a) {
+                bmak[&#39;enAddHidden&#39;] = a
+            },
+            _setInitTime: function (a) {
+                bmak[&#39;init_time&#39;] = a
+            },
+            _setApiUrl: function (a) {
+                bmak[&#39;cf_url&#39;] = a
+            },
+            _setEnGetLoc: function (a) {
+                bmak[&#39;enGetLoc&#39;] = a
+            },
+            _setEnReadDocUrl: function (a) {
+                bmak[&#39;enReadDocUrl&#39;] = a
+            },
+            _setDisFpCalOnTimeout: function (a) {
+                bmak[&#39;disFpCalOnTimeout&#39;] = a
+            },
+            _setCookie: function (a) {
+                bmak[&quot;ckie&quot;] = a
+            },
+            _setCS: function (a) {
+                bmak[&#39;cs&#39;] = (String(a) + bmak[&#39;cs&#39;])[&#39;slice&#39;](0, 16)
+            },
+            _setFsp: function (a) {
+                bmak[&#39;fsp&#39;] = a,
+                bmak[&#39;fsp&#39;] &amp;&amp; (bmak[&#39;cf_url&#39;] = bmak[&#39;cf_url&#39;].replace(/^http:\/\//i, &#39;https://&#39;))
+            },
+            _setBm: function (a) {
+                bmak[&quot;bm&quot;] = a,
+                bmak[&quot;bm&quot;] &amp;&amp; (bmak[&#39;cf_url&#39;] = (bmak[&#39;fsp&#39;] ? &#39;https:&#39; : document[&#39;location&#39;][&#39;protocol&#39;]) + &#39;//&#39; + document[&#39;location&#39;][&#39;hostname&#39;] + &#39;/_bm/_data&#39;, bmak[&#39;api_public_key&#39;] = &#39;afSbep8yjnZUjq3aL010jO15Sawj2VZfdYK8uY90uxq&#39;, bmak[&quot;js_post&quot;] = !0, bmak[&#39;enReadDocUrl&#39;] = 1, bmak[&quot;runFonts&quot;] = !1)
+            },
+            _setAu: function (a) {
+                &#39;string&#39; == typeof a &amp;&amp; 0 === a[&#39;lastIndexOf&#39;](&#39;/&#39;, 0) &amp;&amp; (bmak[&#39;cf_url&#39;] = (bmak[&#39;fsp&#39;] ? &#39;https:&#39; : document[&#39;location&#39;][&#39;protocol&#39;]) + &#39;//&#39; + document[&#39;location&#39;][&#39;hostname&#39;] + a)
+            },
+            _setSDFieldNames: function () {
+                try {
+                    var a;
+                    for (a = 0; a &lt; arguments.length; a += 1) bmak[&quot;sdfn&quot;][&#39;push&#39;](arguments[a])
+                } catch (a) {
+                    bmak[&quot;sd_debug&quot;](&#39;,setSDFN:&#39; + a)
+                }
+            },
+            _setUseAltFonts: function (a) {
+                bmak[&#39;altFonts&#39;] = a
+            }
+        },
+        applyFunc: function () {
+            var a, t, e;
+            for (a = 0; a &lt; arguments.length; a += 1) e = arguments[a];
+            t = e.shift(),
+            bmak[&quot;listFunctions&quot;][t] &amp;&amp; bmak[&quot;listFunctions&quot;][t][&quot;apply&quot;](bmak[&quot;listFunctions&quot;], e)
+        }
+    };
+bmak[&quot;sd_debug&quot;](&quot;&lt;init/&gt;&quot;);
+
+for (var i = 0; i &lt; _cf.length; i++) bmak[&quot;applyFunc&quot;](_cf[i]);
+
+bmak[&quot;sd_debug&quot;](&quot;&lt;setSDFN&gt;&quot; + bmak[&quot;sdfn&quot;].join() + &quot;&lt;/setSDFN&gt;&quot;),
+_cf = {
+        push: bmak[&quot;applyFunc&quot;]
+    },
+
+function (a) {
+        var t = {};
+        // 这里相当于一个赋值。 创建键值对
+        a[&quot;fpcf&quot;] = t,
+        t[&quot;sf4&quot;] = function () {
+            // 获取 U-A 头   返回的是 false... 出了苹果手机
+            var a = bmak[&quot;uar&quot;]();
+            return !(!~a.indexOf(&quot;Version/4.0&quot;) || !(~a.indexOf(&quot;iPad;&quot;) || ~a.indexOf(&quot;iPhone&quot;) || ~a.indexOf(&quot;Mac OS X 10_5&quot;)))
+        },
+        t[&quot;fpValstr&quot;] = -1,
+        t[&quot;fpValCalculated&quot;] = !1,
+
+        t[&quot;rVal&quot;] = -1,
+        t[&quot;rCFP&quot;] = -1,
+        t[&quot;cache&quot;] = {},
+        t[&quot;td&quot;] = -999999,
+        t[&quot;clearCache&quot;] = function () {
+            t[&quot;cache&quot;] = {}
+        },
+        t[&quot;fpVal&quot;] = function () {
+            t[&quot;fpValCalculated&quot;] = !0;
+            try {
+                var a = 0;
+                // 一个时间戳。
+                a = Date.now ? Date.now() : +new Date;
+                var e = t[&quot;data&quot;]();
+                t[&quot;fpValstr&quot;] = e.replace(/\&quot;/g, &#39;\\&quot;&#39;);   // 就是一个杠换成两个杠
+                var n = 0;
+                n = Date.now ? Date.now() : +new Date,
+                t[&quot;td&quot;] = n - a
+            } catch (a) {}
+        },
+        t[&quot;timezoneOffsetKey&quot;] = function () {
+            return (new Date).getTimezoneOffset()
+            // -480  固定值
+        },
+        t[&quot;data&quot;] = function () {
+            var a = 24,
+                e = 24,
+                n = true,
+                o = false,
+                m = -1,
+                r = &#39;default&#39;;
+            return r = !0 ? !1 ? t[&#39;fonts_optm&#39;]() : t[&#39;fonts&#39;]() : &#39;dis&#39;,
+            [t[&#39;canvas&#39;](), r, t[&#39;pluginInfo&#39;](), t[&#39;sessionStorageKey&#39;](), t[&#39;localStorageKey&#39;](), t[&#39;indexedDbKey&#39;](), t[&quot;timezoneOffsetKey&quot;](), t[&#39;webrtcKey&#39;](), a, e, n, o, m].join(&#39;;&#39;)
+        },
+        t[&#39;PLUGINS&#39;] = [&#39;WebEx64 General Plugin Container&#39;, &#39;YouTube Plug-in&#39;, &#39;Java Applet Plug-in&#39;, &#39;Shockwave Flash&#39;, &#39;iPhotoPhotocast&#39;, &#39;SharePoint Browser Plug-in&#39;, &#39;Chrome Remote Desktop Viewer&#39;, &#39;Chrome PDF Viewer&#39;, &#39;Native Client&#39;, &#39;Unity Player&#39;, &#39;WebKit-integrierte PDF&#39;, &#39;QuickTime Plug-in&#39;, &#39;RealPlayer Version Plugin&#39;, &#39;RealPlayer(tm) G2 LiveConnect-Enabled Plug-In (32-bit)&#39;, &#39;Mozilla Default Plug-in&#39;, &#39;Adobe Acrobat&#39;, &#39;AdobeAAMDetect&#39;, &#39;Google Earth Plug-in&#39;, &#39;Java Plug-in 2 for NPAPI Browsers&#39;, &#39;Widevine Content Decryption Module&#39;, &#39;Microsoft Office Live Plug-in&#39;, &#39;Windows Media Player Plug-in Dynamic Link Library&#39;, &#39;Google Talk Plugin Video Renderer&#39;, &#39;Edge PDF Viewer&#39;, &#39;Shockwave for Director&#39;, &#39;Default Browser Helper&#39;, &#39;Silverlight Plug-In&#39;],
+        t[&#39;pluginInfo&#39;] = function () {
+            if (void 0 === navigator.plugins) return null;
+            for (var a = t[&#39;PLUGINS&#39;].length, e = &#39;&#39;, n = 0; n &lt; a; n++) {
+                var o = t[&#39;PLUGINS&#39;][n];
+                void 0 !== navigator.plugins.o &amp;&amp; (e = e + &quot;,&quot; + n)
+            }
+            return e
+            // 像 &quot;,&quot;.json(li)
+        },
+        // 假设 是 -1
+        t[&#39;canvas&#39;] = function () {
+            try {
+                // 不为空的情况下 直接返回
+                if (void 0 !== t[&quot;cache&quot;][&#39;canvas&#39;]) return t[&quot;cache&quot;][&#39;canvas&#39;];
+                var a = -1;
+                // ！false
+                if (!t[&quot;sf4&quot;]()) {
+                    var e = &quot;&lt;canvas&gt;&quot;;
+                    if (e[&#39;width&#39;] = 280, e[&#39;height&#39;] = 60, e[&#39;style&#39;][&#39;display&#39;] = &#39;none&#39;, &#39;function&#39; == typeof e[&#39;getContext&#39;]) {
+                        var n = e[&#39;getContext&#39;](&#39;2d&#39;);
+                        n[&#39;fillStyle&#39;] = &#39;rgb(102, 204, 0)&#39;,
+                        n[&#39;fillRect&#39;](100, 5, 80, 50),
+                        n[&#39;fillStyle&#39;] = &#39;#f60&#39;,
+                        n[&#39;font&#39;] = &#39;16pt Arial&#39;,
+                        n[&#39;fillText&#39;](&#39;&lt;@nv45\. F1n63r,Pr1n71n6!&#39;, 10, 40),
+                        n[&#39;strokeStyle&#39;] = &#39;rgb(120, 186, 176)&#39;,
+                        n[&#39;arc&#39;](80, 10, 20, 0, Math[&#39;PI&#39;], !1),
+                        n[&#39;stroke&#39;]();
+                        var o = e.toDataURL();
+
+                        a = 0;
+                        for (var m = 0; m &lt; o.length; m++) {
+                            a = (a &lt;&lt; 5) - a + o[&#39;charCodeAt&#39;](m),
+                            a &amp;= a
+                        }
+                        a = a.toString();
+                        var r = document[&#39;createElement&#39;](&#39;canvas&#39;);
+                        r[&#39;width&#39;] = 16,
+                        r[&#39;height&#39;] = 16;
+                        var i = r[&#39;getContext&#39;](&#39;2d&#39;);
+                        i[&#39;font&#39;] = &#39;6pt Arial&#39;,
+                        t[&quot;rVal&quot;] = Math[&#39;floor&#39;](1e3 * Math[&#39;random&#39;]())[&#39;toString&#39;](),
+                        i[&#39;fillText&#39;](t[&quot;rVal&quot;], 1, 12);
+                        for (var c = r[&#39;toDataURL&#39;](), b = 0, d = 0; d &lt; c.length; d++) {
+                            b = (b &lt;&lt; 5) - b + c[&#39;charCodeAt&#39;](d),
+                            b &amp;= b
+                        }
+                        t[&quot;rCFP&quot;] = b[&#39;toString&#39;]()
+                    }
+                }
+                return a
+            } catch (a) {
+                return &#39;exception&#39;
+            }
+        },
+        t[&#39;fonts_optm&#39;] = function () {
+            var a = 200,
+                // 一个时间戳
+                e = bmak[&quot;get_cf_date&quot;](),
+                n = [];
+            if (!t[&quot;sf4&quot;]()) {
+                    var o = [&#39;sans-serif&#39;, &#39;monospace&#39;],
+                        m = [0, 0],
+                        r = [0, 0],
+                        i = document[&#39;createElement&#39;](&#39;div&#39;);
+                    i[&#39;style&#39;][&#39;cssText&#39;] = &#39;position: relative; left: -9999px; visibility: hidden; display: block !important&#39;;
+                    var c;
+                    for (c = 0; c &lt; o.length; c++) {
+                            var b = document[&#39;createElement&#39;](&#39;span&#39;);
+                            b[&#39;innerHTML&#39;] = &#39;abcdefhijklmnopqrstuvxyz1234567890;+-.&#39;,
+                            b[&#39;style&#39;][&#39;fontSize&#39;] = &#39;90px&#39;,
+                            b[&#39;style&#39;][&#39;fontFamily&#39;] = o[c],
+                            i[&#39;appendChild&#39;](b)
+                        }
+                    for (document[&#39;body&#39;][&#39;appendChild&#39;](i), c = 0; c &lt; i[&#39;childNodes&#39;].length; c++) b = i[&#39;childNodes&#39;][c],
+                    m[c] = b[&#39;offsetWidth&#39;],
+                    r[c] = b[&#39;offsetHeight&#39;];
+                    if (document[&#39;body&#39;][&#39;removeChild&#39;](i), bmak[&quot;get_cf_date&quot;]() - e &gt; a) return &#39;&#39;;
+                    var d = [&#39;Geneva&#39;, &#39;Lobster&#39;, &#39;New York&#39;, &#39;Century&#39;, &#39;Apple Gothic&#39;, &#39;Minion Pro&#39;, &#39;Apple LiGothic&#39;, &#39;Century Gothic&#39;, &#39;Monaco&#39;, &#39;Lato&#39;, &#39;Fantasque Sans Mono&#39;, &#39;Adobe Braille&#39;, &#39;Cambria&#39;, &#39;Futura&#39;, &#39;Bell MT&#39;, &#39;Courier&#39;, &#39;Courier New&#39;, &#39;Calibri&#39;, &#39;Avenir Next&#39;, &#39;Birch Std&#39;, &#39;Palatino&#39;, &#39;Ubuntu Regular&#39;, &#39;Oswald&#39;, &#39;Batang&#39;, &#39;Ubuntu Medium&#39;, &#39;Cantarell&#39;, &#39;Droid Serif&#39;, &#39;Roboto&#39;, &#39;Helvetica Neue&#39;, &#39;Corsiva Hebrew&#39;, &#39;Adobe Hebrew&#39;, &#39;TI-Nspire&#39;, &#39;Comic Neue&#39;, &#39;Noto&#39;, &#39;AlNile&#39;, &#39;Palatino-Bold&#39;, &#39;ArialHebrew-Light&#39;, &#39;Avenir&#39;, &#39;Papyrus&#39;, &#39;Open Sans&#39;, &#39;Times&#39;, &#39;Quicksand&#39;, &#39;Source Sans Pro&#39;, &#39;Damascus&#39;, &#39;Microsoft Sans Serif&#39;],
+                        k = document[&#39;createElement&#39;](&#39;div&#39;);
+                    k[&#39;style&#39;][&#39;cssText&#39;] = &#39;position: relative; left: -9999px; visibility: hidden; display: block !important&#39;;
+                    for (var s = [], l = 0; l &lt; d.length; l++) {
+                            var u = document[&#39;createElement&#39;](&#39;div&#39;);
+                            for (c = 0; c &lt; o.length; c++) {
+                                var b = document[&#39;createElement&#39;](&#39;span&#39;);
+                                b[&#39;innerHTML&#39;] = &#39;abcdefhijklmnopqrstuvxyz1234567890;+-.&#39;,
+                                b[&#39;style&#39;][&#39;fontSize&#39;] = &#39;90px&#39;,
+                                b[&#39;style&#39;][&#39;fontFamily&#39;] = d[l] + &quot;,&quot; + o[c],
+                                u[&#39;appendChild&#39;](b)
+                            }
+                            k[&#39;appendChild&#39;](u)
+                        }
+                    if (bmak[&quot;get_cf_date&quot;]() - e &gt; a) return &#39;&#39;;
+                    document[&#39;body&#39;][&#39;appendChild&#39;](k);
+                    for (var l = 0; l &lt; k[&#39;childNodes&#39;].length; l++) {
+                            var _ = !1,
+                                u = k[&#39;childNodes&#39;][l];
+                            for (c = 0; c &lt; u[&#39;childNodes&#39;].length; c++) {
+                                    var b = u[&#39;childNodes&#39;][c];
+                                    if (b[&#39;offsetWidth&#39;] !== m[c] || b[&#39;offsetHeight&#39;] !== r[c]) {
+                                        _ = !0;
+                                        break
+                                    }
+                                }
+                            if (_ &amp;&amp; s[&#39;push&#39;](l), bmak[&quot;get_cf_date&quot;]() - e &gt; a) break
+                        }
+                    document[&#39;body&#39;][&#39;removeChild&#39;](k),
+                    n = s[&#39;sort&#39;]()
+                }
+            return n.join(&quot;,&quot;)
+        },
+        t[&#39;fonts&#39;] = function () {
+            var a = [];
+            if (!t[&quot;sf4&quot;]()) {
+                var e = [&#39;serif&#39;, &#39;sans-serif&#39;, &#39;monospace&#39;],
+                    n = [0, 0, 0],
+                    o = [0, 0, 0],
+                    m = &quot;&lt;span&gt;&lt;/span&gt;&quot;;
+                m[&#39;innerHTML&#39;] = &#39;abcdefhijklmnopqrstuvxyz1234567890;+-.&#39;,
+                // m[&#39;style&#39;][&#39;fontSize&#39;] = &#39;90px&#39;;
+                var r;
+                for (r = 0; r &lt; e.length; r++) m[&#39;style&#39;][&#39;fontFamily&#39;] = e[r],
+                document[&#39;body&#39;][&#39;appendChild&#39;](m),
+                n[r] = m[&#39;offsetWidth&#39;],
+                o[r] = m[&#39;offsetHeight&#39;],
+                document[&#39;body&#39;][&#39;removeChild&#39;](m);
+                for (var i = [&#39;Geneva&#39;, &#39;Lobster&#39;, &#39;New York&#39;, &#39;Century&#39;, &#39;Apple Gothic&#39;, &#39;Minion Pro&#39;, &#39;Apple LiGothic&#39;, &#39;Century Gothic&#39;, &#39;Monaco&#39;, &#39;Lato&#39;, &#39;Fantasque Sans Mono&#39;, &#39;Adobe Braille&#39;, &#39;Cambria&#39;, &#39;Futura&#39;, &#39;Bell MT&#39;, &#39;Courier&#39;, &#39;Courier New&#39;, &#39;Calibri&#39;, &#39;Avenir Next&#39;, &#39;Birch Std&#39;, &#39;Palatino&#39;, &#39;Ubuntu Regular&#39;, &#39;Oswald&#39;, &#39;Batang&#39;, &#39;Ubuntu Medium&#39;, &#39;Cantarell&#39;, &#39;Droid Serif&#39;, &#39;Roboto&#39;, &#39;Helvetica Neue&#39;, &#39;Corsiva Hebrew&#39;, &#39;Adobe Hebrew&#39;, &#39;TI-Nspire&#39;, &#39;Comic Neue&#39;, &#39;Noto&#39;, &#39;AlNile&#39;, &#39;Palatino-Bold&#39;, &#39;ArialHebrew-Light&#39;, &#39;Avenir&#39;, &#39;Papyrus&#39;, &#39;Open Sans&#39;, &#39;Times&#39;, &#39;Quicksand&#39;, &#39;Source Sans Pro&#39;, &#39;Damascus&#39;, &#39;Microsoft Sans Serif&#39;], c = [], b = 0; b &lt; i.length; b++) {
+                        var d = !1;
+                        for (r = 0; r &lt; e.length; r++) if (m[&#39;style&#39;][&#39;fontFamily&#39;] = i[b] + &quot;,&quot; + e[r], document[&#39;body&#39;][&#39;appendChild&#39;](m), m[&#39;offsetWidth&#39;] === n[r] &amp;&amp; m[&#39;offsetHeight&#39;] === o[r] || (d = !0), document[&#39;body&#39;][&#39;removeChild&#39;](m), d) {
+                            c[&#39;push&#39;](b);
+                            break
+                        }
+                    }
+                a = c[&#39;sort&#39;]()
+            }
+            return a.join(&quot;,&quot;)
+        },
+            // true
+        t[&#39;webrtcKey&#39;] = function () {
+            return &#39;function&#39; == typeof window[&#39;RTCPeerConnection&#39;] || &#39;function&#39; == typeof window[&#39;mozRTCPeerConnection&#39;] || &#39;function&#39; == typeof window[&#39;webkitRTCPeerConnection&#39;]
+        },
+        // true
+        t[&#39;indexedDbKey&#39;] = function () {
+            return !!t[&#39;hasIndexedDB&#39;]()
+        },
+            // true  //false
+        t[&#39;sessionStorageKey&#39;] = function () {
+            return !!t[&#39;hasSessionStorage&#39;]()
+        },
+            // true  //false
+        t[&#39;localStorageKey&#39;] = function () {
+            return !!t[&#39;hasLocalStorage&#39;]()
+        },
+            // true 或 false
+        t[&#39;hasSessionStorage&#39;] = function () {
+            try {
+                return !!window[&#39;sessionStorage&#39;]
+            } catch (a) {
+                return !1
+            }
+        },
+            // true 或 false
+        t[&#39;hasLocalStorage&#39;] = function () {
+            try {
+                return !!window[&#39;localStorage&#39;]
+            } catch (a) {
+                return !1
+            }
+        },
+            // true
+        t[&#39;hasIndexedDB&#39;] = function () {
+            return !!window[&#39;indexedDB&#39;]
+        }
+    }(bmak);
+try {
+        // _abck &amp;&amp;
+        bmak[&quot;ckie&quot;] &amp;&amp; bmak[&quot;get_cookie&quot;]()
+    } catch (a) {}
+try {
+        // bmak 添加上一堆键值对
+        bmak[&#39;ir&#39;](),
+            // 等于一个时间戳
+        bmak[&#39;t_tst&#39;] = bmak[&quot;get_cf_date&quot;](),
+        // 开启定位
+        bmak[&#39;startTracking&#39;](),
+            // 时间间隔
+        bmak[&#39;tst&#39;] = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;t_tst&#39;],
+            // 0 ||
+        bmak[&#39;disFpCalOnTimeout&#39;] || setTimeout(bmak[&quot;fpcf&quot;][&quot;fpVal&quot;], 100);
+        for (var i = 0; i &lt; 3; i++) setTimeout(bmak[&#39;getmr&#39;], 400 + 5e3 * i);
+        setTimeout(bmak[&#39;mn_init&#39;], 1e3)
+    } catch (a) {}
+</code></pre></div>
+<p>由于该文章字数太多了，csdn 好卡，分两个章节讲述吧。好卡卡卡卡卡卡… 请看下一篇详细解密把</p>
+<p><link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/markdown_views-89f5acb30b.css" rel="stylesheet"> <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/style-49037e4d27.css" rel="stylesheet"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

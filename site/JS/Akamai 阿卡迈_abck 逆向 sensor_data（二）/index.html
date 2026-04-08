@@ -1,0 +1,1021 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://sunxhap.github.io/record_points/JS/Akamai%20%E9%98%BF%E5%8D%A1%E8%BF%88_abck%20%E9%80%86%E5%90%91%20sensor_data%EF%BC%88%E4%BA%8C%EF%BC%89/">
+      
+      
+        <link rel="prev" href="../Akamai%20%E9%98%BF%E5%8D%A1%E8%BF%88_abck%20%E9%80%86%E5%90%91%20sensor_data%EF%BC%88%E4%B8%80%EF%BC%89/">
+      
+      
+        <link rel="next" href="../VM%20%E9%98%B2%E6%8A%A4%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BC%81%E9%B9%85%E6%BB%91%E5%9D%97%E5%88%86%E6%9E%90/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Akamai 阿卡迈 abck 逆向 sensor data（二） - 爬虫逆向文章库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="爬虫逆向文章库" class="md-header__button md-logo" aria-label="爬虫逆向文章库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            爬虫逆向文章库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Akamai 阿卡迈 abck 逆向 sensor data（二）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Android-APP/" class="md-tabs__link">
+          
+  
+  
+  Android APP
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Akamai%20%E9%98%BF%E5%8D%A1%E8%BF%88_abck%20%E9%80%86%E5%90%91%20sensor_data%EF%BC%88%E4%B8%80%EF%BC%89/" class="md-tabs__link">
+          
+  
+  
+  JS
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="爬虫逆向文章库" class="md-nav__button md-logo" aria-label="爬虫逆向文章库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    爬虫逆向文章库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android APP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Android APP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Android-APP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Android 逆向专栏
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Android-APP/%E6%89%93%E9%80%A0%E5%B9%B4%E8%BD%BB%E4%BA%BA%E7%9A%84%E7%AC%AC%E4%B8%80%E5%A5%97%E5%AE%89%E5%8D%93%E9%80%86%E5%90%91%E7%8E%AF%E5%A2%83%EF%BC%81/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    打造年轻人的第一套安卓逆向环境！
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    JS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Akamai%20%E9%98%BF%E5%8D%A1%E8%BF%88_abck%20%E9%80%86%E5%90%91%20sensor_data%EF%BC%88%E4%B8%80%EF%BC%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Akamai 阿卡迈 abck 逆向 sensor data（一）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Akamai 阿卡迈 abck 逆向 sensor data（二）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VM%20%E9%98%B2%E6%8A%A4%E4%BB%8B%E7%BB%8D%E5%8F%8A%E4%BC%81%E9%B9%85%E6%BB%91%E5%9D%97%E5%88%86%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VM 防护介绍及企鹅滑块分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Akamai 阿卡迈 abck 逆向 sensor data（二）</h1>
+
+<blockquote>
+<p>本文由 <a href="http://ksria.com/simpread/">简悦 SimpRead</a> 转码， 原文地址 https://blog.csdn.net/weixin_38927522/article/details/123693086 <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-163de54645.css"> </p>
+</blockquote>
+<p>继续跟着上一篇搞起来：
+上一篇传输门：<a href="https://blog.csdn.net/weixin_38927522/article/details/123691665">https://blog.csdn.net/weixin_38927522/article/details/123691665</a></p>
+<p>在我的记忆里，国外大部分航司全部是用的这一套，像韩国的，捷星航空，还有美国的一些航空。</p>
+<p>这一篇我直接先将思路公布一下：</p>
+<div class="highlight"><pre><span></span><code>思路：
+    1\. 首先访问 https://www.flyasiana.com/5qSZcnDz_/hGWtnW/AkEc/auTFfPPk/9rYphrpkup/dDswFj8m/FVRIJ3V/tGkQ?n$eum=157910959357612400 ,取出 set_cookie (ak_bmsc, bm_sz, _abck)
+    2\. 再通过 _abck 动态生成 sensor_data
+    3\. 再次访问  https://www.flyasiana.com/5qSZcnDz_/hGWtnW/AkEc/auTFfPPk/9rYphrpkup/dDswFj8m/FVRIJ3V/tGkQ?n$eum=157910959357612400 , 携带 三个cookie 以及 sensor_data ,注意：sensor_data 是一个 request playload, 因此需要 json.dumps() 。取出 set_cookie (_abck)
+    4\. 携带 _abck 进行访问 https://www.flyasiana.com/I/CN/CH/SearchRevenueDomesticFareDrivenAvailFlights.do?n$eum=157910959357612400 。取到返回值
+    5\. 如果第四步 返回状态码为 403, 则将参与以上步骤进行置换_abck值
+</code></pre></div>
+<p><strong>sensor_data 生成重写前 js：</strong></p>
+<div class="highlight"><pre><span></span><code>function pd() {
+    var a = 0;
+
+    a = bmak[&quot;get_cf_date&quot;]();
+    var t = bmak[&quot;updatet&quot;](),
+        e = 3;
+    bmak[&quot;ckie&quot;] &amp;&amp; (e = bmak[&quot;get_cookie&quot;]());
+    var n = bmak[&quot;gd&quot;](),
+        o = &quot;do_en&quot;,
+        m = &quot;dm_en&quot;,
+        r = &quot;t_en&quot;,
+        i = o + &quot;,&quot; + m + &quot;,&quot; + r,
+        c = bmak[&quot;forminfo&quot;](),
+        b = bmak[&quot;getdurl&quot;](),
+        d = bmak[&quot;aj_type&quot;] + &quot;,&quot; + bmak[&quot;aj_indx&quot;];
+    !bmak[&quot;fpcf&quot;][&quot;fpValCalculated&quot;] &amp;&amp; (0 == bmak[&quot;js_post&quot;] || bmak[&quot;aj_indx&quot;] &gt; 0) &amp;&amp; bmak[&quot;fpcf&quot;][&quot;fpVal&quot;]();
+    var k = bmak[&#39;ke_vel&#39;] + bmak[&#39;me_vel&#39;] + bmak[&#39;doe_vel&#39;] + bmak[&#39;dme_vel&#39;] + bmak[&#39;te_vel&#39;] + bmak[&#39;pe_vel&#39;],
+        s = bmak[&quot;get_cf_date&quot;]() - bmak[&#39;start_ts&#39;],
+        l = bmak[&#39;pi&#39;](bmak[&#39;d2&#39;] / 6),
+        u = bmak[&#39;fas&#39;](),
+        _ = [bmak[&#39;ke_vel&#39;] + 1, bmak[&#39;me_vel&#39;] + 1, bmak[&#39;te_vel&#39;], bmak[&#39;doe_vel&#39;], bmak[&#39;dme_vel&#39;], bmak[&#39;pe_vel&#39;], k, t, bmak[&#39;init_time&#39;], bmak[&#39;start_ts&#39;], bmak[&quot;fpcf&quot;][&quot;td&quot;], bmak[&#39;d2&#39;], bmak[&#39;ke_cnt&#39;], bmak[&#39;me_cnt&#39;], l, bmak[&#39;pe_cnt&#39;], bmak[&#39;te_cnt&#39;], s, bmak[&#39;ta&#39;], bmak[&quot;n_ck&quot;], e, bmak[&#39;ab&#39;](e), bmak[&quot;fpcf&quot;][&quot;rVal&quot;], bmak[&quot;fpcf&quot;][&quot;rCFP&quot;], u],
+        f = _.join(&quot;,&quot;),
+        p = &#39;&#39; + bmak[&#39;ab&#39;](bmak[&quot;fpcf&quot;][&quot;fpValstr&quot;]),
+        v = bmak[&#39;sed&#39;]();
+
+    sensor_data = bmak[&#39;ver&#39;] + &#39;-1,2,-94,-100,&#39; + n + &#39;-1,2,-94,-101,&#39; + i + &#39;-1,2,-94,-105,&#39; + bmak[&#39;informinfo&#39;] + &#39;-1,2,-94,-102,&#39; + c + &#39;-1,2,-94,-108,&#39; + bmak[&#39;kact&#39;] + &#39;-1,2,-94,-110,&#39; + bmak[&#39;mact&#39;] + &#39;-1,2,-94,-117,&#39; + bmak[&#39;tact&#39;] + &#39;-1,2,-94,-111,&#39; + bmak[&#39;doact&#39;] + &#39;-1,2,-94,-109,&#39; + bmak[&#39;dmact&#39;] + &#39;-1,2,-94,-114,&#39; + bmak[&#39;pact&#39;] + &#39;-1,2,-94,-103,&#39; + bmak[&#39;vcact&#39;] + &#39;-1,2,-94,-112,&#39; + b + &#39;-1,2,-94,-115,&#39; + f + &#39;-1,2,-94,-106,&#39; + d,
+        sensor_data = sensor_data + &#39;-1,2,-94,-119,&#39; + bmak[&#39;mr&#39;] + &#39;-1,2,-94,-122,&#39; + v + &#39;-1,2,-94,-123,&#39; + bmak[&#39;mn_r&#39;];
+    var h = bmak[&#39;ab&#39;](sensor_data);
+    sensor_data = sensor_data + &#39;-1,2,-94,-70,&#39; + bmak[&quot;fpcf&quot;][&quot;fpValstr&quot;] + &#39;-1,2,-94,-80,&#39; + p + &#39;-1,2,-94,-116,&#39; + bmak[&#39;o9&#39;] + &#39;-1,2,-94,-118,&#39; + h + &#39;-1,2,-94,-121,&#39;,
+        bmak[&quot;sd_debug&quot;](&#39;,s1:&#39; + sensor_data[&#39;slice&#39;](0, 10))
+
+    var g = bmak[&#39;od&#39;](bmak[&#39;cs&#39;], bmak[&#39;api_public_key&#39;])[&#39;slice&#39;](0, 16),
+        w = Math[&#39;floor&#39;](bmak[&quot;get_cf_date&quot;]() / 36e5),
+        y = bmak[&quot;get_cf_date&quot;](),
+        C = g + bmak[&#39;od&#39;](w, g) + sensor_data;
+    sensor_data = C + &#39;;&#39; + (bmak[&quot;get_cf_date&quot;]() - a) + &#39;;&#39; + bmak[&#39;tst&#39;] + &#39;;&#39; + (bmak[&quot;get_cf_date&quot;]() - y)
+}
+</code></pre></div>
+<p>我已经将部分值打断点调试为定制，设备指纹目前写死的情况。
+<strong>sensor_data 重写后</strong>：</p>
+<div class="highlight"><pre><span></span><code>function get_cf_date() {
+    return Date.now ? Date.now() : +new Date
+}
+
+function updatet() {
+    return get_cf_date() - (Date.now ? Date.now() : +new Date)
+}
+
+function pi(a) {
+    return parseInt(a)
+}
+
+function ab(a) {
+    if (null == a) return -1;
+    try {
+
+        for (var t = 0, e = 0; e &lt; a.length; e++) {
+            var n = a.charCodeAt(e);
+            n &lt; 128 &amp;&amp; (t += n)
+        }
+        return t
+    } catch (a) {
+        return -2
+    }
+}
+
+function od(a, t) {
+    try {
+        a = String(a);
+        t = String(t);
+        var e = [];
+        var n = t.length;
+        if (n &gt; 0) {
+            for (var o = 0; o &lt; a.length; o++) {
+                var m = a[&#39;charCodeAt&#39;](o);
+                var r = a[&#39;charAt&#39;](o);
+                var i = t[&#39;charCodeAt&#39;](o % n);
+                var m = bmak[&#39;rir&#39;](m, 47, 57, i);
+                m != a[&#39;charCodeAt&#39;](o) &amp;&amp; (r = String[&#39;fromCharCode&#39;](m)),
+                    e[&#39;push&#39;](r)
+            }
+            if (e.length &gt; 0) return e.join(&#39;&#39;)
+        }
+    } catch (a) {
+    }
+    return a
+}
+
+function pd() {
+
+    var ver = 1.41;
+    var a = get_cf_date();
+    var t = updatet();
+    var e = bmak[&quot;get_cookie&quot;]();
+    var n = &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36,uaend,12147,20030107,zh-CN,Gecko,3,0,0,0,385409,1471924,1536,864,1536,864,858,760,1536,,cpen:0,i1:0,dm:0,cwen:0,non:1,opc:0,fc:0,sc:0,wrc:1,isc:0,vib:1,bat:1,x11:0,x12:1,8323,0.983836920491,783200735962,loc:&quot;;
+    var i = &quot;do_en&quot; + &quot;,&quot; + &quot;dm_en&quot; + &quot;,&quot; + &quot;t_en&quot;;
+    var c = &quot;0,-1,0,0,1340,113,0;0,-1,0,0,916,-1,0;0,-1,0,0,918,-1,0;0,-1,0,0,921,-1,0;0,-1,0,0,964,-1,1;0,-1,0,0,966,-1,1;0,-1,0,0,967,-1,1;&quot;;
+    var b = &quot;https://www.flyasiana.com/C/CN/CH/index&quot;;
+    var d = 1 + &quot;,&quot; + 1;
+    var s = get_cf_date() - (Date.now ? Date.now() : +new Date);
+    var l = pi(16756 / 6);
+    var u = 30261693;
+
+    var k = 7584 + 1599 + 1556;
+    var _ = [1, 7777 + 1, 0, 1599, 1556, 0, k, t, 0, (Date.now ? Date.now() : +new Date), 4, 16756, 0, 1, l, 2, 0, s, 0, 1, e, ab(e), &quot;126&quot;, &quot;-1066190195&quot;, u];
+
+    var f = _.join(&quot;,&quot;);
+    var p = &#39;&#39; + ab(&quot;-1752250632;dis;,7,8;true;true;true;-480;true;24;24;true;false;-1&quot;);
+    var v = &quot;0,0,0,0,1,0,0&quot;;
+
+    var mact = &quot;0,1,7513,853,371;1,1,7516,853,371;2,1,7522,843,370;3,1,7530,833,369;4,1,7538,826,367;5,1,7545,817,366;6,1,7553,808,364;7,1,7561,801,362;8,1,7569,796,360;9,1,7576,790,359;10,1,7585,787,358;11,1,7592,784,357;12,1,7600,780,356;13,1,7632,778,356;14,1,7640,778,355;15,1,7648,777,355;16,1,7665,776,355;17,1,7681,776,354;18,1,7697,775,354;19,1,7720,774,354;20,1,7793,772,354;21,3,8249,772,354,2176;22,4,8377,772,354,2176;23,2,8377,772,354,2176;24,1,8561,773,354;25,1,8569,779,358;26,1,8576,784,362;27,1,8585,791,367;28,1,8592,798,373;29,1,8601,808,381;30,1,8608,818,387;31,1,8616,828,396;32,1,8625,840,406;33,1,8633,850,416;&quot;;
+
+    var sensor_data = ver + &#39;-1,2,-94,-100,&#39; + n + &#39;-1,2,-94,-101,&#39; + i + &#39;-1,2,-94,-105,&#39; + &quot;0,-1,0,0,1340,113,0;&quot; + &#39;-1,2,-94,-102,&#39; + c + &#39;-1,2,-94,-108,&#39; + &quot;&quot; + &#39;-1,2,-94,-110,&#39; + mact + &#39;-1,2,-94,-117,&#39; + &quot;&quot; + &#39;-1,2,-94,-111,&#39; + &quot;0,1613,-1,-1,-1;&quot; + &#39;-1,2,-94,-109,&#39; + &quot;0,1613,-1,-1,-1,-1,-1,-1,-1,-1,-1;&quot; + &#39;-1,2,-94,-114,&#39; + &quot;&quot; + &#39;-1,2,-94,-103,&#39; + &quot;2,3443;3,9857;2,10883;3,51884;2,52813;3,55619;2,56282;3,59249;2,60333;&quot; + &#39;-1,2,-94,-112,&#39; + b + &#39;-1,2,-94,-115,&#39; + f + &#39;-1,2,-94,-106,&#39; + d;
+
+    sensor_data = sensor_data + &#39;-1,2,-94,-119,&#39; + &quot;7,8,9,8,17,19,13,8,6,6,5,5,283,307,&quot; + &#39;-1,2,-94,-122,&#39; + v + &#39;-1,2,-94,-123,&#39; + &quot;&quot;;
+    var h = ab(sensor_data);
+
+    sensor_data = sensor_data + &#39;-1,2,-94,-70,&#39; + &quot;-1752250632;dis;,7,8;true;true;true;-480;true;24;24;true;false;-1&quot; + &#39;-1,2,-94,-80,&#39; + p + &#39;-1,2,-94,-116,&#39; + 4419261 + &#39;-1,2,-94,-118,&#39; + h + &#39;-1,2,-94,-121,&#39;;
+
+    var g = &quot;7a74G7m23Vrp0o5c&quot;;
+    var w = Math.floor(get_cf_date() / 36e5);
+    var y = get_cf_date();
+    var C = g + od(w, g) + sensor_data;
+    sensor_data = C + &#39;;&#39; + (get_cf_date() - a) + &#39;;&#39; + (get_cf_date() - a + 100) + &#39;;&#39; + (get_cf_date() - y);
+
+    return sensor_data
+}
+</code></pre></div>
+<p>缺啥补啥，继续搞 -》get_sensor_data.js：</p>
+<div class="highlight"><pre><span></span><code>function get_cf_date() {
+    return Date.now ? Date.now() : +new Date
+}
+
+function updatet() {
+    return get_cf_date() - (Date.now ? Date.now() : +new Date)
+}
+
+function pi(a) {
+    return parseInt(a)
+}
+
+function ab(a) {
+    if (null == a) return -1;
+    try {
+
+        for (var t = 0, e = 0; e &lt; a.length; e++) {
+            var n = a.charCodeAt(e);
+            n &lt; 128 &amp;&amp; (t += n)
+        }
+        return t
+    } catch (a) {
+        return -2
+    }
+}
+
+function od(a, t) {
+    try {
+        a = String(a);
+        t = String(t);
+        var e = [];
+        var n = t.length;
+        if (n &gt; 0) {
+            for (var o = 0; o &lt; a.length; o++) {
+                var m = a[&#39;charCodeAt&#39;](o);
+                var r = a[&#39;charAt&#39;](o);
+                var i = t[&#39;charCodeAt&#39;](o % n);
+                var m = bmak[&#39;rir&#39;](m, 47, 57, i);
+                m != a[&#39;charCodeAt&#39;](o) &amp;&amp; (r = String[&#39;fromCharCode&#39;](m)),
+                    e[&#39;push&#39;](r)
+            }
+            if (e.length &gt; 0) return e.join(&#39;&#39;)
+        }
+    } catch (a) {
+    }
+    return a
+}
+
+function get_sensor_data() {
+    var ver = 1.41;
+    var a = get_cf_date();
+    var t = updatet();
+    var e = &quot;this_is_abck_cookie&quot;;
+    var n = &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36,uaend,12147,20030107,zh-CN,Gecko,3,0,0,0,385409,1471924,1536,864,1536,864,858,760,1536,,cpen:0,i1:0,dm:0,cwen:0,non:1,opc:0,fc:0,sc:0,wrc:1,isc:0,vib:1,bat:1,x11:0,x12:1,8323,0.983836920491,783200735962,loc:&quot;;
+    var i = &quot;do_en&quot; + &quot;,&quot; + &quot;dm_en&quot; + &quot;,&quot; + &quot;t_en&quot;;
+    var c = &quot;0,-1,0,0,1340,113,0;0,-1,0,0,916,-1,0;0,-1,0,0,918,-1,0;0,-1,0,0,921,-1,0;0,-1,0,0,964,-1,1;0,-1,0,0,966,-1,1;0,-1,0,0,967,-1,1;&quot;;
+    var b = &quot;https://www.flyasiana.com/C/CN/CH/index&quot;;
+    var d = 1 + &quot;,&quot; + 1;
+    var s = get_cf_date() - (Date.now ? Date.now() : +new Date);
+    var l = pi(16756 / 6);
+    var u = 30261693;
+
+    var k = 7584 + 1599 + 1556;
+    var _ = [1, 7777 + 1, 0, 1599, 1556, 0, k, t, 0, (Date.now ? Date.now() : +new Date), 4, 16756, 0, 1, l, 2, 0, s, 0, 1, e, ab(e), &quot;126&quot;, &quot;-1066190195&quot;, u];
+
+    var f = _.join(&quot;,&quot;);
+    var p = &#39;&#39; + ab(&quot;-1752250632;dis;,7,8;true;true;true;-480;true;24;24;true;false;-1&quot;);
+    var v = &quot;0,0,0,0,1,0,0&quot;;
+
+    var mact = &quot;0,1,7513,853,371;1,1,7516,853,371;2,1,7522,843,370;3,1,7530,833,369;4,1,7538,826,367;5,1,7545,817,366;6,1,7553,808,364;7,1,7561,801,362;8,1,7569,796,360;9,1,7576,790,359;10,1,7585,787,358;11,1,7592,784,357;12,1,7600,780,356;13,1,7632,778,356;14,1,7640,778,355;15,1,7648,777,355;16,1,7665,776,355;17,1,7681,776,354;18,1,7697,775,354;19,1,7720,774,354;20,1,7793,772,354;21,3,8249,772,354,2176;22,4,8377,772,354,2176;23,2,8377,772,354,2176;24,1,8561,773,354;25,1,8569,779,358;26,1,8576,784,362;27,1,8585,791,367;28,1,8592,798,373;29,1,8601,808,381;30,1,8608,818,387;31,1,8616,828,396;32,1,8625,840,406;33,1,8633,850,416;&quot;;
+
+    var sensor_data = ver + &#39;-1,2,-94,-100,&#39; + n + &#39;-1,2,-94,-101,&#39; + i + &#39;-1,2,-94,-105,&#39; + &quot;0,-1,0,0,1340,113,0;&quot; + &#39;-1,2,-94,-102,&#39; + c + &#39;-1,2,-94,-108,&#39; + &quot;&quot; + &#39;-1,2,-94,-110,&#39; + mact + &#39;-1,2,-94,-117,&#39; + &quot;&quot; + &#39;-1,2,-94,-111,&#39; + &quot;0,1613,-1,-1,-1;&quot; + &#39;-1,2,-94,-109,&#39; + &quot;0,1613,-1,-1,-1,-1,-1,-1,-1,-1,-1;&quot; + &#39;-1,2,-94,-114,&#39; + &quot;&quot; + &#39;-1,2,-94,-103,&#39; + &quot;2,3443;3,9857;2,10883;3,51884;2,52813;3,55619;2,56282;3,59249;2,60333;&quot; + &#39;-1,2,-94,-112,&#39; + b + &#39;-1,2,-94,-115,&#39; + f + &#39;-1,2,-94,-106,&#39; + d;
+
+    sensor_data = sensor_data + &#39;-1,2,-94,-119,&#39; + &quot;7,8,9,8,17,19,13,8,6,6,5,5,283,307,&quot; + &#39;-1,2,-94,-122,&#39; + v + &#39;-1,2,-94,-123,&#39; + &quot;&quot;;
+    var h = ab(sensor_data);
+
+    sensor_data = sensor_data + &#39;-1,2,-94,-70,&#39; + &quot;-1752250632;dis;,7,8;true;true;true;-480;true;24;24;true;false;-1&quot; + &#39;-1,2,-94,-80,&#39; + p + &#39;-1,2,-94,-116,&#39; + 4419261 + &#39;-1,2,-94,-118,&#39; + h + &#39;-1,2,-94,-121,&#39;;
+
+    var g = &quot;7a74G7m23Vrp0o5c&quot;;
+    var w = Math.floor(get_cf_date() / 36e5);
+    var y = get_cf_date();
+    var C = g + od(w, g) + sensor_data;
+    sensor_data = C + &#39;;&#39; + (get_cf_date() - a) + &#39;;&#39; + (get_cf_date() - a + 100) + &#39;;&#39; + (get_cf_date() - y);
+
+    return sensor_data
+}
+</code></pre></div>
+<p>以上改写成了可调用的方式：</p>
+<div class="highlight"><pre><span></span><code>    def __get_sensor_data(self, old_abck_cookie: str):
+        &quot;&quot;&quot;
+        根据 old_abck_cookie ,获取 sensor_data
+        &quot;&quot;&quot;
+        with open(JS_FILENAME, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+            js_content = f.read().replace(&quot;this_is_abck_cookie&quot;, old_abck_cookie).replace(&quot;this_is_url&quot;, self.url)
+        jscontext = execjs.compile(js_content)
+        sensor_data = jscontext.call(&#39;get_sensor_data&#39;)
+        return sensor_data
+</code></pre></div>
+<p>整个流程用 python 模拟下：</p>
+<div class="highlight"><pre><span></span><code># -*- coding: utf-8 -*-
+# @Author  : Codeooo
+# @Time    : 2022/03/25
+
+import json
+import execjs
+import requests
+from fake_useragent import UserAgent
+
+JS_FILENAME = &quot;get_sensor_data.js&quot;
+
+class Abck_Cookie:
+
+    def __init__(self, headers, url, data=None):
+        self.headers = headers
+        self.url = url
+        self.data = data
+        self.proxies = None
+
+    def __get_sensor_data(self, old_abck_cookie: str):
+        &quot;&quot;&quot;
+        根据 old_abck_cookie ,获取 sensor_data
+        &quot;&quot;&quot;
+        with open(JS_FILENAME, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+            js_content = f.read().replace(&quot;this_is_abck_cookie&quot;, old_abck_cookie).replace(&quot;this_is_url&quot;, self.url)
+        jscontext = execjs.compile(js_content)
+        sensor_data = jscontext.call(&#39;get_sensor_data&#39;)
+        print(&quot;生成sensor_data：&quot;,sensor_data)
+        return sensor_data
+
+    def __get_old_abck(self):
+        &quot;&quot;&quot;
+        获取 set_cookie 中的 _abck_cookie_value,以及所有的 cookie
+        &quot;&quot;&quot;
+        headers = {
+            &quot;User-Agent&quot;: UserAgent().random,
+            &#39;content-type&#39;: &#39;text/plain;charset=UTF-8&#39;,
+        }
+        # 更新添加自己所写 headers
+        headers.update(self.headers)
+        try:
+            old_abck_response = requests.post(url=self.url, headers=headers, proxies=self.proxies, data=self.data,
+                                              timeout=5)
+            print(&quot;old_abck_response:&quot;,old_abck_response.text)
+        except Exception as e:
+            return False
+        for cookie in old_abck_response.cookies:
+            if cookie.name == &quot;_abck&quot;:
+                return (cookie.value, old_abck_response.cookies)
+        return False
+
+    def __get_new_abck(self, sensor_data=None, cookies=None):
+        &quot;&quot;&quot;
+        获取 set_cookie 中的 _abck_cookie
+        &quot;&quot;&quot;
+        cookies_dict = {cookie.name: cookie.value for cookie in cookies}
+        headers = {
+            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv&#39;,
+            &#39;Content-Type&#39;: &#39;text/plain;charset=UTF-8&#39;,
+            &#39;Connection&#39;: &#39;keep-alive&#39;,
+            &#39;Cookie&#39;: &#39;ak_bmsc={}; bm_sz={}; _abck={}&#39;.format(cookies_dict.get(&quot;ak_bmsc&quot;), cookies_dict.get(&quot;bm_sz&quot;),
+                                                              cookies_dict.get(&quot;_abck&quot;)),
+            &#39;TE&#39;: &#39;Trailers&#39;
+        }
+        headers.update(self.headers)
+        data = {
+            &quot;sensor_data&quot;: sensor_data
+        }
+        try:
+            res = requests.post(url=self.url, headers=headers, data=json.dumps(data), proxies=self.proxies, timeout=5)
+            print(&quot;get_new_abck：&quot;, res.text)
+        except:
+            return False
+
+        self.cookies = res.cookies.get_dict()
+        print(&quot;=======当前可用cookies====&quot;,self.cookies)
+
+    def execute_get_abck_cookie(self):
+        &quot;&quot;&quot;
+        统一规划，执行获得新的 abck_cookie
+        :return:abck_cookie
+        &quot;&quot;&quot;
+        # 获取 未可以使用的 abck_cookie
+        old_abck_cookie, cookies = self.__get_old_abck()
+        # 获取 sensor_data
+        sensor_data = self.__get_sensor_data(old_abck_cookie)
+        # 获取 可以使用的 abck_cookie
+        self.__get_new_abck(sensor_data, cookies)
+
+if __name__ == &#39;__main__&#39;:
+    url = &quot;https://www.flyasiana.com/5qSZcnDz_/hGWtnW/AkEc/auTFfPPk/9rYphrpkup/dDswFj8m/FVRIJ3V/tGkQ?n$eum=157910959357612400&quot;
+
+    headers = {
+        &#39;authority&#39;: &#39;www.flyasiana.com&#39;,
+        &#39;user-agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36&#39;,
+        &#39;referer&#39;: &#39;https://www.flyasiana.com/I/CN/CH/RevenueRegistTravel.do&#39;,
+    }
+
+    abck = Abck_Cookie(url=url, headers=headers)
+
+    abck.execute_get_abck_cookie()
+</code></pre></div>
+<p>运行结果 ======：
+<img alt="" src="https://img-blog.csdnimg.cn/ac5e76ea5c5b4ebea0a2c162a9650ae2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQ29kZW9vbw==,size_20,color_FFFFFF,t_70,g_se,x_16" /></p>
+<div class="highlight"><pre><span></span><code>get_sensor_data.js 文件中
+        部分值为固定的直接做了替换；
+        值不固定的，则按照首次请求后得到的结果 做替换。
+    以下是可能会对 cookie 产生约束的字段
+        bmak[&#39;mact&#39;]   也和时间戳有关系。
+        bmak[&#39;vcact&#39;]  感觉有在控制次数。每次重新请求一下都会新添加 两个数
+        bmak[&#39;me_cnt&#39;]  请求之间的累计间隔时间。 初始化为 1
+        bmak[&#39;pe_cnt&#39;]  请求次数 * 2  ，初始化为 0
+        bmak[&#39;ta&#39;]  当前请求时间与初始化时间的累和  ，初始化为 0
+        bmak[&#39;me_vel&#39;]   也同样是一个累计运算。 再加上当前请求时间与初始化时间的差
+        bmak[&#39;dme_vel&#39;]  感觉像似响应时长。
+        bmak[&#39;pe_vel&#39;]   看js 的加密，应该是 在原来的基础上 加上 请求次数 * 2 ，以及时间。但是直接打印 一直为 
+</code></pre></div>
+<p><link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/markdown_views-89f5acb30b.css" rel="stylesheet"> <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/style-49037e4d27.css" rel="stylesheet"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
